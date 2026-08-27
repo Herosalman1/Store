@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard | Salman Store</title>
+    <title>Admin Login | Salman Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -25,451 +25,72 @@
         .glass-panel { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
         .input-pro { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); color: white; transition: all 0.3s ease; }
         .input-pro:focus { border-color: #f43f5e; box-shadow: 0 0 15px rgba(244, 63, 94, 0.25); outline: none; }
-        
-        .btn-uniform {
-            background-color: rgba(31, 41, 55, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        .btn-uniform:hover {
-            background-color: rgba(55, 65, 81, 1);
-            border-color: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
     </style>
 </head>
-<body class="min-h-screen p-4 sm:p-6 lg:p-8 selection:bg-brand selection:text-white">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- LOGIN SECTION -->
-    <div id="loginSection" class="min-h-[85vh] flex items-center justify-center">
-        <div class="max-w-md w-full glass-panel p-8 rounded-3xl shadow-2xl space-y-6 text-center border border-white/10">
-            <div class="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 text-white text-3xl border border-white/10 shadow-inner mb-1">
-                🛍️
-            </div>
-            <div class="space-y-1">
-                <h1 class="text-2xl font-bold tracking-tight text-white">Store Control Room</h1>
-                <p class="text-xs text-zinc-400 font-medium">Type Secret Password Token 🔒</p>
-            </div>
-            <div class="space-y-4 text-left">
-                <div>
-                    <input type="password" id="gitToken" placeholder="Paste your token here..." class="w-full px-4 py-3.5 rounded-xl input-pro text-sm text-center">
-                </div>
-                <button onclick="loadData()" class="w-full py-3.5 btn-uniform rounded-xl uppercase tracking-wider text-xs shadow-lg">
-                    LOGIN & LOAD DASHBOARD 🚀
-                </button>
-            </div>
-            <div class="pt-2">
-                <a href="index.html" class="text-xs text-zinc-500 hover:text-zinc-300 transition-colors">← Go Back Store</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN FULL-SCREEN GRID DASHBOARD SECTION -->
-    <div id="editorSection" class="max-w-[1400px] mx-auto space-y-6" style="display:none;">
-        
-        <!-- Top Bar -->
-        <header class="glass-panel px-6 py-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/10">
-            <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-white/5 text-white flex items-center justify-center font-bold text-lg border border-white/10 shadow-inner">🛍️</div>
-                <div>
-                    <h2 class="text-base font-bold text-white tracking-wide">Store Admin Enterprise Dashboard</h2>
-                    <p class="text-xs text-zinc-400">Manage profile, highlights & templates globally in real-time</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3">
-                <a href="index.html" target="_blank" class="px-4 py-2.5 btn-uniform text-xs rounded-xl flex items-center gap-2">
-                    <span>View Store</span> 🌐
-                </a>
-                <button onclick="logout()" class="px-4 py-2.5 btn-uniform text-xs rounded-xl flex items-center gap-2 text-rose-400">
-                    <span>Logout</span> 🔒
-                </button>
-            </div>
-        </header>
-
-        <!-- 12-COLUMN RESPONSIVE GRID LAYOUT -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            
-            <!-- LEFT COLUMN (Span 5 cols): Profile & Highlights -->
-            <div class="lg:col-span-5 flex flex-col gap-6">
-                
-                <!-- Profile Customization Panel -->
-                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10">
-                    <div class="flex items-center gap-2 border-b border-zinc-800 pb-3">
-                        <span class="text-zinc-300">👤</span>
-                        <h3 class="text-sm font-bold uppercase tracking-wider text-white">Profile Customization</h3>
-                    </div>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Profile Picture (DP) URL</label>
-                            <input type="text" id="pDp" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Instagram Link</label>
-                            <input type="text" id="pInsta" placeholder="https://instagram.com/..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Bio Text</label>
-                            <textarea id="pBio" rows="4" class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Telegram Username (for Buy button)</label>
-                            <input type="text" id="pTele" placeholder="Superfast_01" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Highlights Customization Panel -->
-                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col">
-                    <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-zinc-300">🖼️</span>
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-white">Highlights Photo & Manager</h3>
-                        </div>
-                        <button onclick="addHighlightInput('', '')" class="px-3.5 py-2 btn-uniform text-xs rounded-xl flex items-center gap-1">
-                            <span>+ Add</span>
-                        </button>
-                    </div>
-                    
-                    <div id="highlightsAdminContainer" class="space-y-2.5 overflow-y-auto pr-1 flex-1 min-h-[170px]">
-                        <!-- Dynamically populated highlight rows -->
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- RIGHT COLUMN (Span 7 cols): Code Upload & Edit System + Publish -->
-            <div class="lg:col-span-7 flex flex-col gap-6 justify-between">
-                
-                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between border-b border-zinc-800 pb-3 mb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="text-zinc-300">📤</span>
-                                <h3 id="formTitle" class="text-sm font-bold uppercase tracking-wider text-white">Code Upload & Edit System</h3>
-                            </div>
-                            <button onclick="openModal()" class="px-3.5 py-2 btn-uniform text-xs rounded-xl flex items-center gap-1.5">
-                                <span>📋 View Saved List</span>
-                            </button>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Template Name</label>
-                                <input type="text" id="tName" placeholder="E.g. Cinematic Birthday" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Price (₹)</label>
-                                <input type="number" id="tPrice" placeholder="249" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Preview Image URL</label>
-                                <input type="text" id="tImg" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Live Demo Link</label>
-                                <input type="text" id="tDemo" placeholder="rakhi.html" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Short Description</label>
-                                <textarea id="tDesc" rows="3" placeholder="Write short details about this code..." class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="pt-3">
-                        <button id="actionBtn" onclick="processTemplate()" class="w-full py-3.5 btn-uniform text-xs uppercase tracking-wider rounded-xl shadow-md">
-                            + Add Code to List
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SECTION 3: GLOBAL PUBLISH TO GITHUB -->
-                <div class="glass-panel p-6 rounded-3xl text-center space-y-3 border border-white/10">
-                    <div class="flex items-center justify-center gap-2">
-                        <span class="text-zinc-300">🚀</span>
-                        <h3 class="text-sm font-bold uppercase tracking-wider text-white">Publish Everything</h3>
-                    </div>
-                    <p class="text-xs text-zinc-400">Save profile customization, highlights photos and template updates globally to your live store.</p>
-                    <button onclick="saveToGitHub()" class="w-full py-4 btn-uniform text-xs uppercase tracking-wider rounded-2xl shadow-xl">
-                        Save & Upload Everything to GitHub ✨
-                    </button>
-                </div>
-
-            </div>
-
+    <div class="glass-panel p-8 rounded-2xl w-full max-w-md border border-zinc-800 shadow-2xl">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold tracking-wide text-white">🔐 Admin Control Room</h2>
+            <p class="text-xs text-zinc-400 mt-1">Enter your GitHub Personal Access Token</p>
         </div>
 
-    </div>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1">GitHub Token:</label>
+                <input type="password" id="gitToken" class="input-pro w-full px-4 py-3 rounded-xl text-sm" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            </div>
 
-    <!-- List Modal Box for Edit/Delete -->
-    <div id="listModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="max-w-xl w-full glass-panel p-6 rounded-3xl border border-white/10 max-h-[85vh] flex flex-col shadow-2xl">
-            <div class="flex items-center justify-between pb-4 border-b border-zinc-800 mb-4">
-                <h3 class="font-bold text-white text-sm flex items-center gap-2"><span>📋</span> All Uploaded Codes Gallery</h3>
-                <button onclick="closeModal()" class="text-zinc-400 hover:text-white text-xl font-bold bg-zinc-800 h-8 w-8 rounded-full flex items-center justify-center">×</button>
-            </div>
-            <div id="projectList" class="overflow-y-auto space-y-3 pr-1 flex-1">
-                <!-- Dynamic items -->
-            </div>
+            <button id="loginBtn" onclick="verifyAndLogin()" class="w-full py-3 rounded-xl bg-brand text-white font-semibold text-sm hover:bg-rose-600 transition-all shadow-lg shadow-rose-600/20">
+                LOGIN & OPEN DASHBOARD ⚡
+            </button>
         </div>
     </div>
 
     <script>
-        const myRepo = "Herosalman1/Store"; 
-        let storeData = { profile: {}, highlights: [], templates: [] };
-        let fileSha = "";
-        let editIndex = null; 
-
-        async function loadData() {
+        async function verifyAndLogin() {
             const token = document.getElementById('gitToken').value.trim();
-            if(!token) return alert("Please enter your GitHub Token!");
+            const btn = document.getElementById('loginBtn');
 
-            const loginBtn = document.querySelector('#loginSection button');
-            loginBtn.innerText = "Connecting...";
-
-            try {
-                const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
-                    headers: { 'Authorization': `token ${token}` }
-                });
-                
-                if(!response.ok) throw new Error("Invalid Token or Repo!");
-                
-                const data = await response.json();
-                fileSha = data.sha;
-                const decodedData = decodeURIComponent(escape(atob(data.content)));
-                let parsed = JSON.parse(decodedData);
-                
-                if(Array.isArray(parsed)) {
-                    storeData.templates = parsed;
-                    storeData.profile = {
-                        dp: "https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4",
-                        bio: "SALMAN he/him\nAI creator & Web Developer\nFocus अगर करना ही है !! तो सिर्फ अपने Work पर Focus कीजिए !!",
-                        insta: "https://www.instagram.com/herosalman1_929/",
-                        telegram: "Superfast_01"
-                    };
-                    storeData.highlights = [
-                        { icon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=200", name: "Projects" },
-                        { icon: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=200", name: "Rakhi Spl" },
-                        { icon: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=200", name: "Demos" }
-                    ];
-                } else {
-                    storeData = parsed;
-                    if(!storeData.highlights) {
-                        storeData.highlights = [
-                            { icon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=200", name: "Projects" },
-                            { icon: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=200", name: "Rakhi Spl" },
-                            { icon: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=200", name: "Demos" }
-                        ];
-                    }
-                }
-                
-                document.getElementById('pDp').value = storeData.profile.dp || '';
-                document.getElementById('pBio').value = storeData.profile.bio || '';
-                document.getElementById('pInsta').value = storeData.profile.insta || '';
-                document.getElementById('pTele').value = storeData.profile.telegram || '';
-
-                renderHighlightsAdmin();
-
-                localStorage.setItem('gitToken', token);
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('editorSection').style.display = 'block';
-            } catch (error) {
-                alert("Connection failed! Check your GitHub Token.");
-                loginBtn.innerText = "LOGIN & LOAD DASHBOARD 🚀";
-            }
-        }
-
-        function renderHighlightsAdmin() {
-            let container = document.getElementById('highlightsAdminContainer');
-            container.innerHTML = '';
-            storeData.highlights.forEach((h, idx) => {
-                container.innerHTML += `
-                    <div class="flex gap-2 items-center bg-black/40 p-2.5 rounded-2xl border border-white/5" id="hRow_${idx}">
-                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Photo Image URL" class="w-32 px-2 py-2 rounded-xl input-pro text-xs text-center text-white" title="Paste Photo URL here">
-                        <input type="text" id="hName_${idx}" value="${h.name || ''}" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-pro text-xs text-white">
-                        <button onclick="removeHighlight(${idx})" class="px-3 py-2 btn-uniform text-xs rounded-xl text-rose-400">🗑️</button>
-                    </div>
-                `;
-            });
-        }
-
-        function addHighlightInput(icon, name) {
-            storeData.highlights.push({ icon: icon, name: name });
-            renderHighlightsAdmin();
-        }
-
-        function removeHighlight(idx) {
-            storeData.highlights.splice(idx, 1);
-            renderHighlightsAdmin();
-        }
-
-        function renderList() {
-            const list = document.getElementById('projectList');
-            list.innerHTML = "";
-            if(!storeData.templates || storeData.templates.length === 0) {
-                list.innerHTML = `<p class="text-xs text-zinc-500 text-center py-6">No codes uploaded yet.</p>`;
+            if(!token) {
+                btn.innerText = "⚠️ ENTER TOKEN FIRST!";
+                btn.style.background = "#d97706";
+                setTimeout(() => {
+                    btn.innerText = "LOGIN & OPEN DASHBOARD ⚡";
+                    btn.style.background = "#f43f5e";
+                }, 2000);
                 return;
             }
-            storeData.templates.forEach((tool, index) => {
-                let price = tool.price || '249';
-                list.innerHTML += `
-                    <div class="flex items-center justify-between bg-black/40 border border-white/5 p-3 rounded-2xl">
-                        <div class="flex items-center gap-3">
-                            <img src="${tool.img}" class="w-10 h-10 object-cover rounded-xl border border-white/10">
-                            <div>
-                                <h4 class="text-xs font-semibold text-white">${index + 1}. ${tool.name}</h4>
-                                <p class="text-[10px] text-zinc-400">₹${price}</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="editTemplate(${index})" class="px-3 py-1.5 btn-uniform text-[10px] font-semibold rounded-lg">EDIT</button>
-                            <button onclick="deleteTemplate(${index})" class="px-3 py-1.5 btn-uniform text-[10px] font-semibold rounded-lg text-rose-400">DEL</button>
-                        </div>
-                    </div>`;
-            });
-        }
 
-        function processTemplate() {
-            const name = document.getElementById('tName').value.trim();
-            const price = document.getElementById('tPrice').value.trim();
-            const img = document.getElementById('tImg').value.trim();
-            const demo = document.getElementById('tDemo').value.trim();
-            const desc = document.getElementById('tDesc').value.trim();
-            
-            if(!name || !price) {
-                return alert("Template Name and Price are required!");
-            }
-
-            const itemObj = {
-                name,
-                price,
-                img: img || 'https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=500&auto=format&fit=crop',
-                demo: demo || '#',
-                desc: desc || 'Premium animated web template.'
-            };
-
-            if(editIndex === null) {
-                storeData.templates.unshift(itemObj);
-            } else {
-                storeData.templates[editIndex] = itemObj;
-                editIndex = null;
-                document.getElementById('formTitle').innerText = "Code Upload & Edit System";
-                document.getElementById('actionBtn').innerText = "+ Add Code to List";
-                document.getElementById('actionBtn').className = "w-full py-3.5 btn-uniform text-xs uppercase tracking-wider rounded-xl shadow-md";
-            }
-
-            document.getElementById('tName').value = "";
-            document.getElementById('tPrice').value = "";
-            document.getElementById('tImg').value = "";
-            document.getElementById('tDemo').value = "";
-            document.getElementById('tDesc').value = "";
-            
-            alert("Code added/updated locally! Click 'Save & Upload Everything to GitHub' to publish.");
-        }
-
-        function editTemplate(index) {
-            editIndex = index;
-            let item = storeData.templates[index];
-            document.getElementById('tName').value = item.name || '';
-            document.getElementById('tPrice').value = item.price || '';
-            document.getElementById('tImg').value = item.img || '';
-            document.getElementById('tDemo').value = item.demo || item.url || '';
-            document.getElementById('tDesc').value = item.desc || '';
-            
-            document.getElementById('formTitle').innerText = "✏️ Edit Template Code";
-            document.getElementById('actionBtn').innerText = "UPDATE CODE";
-            document.getElementById('actionBtn').className = "w-full py-3.5 btn-uniform text-xs uppercase tracking-wider rounded-xl shadow-lg";
-            
-            closeModal();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function deleteTemplate(index) {
-            if(confirm("Are you sure you want to delete this code?")) {
-                storeData.templates.splice(index, 1);
-                renderList();
-            }
-        }
-
-        async function saveToGitHub() {
-            const token = localStorage.getItem('gitToken');
-            
-            storeData.profile = {
-                dp: document.getElementById('pDp').value.trim(),
-                bio: document.getElementById('pBio').value,
-                insta: document.getElementById('pInsta').value.trim(),
-                telegram: document.getElementById('pTele').value.trim()
-            };
-
-            storeData.highlights = [];
-            storeData.highlights.forEach((h, idx) => {
-                let iconEl = document.getElementById(`hIcon_${idx}`);
-                let nameEl = document.getElementById(`hName_${idx}`);
-                if(iconEl && nameEl) {
-                    storeData.highlights.push({
-                        icon: iconEl.value.trim() || "",
-                        name: nameEl.value.trim() || "Highlight"
-                    });
-                }
-            });
-
-            const updatedJson = JSON.stringify(storeData, null, 2);
-            const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
-
-            const uploadBtn = document.querySelector('.glass-panel:last-child button');
-            uploadBtn.innerText = "Syncing with GitHub...";
+            btn.innerText = "VERIFYING... ⏳";
+            btn.style.background = "#1f6feb";
 
             try {
-                const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: "Updated profile, dynamic photo highlights and templates via Admin Panel",
-                        content: encodedContent,
-                        sha: fileSha
-                    })
+                // Test token validity with GitHub API
+                const response = await fetch('https://api.github.com/user', {
+                    headers: { 'Authorization': `token ${token}` }
                 });
 
                 if(response.ok) {
-                    const data = await response.json();
-                    fileSha = data.content.sha;
-                    alert("✅ Successfully updated store globally on GitHub! 🎉");
-                    uploadBtn.innerText = "Save & Upload Everything to GitHub ✨";
+                    localStorage.setItem('gitToken', token);
+                    
+                    btn.innerText = "SUCCESS! OPENING... ✅";
+                    btn.style.background = "#238636";
+
+                    setTimeout(() => {
+                        window.location.href = "tools.html";
+                    }, 1000);
                 } else {
-                    throw new Error("Save error");
+                    throw new Error("Invalid token");
                 }
             } catch (error) {
-                alert("Failed to save! Check your token.");
-                uploadBtn.innerText = "Save & Upload Everything to GitHub ✨";
-            }
-        }
+                btn.innerText = "❌ INVALID TOKEN! TRY AGAIN";
+                btn.style.background = "#da3633";
 
-        function openModal() {
-            renderList();
-            document.getElementById('listModal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('listModal').style.display = 'none';
-        }
-
-        function logout() {
-            localStorage.removeItem('gitToken');
-            location.reload();
-        }
-
-        window.onload = function() {
-            if(localStorage.getItem('gitToken')) {
-                document.getElementById('gitToken').value = localStorage.getItem('gitToken');
+                setTimeout(() => {
+                    btn.innerText = "LOGIN & OPEN DASHBOARD ⚡";
+                    btn.style.background = "#f43f5e";
+                }, 2500);
             }
         }
     </script>
