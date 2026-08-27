@@ -14,7 +14,7 @@
                 extend: {
                     colors: {
                         background: '#000000',
-                        foreground: '#ffffff',
+                        foreground: '#ededed',
                         brand: '#e11d48',
                         muted: '#71717a'
                     }
@@ -30,10 +30,8 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #000000;
-            color: #ffffff;
+            color: #ededed;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
         }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -45,7 +43,7 @@
     <!-- Top Navigation Bar -->
     <nav class="sticky top-0 z-50 border-b border-zinc-950 bg-black/80 backdrop-blur-md">
         <div class="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
-            <span class="font-bold text-base tracking-wider">herosalman1_929</span>
+            <span class="font-bold text-base tracking-wider" id="navUser">herosalman1_929</span>
             <a href="admin.html" class="text-zinc-600 hover:text-white transition-colors text-sm" title="Admin Login">⚙️</a>
         </div>
     </nav>
@@ -57,13 +55,13 @@
         <header class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 pb-8 border-b border-zinc-900">
             <div class="relative">
                 <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600">
-                    <img src="https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4" alt="Profile" class="w-full h-full object-cover rounded-full bg-black">
+                    <img id="storeDp" src="https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4" alt="Profile" class="w-full h-full object-cover rounded-full bg-black">
                 </div>
             </div>
 
             <div class="flex-1 text-center sm:text-left">
                 <div class="flex items-center justify-center sm:justify-start gap-4 mb-4">
-                    <h1 class="text-xl font-semibold tracking-wide">herosalman1_929</h1>
+                    <h1 class="text-xl font-semibold tracking-wide" id="profileName">herosalman1_929</h1>
                 </div>
 
                 <div class="flex justify-center sm:justify-start gap-6 text-sm mb-4 text-zinc-300">
@@ -72,17 +70,17 @@
                     <div><span class="font-semibold text-white">276</span> following</div>
                 </div>
 
-                <div class="text-xs sm:text-sm text-zinc-300 space-y-1 mb-3">
-                    <p class="font-medium text-white">SALMAN <span class="text-zinc-500">he/him</span></p>
-                    <p>AI creator & Web Developer</p>
-                    <p class="text-zinc-400">Focus अगर करना ही है !! तो सिर्फ अपने Work पर Focus कीजिए !!</p>
+                <div id="storeBio" class="text-xs sm:text-sm text-zinc-300 space-y-1 mb-3 whitespace-pre-line">
+                    SALMAN he/him
+                    AI creator & Web Developer
+                    Focus अगर करना ही है !! तो सिर्फ अपने Work पर Focus कीजिए !!
                 </div>
 
                 <div class="flex items-center justify-center sm:justify-start gap-4 pt-1">
-                    <a href="https://www.instagram.com/herosalman1_929/" target="_blank" class="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800">
+                    <a id="instaLink" href="https://www.instagram.com/herosalman1_929/" target="_blank" class="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800">
                         Instagram
                     </a>
-                    <a href="https://t.me/Superfast_01" target="_blank" class="flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 transition-colors bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800">
+                    <a id="teleLink" href="https://t.me/Superfast_01" target="_blank" class="flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 transition-colors bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800">
                         Telegram
                     </a>
                 </div>
@@ -107,13 +105,13 @@
 
         <!-- Section Title -->
         <div class="py-6 flex items-center justify-between">
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">📁 Premium Codes & Templates (Reels Grid)</h2>
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">📁 PREMIUM CODES & TEMPLATES (REELS GRID)</h2>
             <span class="text-xs text-zinc-500">Tap to View Demo / Buy</span>
         </div>
 
         <!-- Grid Gallery -->
         <div id="storeGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-12">
-            <p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>
+            <p class="text-xs text-zinc-600 col-span-full text-center py-12">Loading store data... ⏳</p>
         </div>
 
     </main>
@@ -124,6 +122,10 @@
     </footer>
 
     <script>
+        // Aapke naye Store repository ka naam yahan set hai
+        const username = 'Herosalman1'; 
+        const repo = 'Store'; 
+
         document.addEventListener('keydown', function (e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.key === 'C')) {
                 e.preventDefault();
@@ -132,23 +134,38 @@
             }
         });
 
-        async function fetchGitHubTemplates() {
+        async function fetchStoreData() {
             let grid = document.getElementById('storeGrid');
-            const username = 'Herosalman1'; 
-            const repo = 'all-tools-dashboard';
             const jsonUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/tools.json`;
 
             try {
                 let response = await fetch(jsonUrl);
                 if (response.ok) {
-                    let list = await response.json();
-                    if (!Array.isArray(list) || list.length === 0) {
+                    let data = await response.json();
+                    
+                    let templates = [];
+                    let profile = {};
+
+                    if(Array.isArray(data)) {
+                        templates = data;
+                    } else {
+                        templates = data.templates || [];
+                        profile = data.profile || {};
+                    }
+
+                    if(profile.dp) document.getElementById('storeDp').src = profile.dp;
+                    if(profile.bio) document.getElementById('storeBio').innerText = profile.bio;
+                    if(profile.insta) document.getElementById('instaLink').href = profile.insta;
+                    let teleUser = profile.telegram || 'Superfast_01';
+                    document.getElementById('teleLink').href = `https://t.me/${teleUser}`;
+
+                    if (templates.length === 0) {
                         grid.innerHTML = '<p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
                         return;
                     }
 
                     grid.innerHTML = '';
-                    list.forEach(item => {
+                    templates.forEach(item => {
                         let price = item.price || '249';
                         let img = item.img || 'https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=500&auto=format&fit=crop';
                         let demo = item.demo || item.url || '#';
@@ -170,7 +187,7 @@
                                     <a href="${demo}" target="_blank" class="flex-1 py-2 px-3 rounded-lg border border-zinc-700 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
                                         👁️ Live Demo
                                     </a>
-                                    <button onclick="buyCode('${item.name}', '${price}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
+                                    <button onclick="buyCode('${item.name}', '${price}', '${teleUser}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
                                         Buy Code ⚡
                                     </button>
                                 </div>
@@ -185,12 +202,12 @@
             }
         }
 
-        function buyCode(templateName, price) {
+        function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
-            window.open(`https://t.me/Superfast_01?text=${msg}`, '_blank');
+            window.open(`https://t.me/${teleUser}?text=${msg}`, '_blank');
         }
 
-        fetchGitHubTemplates();
+        fetchStoreData();
     </script>
 </body>
 </html>
