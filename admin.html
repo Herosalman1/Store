@@ -2,8 +2,10 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard | Salman Store</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- AUTO DESKTOP SITE MODE & ZOOM DISABLED -->
+    <meta name="viewport" content="width=1040, user-scalable=no">
+    <title>Salman | Developer & Creator Templates Store</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,515 +13,232 @@
             theme: {
                 extend: {
                     colors: {
-                        background: '#030712',
-                        foreground: '#f3f4f6',
-                        brand: '#f43f5e'
+                        background: '#000000',
+                        foreground: '#ededed',
+                        brand: '#e11d48',
+                        muted: '#71717a'
                     }
                 }
             }
         }
     </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #030712; color: #f3f4f6; }
-        .glass-panel { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
-        .input-pro { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); color: white; transition: all 0.3s ease; }
-        .input-pro:focus { border-color: #f43f5e; box-shadow: 0 0 15px rgba(244, 63, 94, 0.25); outline: none; }
-        
-        .btn-uniform {
-            background-color: rgba(31, 41, 55, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            font-weight: 500;
-            transition: all 0.3s ease;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            color: #ededed;
+            -webkit-user-select: none;
+            user-select: none;
+            /* SCREEN BOUNCE AUR HILNE SE ROKNE KE LIYE */
+            overflow-x: hidden;
+            overscroll-behavior: none;
         }
-        .btn-uniform:hover {
-            background-color: rgba(55, 65, 81, 1);
-            border-color: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="min-h-screen p-4 sm:p-6 lg:p-8 selection:bg-brand selection:text-white">
+<body class="min-h-screen flex flex-col antialiased selection:bg-brand selection:text-white" oncontextmenu="return false;">
 
-    <!-- LOGIN SECTION -->
-    <div id="loginSection" class="min-h-[85vh] flex items-center justify-center">
-        <div class="max-w-md w-full glass-panel p-8 rounded-3xl shadow-2xl space-y-6 text-center border border-white/10">
-            <div class="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 text-white text-3xl border border-white/10 shadow-inner mb-1">
-                🛍️
-            </div>
-            <div class="space-y-1">
-                <h1 class="text-2xl font-bold tracking-tight text-white">Store Control Room</h1>
-                <p class="text-xs text-zinc-400 font-medium">Type Secret Password Token 🔒</p>
-            </div>
-            <div class="space-y-4 text-left">
-                <div>
-                    <input type="password" id="gitToken" placeholder="Paste your token here..." class="w-full px-4 py-3.5 rounded-xl input-pro text-sm text-center">
-                </div>
-                <button id="mainLoginBtn" onclick="loadData()" class="w-full py-3.5 btn-uniform rounded-xl uppercase tracking-wider text-xs shadow-lg">
-                    LOGIN & LOAD DASHBOARD 🚀
-                </button>
-            </div>
-            <div class="pt-2">
-                <a href="index.html" class="text-xs text-zinc-500 hover:text-zinc-300 transition-colors">← Go Back Store</a>
-            </div>
-        </div>
-    </div>
+    <nav class="sticky top-0 z-50 border-b border-zinc-950 bg-black/80 backdrop-blur-md">
+        <div class="mx-auto flex h-14 max-w-4xl items-center justify-end px-4"></div>
+    </nav>
 
-    <!-- MAIN FULL-SCREEN GRID DASHBOARD SECTION -->
-    <div id="editorSection" class="max-w-[1400px] mx-auto space-y-6" style="display:none;">
+    <main class="mx-auto w-full max-w-4xl px-4 py-5 flex-1 flex flex-col">
         
-        <!-- Top Bar -->
-        <header class="glass-panel px-6 py-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/10">
-            <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-white/5 text-white flex items-center justify-center font-bold text-lg border border-white/10 shadow-inner">🛍️</div>
-                <div>
-                    <h2 class="text-base font-bold text-white tracking-wide">Store Admin Enterprise Dashboard</h2>
-                    <p class="text-xs text-zinc-400">Manage profile, highlights & templates globally in real-time</p>
+        <header class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 pb-5 border-b border-zinc-900">
+            <div class="relative">
+                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600">
+                    <img id="storeDp" src="https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4" alt="Profile" class="w-full h-full object-cover rounded-full bg-black">
                 </div>
             </div>
-            <div class="flex items-center gap-3">
-                <a href="index.html" target="_blank" class="px-4 py-2.5 btn-uniform text-xs rounded-xl flex items-center gap-2">
-                    <span>View Store</span> 🌐
-                </a>
-                <button onclick="logout()" class="px-4 py-2.5 btn-uniform text-xs rounded-xl flex items-center gap-2 text-rose-400">
-                    <span>Logout</span> 🔒
-                </button>
+
+            <div class="flex-1 text-center sm:text-left">
+                <div class="flex items-center justify-center sm:justify-start gap-2" style="margin-bottom: 3px;">
+                    <h1 class="text-xl font-semibold tracking-wide text-white" id="profileName">herosalman1_929</h1>
+                    <svg aria-label="Verified" class="x1lliihq x1n2onr6 x1q0g3np" fill="rgb(0, 149, 246)" height="18" role="img" viewBox="0 0 40 40" width="18">
+                        <title>Verified</title>
+                        <path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.36l5.432 3.138v6.353h6.234L14.638 40l5.36-3.094L25.358 40l2.972-5.149h6.234v-6.353L40 25.36 36.906 20 40 14.64l-5.432-3.136V5.15h-6.234L25.358 0l-5.36 3.094Zm11.586 10.986-13.41 13.41-6.41-6.41 2.828-2.828 3.582 3.582 10.582-10.582 2.828 2.828Z" fill-rule="evenodd"></path>
+                    </svg>
+                </div>
+
+                <div class="text-xs sm:text-sm font-semibold text-white leading-tight" style="margin-bottom: 6px;">
+                    SALMAN <span class="font-normal text-zinc-400">he/him</span>
+                </div>
+
+                <div class="flex justify-center sm:justify-start gap-6 text-sm text-zinc-300" style="margin-bottom: -2px;">
+                    <div><span class="font-semibold text-white">45</span> posts</div>
+                    <div><span class="font-semibold text-white">9,779</span> followers</div>
+                    <div><span class="font-semibold text-white">276</span> following</div>
+                </div>
+
+                <div id="storeBio" class="text-xs sm:text-sm text-zinc-300 whitespace-pre-line leading-snug" style="margin-bottom: -6px;">
+                    AI creator
+                    Focus अगर करना ही है !!
+                    तो सिर्फ अपने Work पर Focus कीजिए !!
+                    <a href="https://beacons.ai/herosalman1" target="_blank" class="text-sky-400 hover:underline block pt-0.5">beacons.ai/herosalman1</a>
+                </div>
+
+                <div class="flex items-center justify-center sm:justify-start gap-2" style="margin-top: 4px;">
+                    <a id="instaLink" href="https://www.instagram.com/herosalman1_929/" target="_blank" class="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors bg-zinc-900 px-4 py-1.5 rounded-full border border-zinc-800">
+                        Instagram
+                    </a>
+                    <a id="teleLink" href="https://t.me/Superfast_01" target="_blank" class="flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 transition-colors bg-zinc-900 px-4 py-1.5 rounded-full border border-zinc-800">
+                        Telegram
+                    </a>
+                </div>
             </div>
         </header>
 
-        <!-- 12-COLUMN RESPONSIVE GRID LAYOUT -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            
-            <!-- LEFT COLUMN (Span 5 cols): Profile & Highlights -->
-            <div class="lg:col-span-5 flex flex-col gap-6">
-                
-                <!-- Profile Customization Panel -->
-                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10">
-                    <div class="flex items-center gap-2 border-b border-zinc-800 pb-3">
-                        <span class="text-zinc-300">👤</span>
-                        <h3 class="text-sm font-bold uppercase tracking-wider text-white">Profile Customization</h3>
-                    </div>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Profile Picture (DP) URL</label>
-                            <input type="text" id="pDp" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Instagram Link</label>
-                            <input type="text" id="pInsta" placeholder="https://instagram.com/..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Bio Text</label>
-                            <textarea id="pBio" rows="4" class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Telegram Username (for Buy button)</label>
-                            <input type="text" id="pTele" placeholder="Superfast_01" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                    </div>
-                </div>
+        <div id="highlightsBar" class="flex gap-4 py-4 overflow-x-auto scrollbar-hide border-b border-zinc-900"></div>
 
-                <!-- Highlights Customization Panel -->
-                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col">
-                    <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-zinc-300">🖼️</span>
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-white">Highlights Photo & Manager</h3>
-                        </div>
-                        <button onclick="addHighlightInput('', '')" class="px-3.5 py-2 btn-uniform text-xs rounded-xl flex items-center gap-1">
-                            <span>+ Add</span>
-                        </button>
-                    </div>
-                    
-                    <div id="highlightsAdminContainer" class="space-y-2.5 overflow-y-auto pr-1 flex-1 min-h-[170px]">
-                        <!-- Dynamically populated highlight rows -->
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- RIGHT COLUMN (Span 7 cols): Code Upload & Edit System + Publish -->
-            <div class="lg:col-span-7 flex flex-col gap-6 justify-between">
-                
-                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between border-b border-zinc-800 pb-3 mb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="text-zinc-300">📤</span>
-                                <h3 id="formTitle" class="text-sm font-bold uppercase tracking-wider text-white">Code Upload & Edit System</h3>
-                            </div>
-                            <button onclick="openModal()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2">
-                                <span>📋 VIEW SAVED CODES</span>
-                            </button>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Template Name</label>
-                                <input type="text" id="tName" placeholder="E.g. Cinematic Birthday" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Price (₹)</label>
-                                <input type="number" id="tPrice" placeholder="249" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Preview Image URL</label>
-                                <input type="text" id="tImg" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Live Demo Link</label>
-                                <input type="text" id="tDemo" placeholder="rakhi.html" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Short Description</label>
-                                <textarea id="tDesc" rows="3" placeholder="Write short details about this code..." class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="pt-3">
-                        <button id="actionBtn" onclick="processTemplate()" class="w-full py-3.5 btn-uniform text-xs uppercase tracking-wider rounded-xl shadow-md transition-all">
-                            + Add Code to List
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SECTION 3: GLOBAL PUBLISH TO GITHUB -->
-                <div class="glass-panel p-6 rounded-3xl text-center space-y-3 border border-white/10">
-                    <div class="flex items-center justify-center gap-2">
-                        <span class="text-zinc-300">🚀</span>
-                        <h3 class="text-sm font-bold uppercase tracking-wider text-white">Publish Everything</h3>
-                    </div>
-                    <p class="text-xs text-zinc-400">Save profile customization, highlights photos and template updates globally to your live store.</p>
-                    <button id="uploadBtn" onclick="saveToGitHub()" class="w-full py-4 btn-uniform text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all">
-                        Save & Upload Everything to GitHub ✨
-                    </button>
-                </div>
-
-            </div>
-
+        <div class="py-4 flex items-center justify-between">
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">📁 PREMIUM CODES & TEMPLATES (REELS GRID)</h2>
+            <span class="text-xs text-zinc-500">Tap to View Demo / Buy</span>
         </div>
 
-    </div>
+        <div id="storeGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-12">
+            <p class="text-xs text-zinc-600 col-span-full text-center py-12">Loading store data... ⏳</p>
+        </div>
 
-    <!-- LARGE MODAL BOX (Half Screen +) -->
-    <div id="listModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-10">
-        <div class="max-w-4xl w-full h-[75vh] glass-panel p-6 sm:p-8 rounded-3xl border border-zinc-700 flex flex-col shadow-2xl">
-            <div class="flex items-center justify-between pb-5 border-b border-zinc-800 mb-5">
-                <h3 class="font-bold text-white text-lg flex items-center gap-3"><span>📋</span> All Uploaded Codes Gallery</h3>
-                <button onclick="closeModal()" class="text-zinc-400 hover:text-rose-500 text-3xl font-bold bg-zinc-900/80 h-10 w-10 rounded-xl border border-white/5 flex items-center justify-center transition-all pb-1">×</button>
+    </main>
+
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
+        <div class="w-full max-w-4xl h-[90vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+            <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800">
+                <h3 class="text-xs font-semibold text-white tracking-wider flex items-center gap-2"><span>🔴</span> Live Code Preview</h3>
+                <button onclick="closePreview()" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 h-7 w-7 rounded-full flex items-center justify-center text-sm font-bold transition-all">✕</button>
             </div>
-            <div id="projectList" class="overflow-y-auto space-y-4 pr-3 flex-1">
-                <!-- Dynamic items -->
+            <div class="flex-1 w-full bg-black relative">
+                <iframe id="previewFrame" src="" class="w-full h-full border-0"></iframe>
             </div>
         </div>
     </div>
+
+    <footer class="border-t border-zinc-900 py-6 text-center text-xs text-zinc-500">
+        <p>© 2026 herosalman1_929. All rights reserved.</p>
+    </footer>
 
     <script>
-        const myRepo = "Herosalman1/Store"; 
-        let storeData = { profile: {}, highlights: [], templates: [] };
-        let fileSha = "";
-        let editIndex = null; 
+        const username = 'Herosalman1'; 
+        const repo = 'Store'; 
 
-        async function loadData() {
-            const token = document.getElementById('gitToken').value.trim();
-            const loginBtn = document.getElementById('mainLoginBtn');
-
-            if(!token) {
-                loginBtn.innerText = "⚠️ TOKEN ENTER KRO FIRST";
-                loginBtn.style.backgroundColor = "#ef4444"; 
-                setTimeout(() => {
-                    loginBtn.innerText = "LOGIN & LOAD DASHBOARD 🚀";
-                    loginBtn.style.backgroundColor = "";
-                }, 2000);
-                return;
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.key === 'C')) {
+                e.preventDefault();
+                alert('Action restricted to protect source code.');
+                return false;
             }
+        });
 
-            loginBtn.innerText = "CONNECTING... ⏳";
-            loginBtn.style.backgroundColor = "#2563eb"; // Blue connection
+        async function fetchStoreData() {
+            let grid = document.getElementById('storeGrid');
+            let highlightsBar = document.getElementById('highlightsBar');
+            const jsonUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/tools.json`;
 
             try {
-                const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
-                    headers: { 'Authorization': `token ${token}` }
-                });
-                
-                if(!response.ok) throw new Error("Invalid Token or Repo!");
-                
-                const data = await response.json();
-                fileSha = data.sha;
-                const decodedData = decodeURIComponent(escape(atob(data.content)));
-                let parsed = JSON.parse(decodedData);
-                
-                if(Array.isArray(parsed)) {
-                    storeData.templates = parsed;
-                    storeData.profile = { dp: "", bio: "", insta: "", telegram: "" };
-                    storeData.highlights = [];
-                } else {
-                    storeData = parsed;
-                    if(!storeData.highlights) storeData.highlights = [];
-                }
-                
-                document.getElementById('pDp').value = storeData.profile.dp || '';
-                document.getElementById('pBio').value = storeData.profile.bio || '';
-                document.getElementById('pInsta').value = storeData.profile.insta || '';
-                document.getElementById('pTele').value = storeData.profile.telegram || '';
+                let response = await fetch(jsonUrl);
+                if (response.ok) {
+                    let data = await response.json();
+                    let templates = data.templates || [];
+                    let profile = data.profile || {};
+                    let highlights = [
+                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835713/663b59ec-9212-424a-a5b2-689adf955b4e.png", name: "MR." },
+                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835362/7.jpg", name: "S" },
+                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835358/6.jpg", name: "A" },
+                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835350/4.jpg", name: "L" },
+                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835347/3.jpg", name: "M" },
+                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835264/1.jpg", name: "A" },
+                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835342/2.jpg", name: "N" }
+                    ];
 
-                renderHighlightsAdmin();
+                    if(profile.dp) document.getElementById('storeDp').src = profile.dp;
+                    if(profile.insta) document.getElementById('instaLink').href = profile.insta;
+                    let teleUser = profile.telegram || 'Superfast_01';
+                    document.getElementById('teleLink').href = `https://t.me/${teleUser}`;
 
-                localStorage.setItem('gitToken', token);
-                
-                loginBtn.innerText = "SUCCESS! LOADING... ✅";
-                loginBtn.style.backgroundColor = "#22c55e"; 
-                
-                setTimeout(() => {
-                    document.getElementById('loginSection').style.display = 'none';
-                    document.getElementById('editorSection').style.display = 'block';
-                    loginBtn.innerText = "LOGIN & LOAD DASHBOARD 🚀";
-                    loginBtn.style.backgroundColor = "";
-                }, 800);
+                    highlightsBar.innerHTML = '';
+                    highlights.forEach((h, idx) => {
+                        let borderClass = idx === 0 ? 'border-rose-500' : 'border-zinc-700';
+                        let iconContent = h.icon && h.icon.startsWith('http') 
+                            ? `<img src="${h.icon}" class="w-full h-full object-cover rounded-full">` 
+                            : `<span>${h.icon || '✨'}</span>`;
 
-            } catch (error) {
-                loginBtn.innerText = "❌ INVALID TOKEN! TRY AGAIN";
-                loginBtn.style.backgroundColor = "#ef4444"; 
-                setTimeout(() => {
-                    loginBtn.innerText = "LOGIN & LOAD DASHBOARD 🚀";
-                    loginBtn.style.backgroundColor = "";
-                }, 2500);
-            }
-        }
-
-        function renderHighlightsAdmin() {
-            let container = document.getElementById('highlightsAdminContainer');
-            container.innerHTML = '';
-            storeData.highlights.forEach((h, idx) => {
-                container.innerHTML += `
-                    <div class="flex gap-2 items-center bg-black/40 p-2.5 rounded-2xl border border-white/5" id="hRow_${idx}">
-                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Photo Image URL" class="w-32 px-2 py-2 rounded-xl input-pro text-xs text-center text-white" title="Paste Photo URL here">
-                        <input type="text" id="hName_${idx}" value="${h.name || ''}" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-pro text-xs text-white">
-                        <button onclick="removeHighlight(${idx})" class="px-3 py-2 btn-uniform text-xs rounded-xl text-rose-400">🗑️</button>
-                    </div>
-                `;
-            });
-        }
-
-        function addHighlightInput(icon, name) {
-            storeData.highlights.push({ icon: icon, name: name });
-            renderHighlightsAdmin();
-        }
-
-        function removeHighlight(idx) {
-            storeData.highlights.splice(idx, 1);
-            renderHighlightsAdmin();
-        }
-
-        function renderList() {
-            const list = document.getElementById('projectList');
-            list.innerHTML = "";
-            if(!storeData.templates || storeData.templates.length === 0) {
-                list.innerHTML = `<p class="text-sm text-zinc-500 text-center py-10 font-semibold">No codes uploaded yet.</p>`;
-                return;
-            }
-            storeData.templates.forEach((tool, index) => {
-                let price = tool.price || '249';
-                list.innerHTML += `
-                    <div class="flex items-center justify-between bg-black/60 border border-white/10 p-4 rounded-2xl hover:border-zinc-500 transition-colors">
-                        <div class="flex items-center gap-4">
-                            <img src="${tool.img}" class="w-14 h-14 object-cover rounded-xl border border-white/10">
-                            <div>
-                                <h4 class="text-sm font-semibold text-white tracking-wide">${index + 1}. ${tool.name}</h4>
-                                <p class="text-xs text-rose-400 font-bold mt-0.5">₹${price}</p>
+                        highlightsBar.innerHTML += `
+                            <div class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0">
+                                <div class="w-16 h-16 rounded-full p-[2px] border ${borderClass} bg-zinc-900 flex items-center justify-center overflow-hidden text-xl">${iconContent}</div>
+                                <span class="text-xs text-zinc-400">${h.name || 'Highlight'}</span>
                             </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="editTemplate(${index})" class="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold rounded-xl border border-white/5 transition-all">EDIT</button>
-                            <button onclick="deleteTemplate(${index})" class="px-5 py-2 bg-rose-900/50 hover:bg-rose-600 text-white text-xs font-bold rounded-xl border border-rose-500/30 transition-all">DELETE</button>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function processTemplate() {
-            const btn = document.getElementById('actionBtn');
-            const name = document.getElementById('tName').value.trim();
-            const price = document.getElementById('tPrice').value.trim();
-            const img = document.getElementById('tImg').value.trim();
-            const demo = document.getElementById('tDemo').value.trim();
-            const desc = document.getElementById('tDesc').value.trim();
-            
-            if(!name || !price) {
-                btn.innerText = "⚠️ ENTER TEMPLATE NAME & PRICE!";
-                btn.style.backgroundColor = "#ef4444"; // Red for error
-                setTimeout(() => {
-                    btn.innerText = editIndex === null ? "+ Add Code to List" : "UPDATE CODE";
-                    btn.style.backgroundColor = ""; // Reset to default gray
-                }, 2500);
-                return;
-            }
-
-            const itemObj = {
-                name,
-                price,
-                img: img || 'https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=500&auto=format&fit=crop',
-                demo: demo || '#',
-                desc: desc || 'Premium animated web template.'
-            };
-
-            if(editIndex === null) {
-                storeData.templates.unshift(itemObj);
-            } else {
-                storeData.templates[editIndex] = itemObj;
-                editIndex = null;
-                document.getElementById('formTitle').innerText = "Code Upload & Edit System";
-            }
-
-            document.getElementById('tName').value = "";
-            document.getElementById('tPrice').value = "";
-            document.getElementById('tImg').value = "";
-            document.getElementById('tDemo').value = "";
-            document.getElementById('tDesc').value = "";
-            
-            // Pro-Level Blue visual feedback!
-            btn.innerText = "ADDED TO LIST SUCCESSFULLY 📋";
-            btn.style.backgroundColor = "#2563eb"; // Tailwind blue-600
-            btn.style.borderColor = "#2563eb";
-            btn.style.color = "#ffffff";
-
-            setTimeout(() => {
-                btn.innerText = "+ Add Code to List";
-                btn.style.backgroundColor = "";
-                btn.style.borderColor = "";
-                btn.style.color = "";
-                btn.className = "w-full py-3.5 btn-uniform text-xs uppercase tracking-wider rounded-xl shadow-md transition-all";
-            }, 2000);
-        }
-
-        function editTemplate(index) {
-            editIndex = index;
-            let item = storeData.templates[index];
-            document.getElementById('tName').value = item.name || '';
-            document.getElementById('tPrice').value = item.price || '';
-            document.getElementById('tImg').value = item.img || '';
-            document.getElementById('tDemo').value = item.demo || item.url || '';
-            document.getElementById('tDesc').value = item.desc || '';
-            
-            document.getElementById('formTitle').innerText = "✏️ Edit Template Code";
-            const btn = document.getElementById('actionBtn');
-            btn.innerText = "UPDATE CODE";
-            btn.className = "w-full py-3.5 btn-uniform text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all text-amber-400";
-            
-            closeModal();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function deleteTemplate(index) {
-            if(confirm("Are you sure you want to delete this code?")) {
-                storeData.templates.splice(index, 1);
-                renderList();
-            }
-        }
-
-        async function saveToGitHub() {
-            const token = localStorage.getItem('gitToken');
-            const uploadBtn = document.getElementById('uploadBtn');
-            
-            storeData.profile = {
-                dp: document.getElementById('pDp').value.trim(),
-                bio: document.getElementById('pBio').value,
-                insta: document.getElementById('pInsta').value.trim(),
-                telegram: document.getElementById('pTele').value.trim()
-            };
-
-            storeData.highlights = [];
-            storeData.highlights.forEach((h, idx) => {
-                let iconEl = document.getElementById(`hIcon_${idx}`);
-                let nameEl = document.getElementById(`hName_${idx}`);
-                if(iconEl && nameEl) {
-                    storeData.highlights.push({
-                        icon: iconEl.value.trim() || "",
-                        name: nameEl.value.trim() || "Highlight"
+                        `;
                     });
-                }
-            });
 
-            const updatedJson = JSON.stringify(storeData, null, 2);
-            const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
+                    if (templates.length === 0) {
+                        grid.innerHTML = '<p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
+                        return;
+                    }
 
-            uploadBtn.innerText = "UPLOADING TO GITHUB... ⏳";
-            uploadBtn.style.backgroundColor = "#2563eb"; // Blue processing state
-            uploadBtn.style.borderColor = "#2563eb";
+                    grid.innerHTML = '';
+                    templates.forEach(item => {
+                        let price = item.price || '199';
+                        let img = item.img || '';
+                        let demo = item.demo || '#';
+                        let desc = item.desc || '';
 
-            try {
-                const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: "Updated profile, highlights and templates via Control Room",
-                        content: encodedContent,
-                        sha: fileSha
-                    })
-                });
-
-                if(response.ok) {
-                    const data = await response.json();
-                    fileSha = data.content.sha;
-                    
-                    uploadBtn.innerText = "CODE GITHUB PER UPLOAD KAR DIYA HAI ✅";
-                    uploadBtn.style.backgroundColor = "#22c55e"; // Green for success
-                    uploadBtn.style.borderColor = "#22c55e";
-                    uploadBtn.style.color = "#000";
-                    uploadBtn.style.fontWeight = "bold";
-
-                    setTimeout(() => {
-                        uploadBtn.innerText = "Save & Upload Everything to GitHub ✨";
-                        uploadBtn.style.backgroundColor = "";
-                        uploadBtn.style.borderColor = "";
-                        uploadBtn.style.color = "";
-                        uploadBtn.style.fontWeight = "";
-                    }, 3500);
-
+                        grid.innerHTML += `
+                            <div class="group relative rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 flex flex-col justify-between hover:border-rose-600 transition-all shadow-xl">
+                                <div>
+                                    <div class="relative aspect-[4/3] bg-zinc-900 overflow-hidden">
+                                        <img src="${img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90">
+                                        <div class="absolute top-3 right-3 px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-md text-sm font-bold text-white border border-white/20 shadow-2xl flex items-center gap-1 tracking-wide">
+                                            <span>₹${price}</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-semibold text-white text-sm mb-1">${item.name}</h3>
+                                        <p class="text-xs text-zinc-400 whitespace-pre-line mb-3">${desc}</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 pt-0 flex gap-2">
+                                    <button onclick="openPreview('${demo}')" class="flex-1 py-2 px-3 rounded-lg border border-zinc-700 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
+                                        👁️ Live Demo
+                                    </button>
+                                    <button onclick="buyCode('${item.name}', '${price}', '${teleUser}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
+                                        Buy Code ⚡
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
                 } else {
-                    throw new Error("Save error");
+                    grid.innerHTML = '<p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
                 }
             } catch (error) {
-                uploadBtn.innerText = "❌ FAILED! TRY AGAIN OR CHECK TOKEN";
-                uploadBtn.style.backgroundColor = "#ef4444"; 
-                uploadBtn.style.borderColor = "#ef4444";
-                
-                setTimeout(() => {
-                    uploadBtn.innerText = "Save & Upload Everything to GitHub ✨";
-                    uploadBtn.style.backgroundColor = "";
-                    uploadBtn.style.borderColor = "";
-                }, 3500);
+                grid.innerHTML = '<p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
             }
         }
 
-        function openModal() {
-            renderList();
-            document.getElementById('listModal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('listModal').style.display = 'none';
-        }
-
-        function logout() {
-            localStorage.removeItem('gitToken');
-            location.reload();
+        function openPreview(url) {
+            const modal = document.getElementById('previewModal');
+            const iframe = document.getElementById('previewFrame');
+            iframe.src = url;
+            modal.style.display = 'flex';
         }
 
-        window.onload = function() {
-            if(localStorage.getItem('gitToken')) {
-                document.getElementById('gitToken').value = localStorage.getItem('gitToken');
-            }
+        function closePreview() {
+            const modal = document.getElementById('previewModal');
+            const iframe = document.getElementById('previewFrame');
+            iframe.src = '';
+            modal.style.display = 'none';
         }
+
+        function buyCode(templateName, price, teleUser) {
+            const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
+            window.open(`https://t.me/${teleUser}?text=${msg}`, '_blank');
+        }
+
+        fetchStoreData();
     </script>
 </body>
 </html>
