@@ -95,7 +95,7 @@
         <!-- 12-COLUMN RESPONSIVE GRID LAYOUT -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
-            <!-- LEFT COLUMN (Span 5 cols): Profile & Highlights -->
+            <!-- LEFT COLUMN: Profile & Highlights -->
             <div class="lg:col-span-5 flex flex-col gap-6">
                 
                 <!-- Profile Customization Panel -->
@@ -106,6 +106,20 @@
                     </div>
                     
                     <div class="space-y-4">
+                        <div class="grid grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-zinc-400 mb-1 uppercase tracking-wider">Posts</label>
+                                <input type="text" id="pPosts" placeholder="45" class="w-full px-3 py-2.5 rounded-xl input-pro text-xs text-center font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-zinc-400 mb-1 uppercase tracking-wider">Followers</label>
+                                <input type="text" id="pFollowers" placeholder="9,779" class="w-full px-3 py-2.5 rounded-xl input-pro text-xs text-center font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-zinc-400 mb-1 uppercase tracking-wider">Following</label>
+                                <input type="text" id="pFollowing" placeholder="276" class="w-full px-3 py-2.5 rounded-xl input-pro text-xs text-center font-semibold">
+                            </div>
+                        </div>
                         <div>
                             <label class="block text-xs font-medium text-zinc-400 mb-1">Profile Picture (DP) URL</label>
                             <input type="text" id="pDp" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
@@ -116,7 +130,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-zinc-400 mb-1">Bio Text</label>
-                            <textarea id="pBio" rows="4" class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
+                            <textarea id="pBio" rows="3" class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-zinc-400 mb-1">Telegram Username (for Buy button)</label>
@@ -138,13 +152,13 @@
                     </div>
                     
                     <div id="highlightsAdminContainer" class="space-y-2.5 overflow-y-auto pr-1 flex-1 min-h-[170px]">
-                        <!-- Dynamically populated highlight rows -->
+                        <!-- Dynamically populated rows -->
                     </div>
                 </div>
 
             </div>
 
-            <!-- RIGHT COLUMN (Span 7 cols): Code Upload & Edit System + Publish -->
+            <!-- RIGHT COLUMN: Code Upload & Publish -->
             <div class="lg:col-span-7 flex flex-col gap-6 justify-between">
                 
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col justify-between">
@@ -190,13 +204,13 @@
                     </div>
                 </div>
 
-                <!-- SECTION 3: GLOBAL PUBLISH TO GITHUB -->
+                <!-- Publish Section -->
                 <div class="glass-panel p-6 rounded-3xl text-center space-y-3 border border-white/10">
                     <div class="flex items-center justify-center gap-2">
                         <span class="text-zinc-300">🚀</span>
                         <h3 class="text-sm font-bold uppercase tracking-wider text-white">Publish Everything</h3>
                     </div>
-                    <p class="text-xs text-zinc-400">Save profile customization, highlights photos and template updates globally to your live store.</p>
+                    <p class="text-xs text-zinc-400">Save profile customization, stats, highlights, and templates globally.</p>
                     <button id="uploadBtn" onclick="saveToGitHub()" class="w-full py-4 btn-uniform text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all">
                         Save & Upload Everything to GitHub ✨
                     </button>
@@ -208,7 +222,7 @@
 
     </div>
 
-    <!-- LARGE MODAL BOX (Half Screen +) -->
+    <!-- Full / Half Screen Modal -->
     <div id="listModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-10">
         <div class="max-w-4xl w-full h-[75vh] glass-panel p-6 sm:p-8 rounded-3xl border border-zinc-700 flex flex-col shadow-2xl">
             <div class="flex items-center justify-between pb-5 border-b border-zinc-800 mb-5">
@@ -216,7 +230,7 @@
                 <button onclick="closeModal()" class="text-zinc-400 hover:text-rose-500 text-3xl font-bold bg-zinc-900/80 h-10 w-10 rounded-xl border border-white/5 flex items-center justify-center transition-all pb-1">×</button>
             </div>
             <div id="projectList" class="overflow-y-auto space-y-4 pr-3 flex-1">
-                <!-- Dynamic items -->
+                <!-- Dynamic List Items -->
             </div>
         </div>
     </div>
@@ -242,7 +256,7 @@
             }
 
             loginBtn.innerText = "CONNECTING... ⏳";
-            loginBtn.style.backgroundColor = "#2563eb"; // Blue connection
+            loginBtn.style.backgroundColor = "#2563eb"; 
 
             try {
                 const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
@@ -258,17 +272,22 @@
                 
                 if(Array.isArray(parsed)) {
                     storeData.templates = parsed;
-                    storeData.profile = { dp: "", bio: "", insta: "", telegram: "" };
+                    storeData.profile = { dp: "", bio: "", insta: "", telegram: "", posts: "45", followers: "9,779", following: "276" };
                     storeData.highlights = [];
                 } else {
                     storeData = parsed;
                     if(!storeData.highlights) storeData.highlights = [];
+                    if(!storeData.profile) storeData.profile = {};
                 }
                 
                 document.getElementById('pDp').value = storeData.profile.dp || '';
                 document.getElementById('pBio').value = storeData.profile.bio || '';
                 document.getElementById('pInsta').value = storeData.profile.insta || '';
                 document.getElementById('pTele').value = storeData.profile.telegram || '';
+                
+                document.getElementById('pPosts').value = storeData.profile.posts || '45';
+                document.getElementById('pFollowers').value = storeData.profile.followers || '9,779';
+                document.getElementById('pFollowing').value = storeData.profile.following || '276';
 
                 renderHighlightsAdmin();
 
@@ -300,7 +319,7 @@
             storeData.highlights.forEach((h, idx) => {
                 container.innerHTML += `
                     <div class="flex gap-2 items-center bg-black/40 p-2.5 rounded-2xl border border-white/5" id="hRow_${idx}">
-                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Photo Image URL" class="w-32 px-2 py-2 rounded-xl input-pro text-xs text-center text-white" title="Paste Photo URL here">
+                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Photo Image URL" class="w-32 px-2 py-2 rounded-xl input-pro text-xs text-center text-white">
                         <input type="text" id="hName_${idx}" value="${h.name || ''}" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-pro text-xs text-white">
                         <button onclick="removeHighlight(${idx})" class="px-3 py-2 btn-uniform text-xs rounded-xl text-rose-400">🗑️</button>
                     </div>
@@ -326,7 +345,7 @@
                 return;
             }
             storeData.templates.forEach((tool, index) => {
-                let price = tool.price || '249';
+                let price = tool.price || '199';
                 list.innerHTML += `
                     <div class="flex items-center justify-between bg-black/60 border border-white/10 p-4 rounded-2xl hover:border-zinc-500 transition-colors">
                         <div class="flex items-center gap-4">
@@ -354,10 +373,10 @@
             
             if(!name || !price) {
                 btn.innerText = "⚠️ ENTER TEMPLATE NAME & PRICE!";
-                btn.style.backgroundColor = "#ef4444"; // Red for error
+                btn.style.backgroundColor = "#ef4444"; 
                 setTimeout(() => {
                     btn.innerText = editIndex === null ? "+ Add Code to List" : "UPDATE CODE";
-                    btn.style.backgroundColor = ""; // Reset to default gray
+                    btn.style.backgroundColor = ""; 
                 }, 2500);
                 return;
             }
@@ -365,9 +384,9 @@
             const itemObj = {
                 name,
                 price,
-                img: img || 'https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=500&auto=format&fit=crop',
+                img: img || 'https://res.cloudinary.com/ysl029w9/image/upload/v1787835800/548451ef-0167-40b1-a89f-c98398aba42f.png',
                 demo: demo || '#',
-                desc: desc || 'Premium animated web template.'
+                desc: desc || 'Special Template ❤️🎁💫✨'
             };
 
             if(editIndex === null) {
@@ -384,9 +403,8 @@
             document.getElementById('tDemo').value = "";
             document.getElementById('tDesc').value = "";
             
-            // Pro-Level Blue visual feedback!
             btn.innerText = "ADDED TO LIST SUCCESSFULLY 📋";
-            btn.style.backgroundColor = "#2563eb"; // Tailwind blue-600
+            btn.style.backgroundColor = "#2563eb"; 
             btn.style.borderColor = "#2563eb";
             btn.style.color = "#ffffff";
 
@@ -432,16 +450,18 @@
                 dp: document.getElementById('pDp').value.trim(),
                 bio: document.getElementById('pBio').value,
                 insta: document.getElementById('pInsta').value.trim(),
-                telegram: document.getElementById('pTele').value.trim()
+                telegram: document.getElementById('pTele').value.trim(),
+                posts: document.getElementById('pPosts').value.trim() || "45",
+                followers: document.getElementById('pFollowers').value.trim() || "9,779",
+                following: document.getElementById('pFollowing').value.trim() || "276"
             };
 
             storeData.highlights = [];
-            storeData.highlights.forEach((h, idx) => {
-                let iconEl = document.getElementById(`hIcon_${idx}`);
+            document.querySelectorAll('[id^="hIcon_"]').forEach((el, idx) => {
                 let nameEl = document.getElementById(`hName_${idx}`);
-                if(iconEl && nameEl) {
+                if(el && nameEl) {
                     storeData.highlights.push({
-                        icon: iconEl.value.trim() || "",
+                        icon: el.value.trim(),
                         name: nameEl.value.trim() || "Highlight"
                     });
                 }
@@ -451,7 +471,7 @@
             const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
 
             uploadBtn.innerText = "UPLOADING TO GITHUB... ⏳";
-            uploadBtn.style.backgroundColor = "#2563eb"; // Blue processing state
+            uploadBtn.style.backgroundColor = "#2563eb"; 
             uploadBtn.style.borderColor = "#2563eb";
 
             try {
@@ -462,7 +482,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: "Updated profile, highlights and templates via Control Room",
+                        message: "Updated profile, stats and templates via Control Room",
                         content: encodedContent,
                         sha: fileSha
                     })
@@ -473,7 +493,7 @@
                     fileSha = data.content.sha;
                     
                     uploadBtn.innerText = "CODE GITHUB PER UPLOAD KAR DIYA HAI ✅";
-                    uploadBtn.style.backgroundColor = "#22c55e"; // Green for success
+                    uploadBtn.style.backgroundColor = "#22c55e"; 
                     uploadBtn.style.borderColor = "#22c55e";
                     uploadBtn.style.color = "#000";
                     uploadBtn.style.fontWeight = "bold";
