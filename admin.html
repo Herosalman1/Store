@@ -67,7 +67,7 @@
                 <div class="h-9 w-9 rounded-xl bg-brand/20 text-brand flex items-center justify-center font-bold text-sm">🛍️</div>
                 <div>
                     <h2 class="text-sm font-bold text-white">Store Admin Panel</h2>
-                    <p class="text-[10px] text-zinc-400">Manage products & profile globally</p>
+                    <p class="text-[10px] text-zinc-400">Manage products, profile & highlights globally</p>
                 </div>
             </div>
             <div class="flex gap-2">
@@ -104,9 +104,33 @@
             </div>
         </div>
 
-        <!-- SECTION 2: CODE UPLOAD & EDIT SYSTEM -->
+        <!-- SECTION 2: HIGHLIGHTS CUSTOMIZATION -->
         <div class="glass-box p-6 rounded-3xl space-y-4">
-            <h3 id="formTitle" class="text-sm font-bold uppercase tracking-wider text-rose-500">📤 2. Code Upload & Edit System</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-amber-400">✨ 2. Highlights Customization</h3>
+            <p class="text-xs text-zinc-400">Apne store ke highlights ke icons aur names yahan se change karein:</p>
+            
+            <div id="highlightsContainer" class="space-y-3">
+                <!-- Highlight 1 -->
+                <div class="flex gap-2 items-center bg-black/40 p-3 rounded-2xl border border-white/5">
+                    <input type="text" id="hIcon0" placeholder="Emoji (e.g. 🚀)" class="w-20 px-3 py-2 rounded-xl input-dark text-xs text-center">
+                    <input type="text" id="hName0" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-dark text-xs">
+                </div>
+                <!-- Highlight 2 -->
+                <div class="flex gap-2 items-center bg-black/40 p-3 rounded-2xl border border-white/5">
+                    <input type="text" id="hIcon1" placeholder="Emoji (e.g. ❤️)" class="w-20 px-3 py-2 rounded-xl input-dark text-xs text-center">
+                    <input type="text" id="hName1" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-dark text-xs">
+                </div>
+                <!-- Highlight 3 -->
+                <div class="flex gap-2 items-center bg-black/40 p-3 rounded-2xl border border-white/5">
+                    <input type="text" id="hIcon2" placeholder="Emoji (e.g. 💡)" class="w-20 px-3 py-2 rounded-xl input-dark text-xs text-center">
+                    <input type="text" id="hName2" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-dark text-xs">
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: CODE UPLOAD & EDIT SYSTEM -->
+        <div class="glass-box p-6 rounded-3xl space-y-4">
+            <h3 id="formTitle" class="text-sm font-bold uppercase tracking-wider text-rose-500">📤 3. Code Upload & Edit System</h3>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -141,10 +165,10 @@
             </div>
         </div>
 
-        <!-- SECTION 3: GLOBAL UPLOAD TO GITHUB -->
+        <!-- SECTION 4: GLOBAL UPLOAD TO GITHUB -->
         <div class="glass-box p-6 rounded-3xl text-center space-y-3">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-400">🚀 3. Publish Changes</h3>
-            <p class="text-xs text-zinc-400">Save profile customization and template updates globally to your store.</p>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-400">🚀 4. Publish Changes</h3>
+            <p class="text-xs text-zinc-400">Save profile, highlights and template updates globally to your store.</p>
             <button onclick="saveToGitHub()" class="w-full py-4 bg-gradient-to-r from-emerald-600 to-teal-700 hover:opacity-90 text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition-all shadow-xl shadow-emerald-600/20">
                 Save & Upload Everything to GitHub ✨
             </button>
@@ -166,9 +190,8 @@
     </div>
 
     <script>
-        // Yahan bhi naye repository ka naam set kiya gaya hai
         const myRepo = "Herosalman1/Store"; 
-        let storeData = { profile: {}, templates: [] };
+        let storeData = { profile: {}, highlights: [], templates: [] };
         let fileSha = "";
         let editIndex = null; 
 
@@ -199,14 +222,32 @@
                         insta: "https://www.instagram.com/herosalman1_929/",
                         telegram: "Superfast_01"
                     };
+                    storeData.highlights = [
+                        { icon: "🚀", name: "Projects" },
+                        { icon: "❤️", name: "Rakhi Spl" },
+                        { icon: "💡", name: "Demos" }
+                    ];
                 } else {
                     storeData = parsed;
+                    if(!storeData.highlights) {
+                        storeData.highlights = [
+                            { icon: "🚀", name: "Projects" },
+                            { icon: "❤️", name: "Rakhi Spl" },
+                            { icon: "💡", name: "Demos" }
+                        ];
+                    }
                 }
                 
                 document.getElementById('pDp').value = storeData.profile.dp || '';
                 document.getElementById('pBio').value = storeData.profile.bio || '';
                 document.getElementById('pInsta').value = storeData.profile.insta || '';
                 document.getElementById('pTele').value = storeData.profile.telegram || '';
+
+                // Load highlights inputs
+                storeData.highlights.forEach((h, idx) => {
+                    if(document.getElementById(`hIcon${idx}`)) document.getElementById(`hIcon${idx}`).value = h.icon || '';
+                    if(document.getElementById(`hName${idx}`)) document.getElementById(`hName${idx}`).value = h.name || '';
+                });
 
                 localStorage.setItem('gitToken', token);
                 document.getElementById('loginSection').style.display = 'none';
@@ -267,7 +308,7 @@
             } else {
                 storeData.templates[editIndex] = itemObj;
                 editIndex = null;
-                document.getElementById('formTitle').innerText = "📤 2. Code Upload & Edit System";
+                document.getElementById('formTitle').innerText = "📤 3. Code Upload & Edit System";
                 document.getElementById('actionBtn').innerText = "+ Add Code to List";
                 document.getElementById('actionBtn').className = "flex-1 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs rounded-xl transition-all border border-zinc-700";
             }
@@ -315,6 +356,13 @@
                 telegram: document.getElementById('pTele').value.trim()
             };
 
+            // Gather highlights
+            storeData.highlights = [
+                { icon: document.getElementById('hIcon0').value.trim() || "🚀", name: document.getElementById('hName0').value.trim() || "Projects" },
+                { icon: document.getElementById('hIcon1').value.trim() || "❤️", name: document.getElementById('hName1').value.trim() || "Rakhi Spl" },
+                { icon: document.getElementById('hIcon2').value.trim() || "💡", name: document.getElementById('hName2').value.trim() || "Demos" }
+            ];
+
             const updatedJson = JSON.stringify(storeData, null, 2);
             const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
 
@@ -329,7 +377,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: "Updated profile and templates via Admin Panel",
+                        message: "Updated profile, highlights and templates via Admin Panel",
                         content: encodedContent,
                         sha: fileSha
                     })
@@ -338,7 +386,7 @@
                 if(response.ok) {
                     const data = await response.json();
                     fileSha = data.content.sha;
-                    alert("✅ Successfully updated profile & codes globally on GitHub! 🎉");
+                    alert("✅ Successfully updated store globally on GitHub! 🎉");
                     uploadBtn.innerText = "🚀 Save & Upload Everything to GitHub ✨";
                 } else {
                     throw new Error("Save error");
