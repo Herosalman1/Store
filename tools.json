@@ -2,11 +2,21 @@
   "profile": {
     "dp": "https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4",
     "bio": "SALMAN he/him\nAI creator & Web Developer\nFocus अगर करना ही है !! तो सिर्फ अपने Work पर Focus कीजिए !!",
-    "insta": "https://www.instagram.com/herosalman1_929/",
-    "telegram": "Superfast_01",
     "posts": "45",
     "followers": "9,779",
-    "following": "276"
+    "following": "276",
+    "socials": [
+      {
+        "name": "Instagram",
+        "url": "https://www.instagram.com/herosalman1_929/",
+        "color": "#f87171"
+      },
+      {
+        "name": "Telegram",
+        "url": "https://t.me/Superfast_01",
+        "color": "#38bdf8"
+      }
+    ]
   },
   "highlights": [
     {
