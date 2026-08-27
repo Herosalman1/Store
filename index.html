@@ -43,10 +43,10 @@
 <body class="min-h-screen flex flex-col antialiased selection:bg-brand selection:text-white" oncontextmenu="return false;">
 
     <!-- Top Navigation Bar -->
-    <nav class="sticky top-0 z-50 border-b border-zinc-900 bg-black/80 backdrop-blur-md">
+    <nav class="sticky top-0 z-50 border-b border-zinc-950 bg-black/80 backdrop-blur-md">
         <div class="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
             <span class="font-bold text-base tracking-wider">herosalman1_929</span>
-            <a href="admin.html" class="text-[10px] text-zinc-500 hover:text-white transition-colors">Admin Login ⚙️</a>
+            <a href="admin.html" class="text-zinc-600 hover:text-white transition-colors text-sm" title="Admin Login">⚙️</a>
         </div>
     </nav>
 
@@ -107,11 +107,11 @@
 
         <!-- Section Title -->
         <div class="py-6 flex items-center justify-between">
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">📁 Chek-Out Premium Codes & Templates</h2>
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">📁 Premium Codes & Templates (Reels Grid)</h2>
             <span class="text-xs text-zinc-500">Tap to View Demo / Buy</span>
         </div>
 
-        <!-- Grid Gallery (Fetched from GitHub templates.json) -->
+        <!-- Grid Gallery (Fetched from GitHub tools.json) -->
         <div id="storeGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-12">
             <p class="text-xs text-zinc-500 col-span-full text-center py-8">Loading templates from GitHub... ⏳</p>
         </div>
@@ -123,7 +123,7 @@
         <p>© 2026 herosalman1_929. All rights reserved.</p>
     </footer>
 
-    <!-- Script to fetch global templates from GitHub -->
+    <!-- Script to fetch store items from GitHub -->
     <script>
         document.addEventListener('keydown', function (e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.key === 'C')) {
@@ -135,10 +135,9 @@
 
         async function fetchGitHubTemplates() {
             let grid = document.getElementById('storeGrid');
-            // Apna GitHub Username aur Repository yahan set kar dein (Jaise 'herosalman' aur 'store')
-            const username = 'herosalman'; 
-            const repo = 'store';
-            const jsonUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/templates.json`;
+            const username = 'Herosalman1'; 
+            const repo = 'all-tools-dashboard';
+            const jsonUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/tools.json`;
 
             try {
                 let response = await fetch(jsonUrl);
@@ -147,23 +146,29 @@
                     grid.innerHTML = '';
                     
                     list.forEach(item => {
+                        // Support for both old format (name, url) and new format (name, price, img, demo, desc)
+                        let price = item.price || '249';
+                        let img = item.img || 'https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=500&auto=format&fit=crop';
+                        let demo = item.demo || item.url || '#';
+                        let desc = item.desc || 'Premium animated web template with full source code.';
+
                         grid.innerHTML += `
                             <div class="group relative rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 flex flex-col justify-between hover:border-rose-600 transition-all shadow-xl">
                                 <div>
                                     <div class="relative aspect-[4/3] bg-zinc-900 overflow-hidden">
-                                        <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90">
-                                        <span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-semibold text-rose-400 border border-rose-500/30">₹${item.price}</span>
+                                        <img src="${img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90">
+                                        <span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-semibold text-rose-400 border border-rose-500/30">₹${price}</span>
                                     </div>
                                     <div class="p-4">
                                         <h3 class="font-semibold text-white text-sm mb-1">${item.name}</h3>
-                                        <p class="text-xs text-zinc-400 line-clamp-2 mb-3">${item.desc}</p>
+                                        <p class="text-xs text-zinc-400 line-clamp-2 mb-3">${desc}</p>
                                     </div>
                                 </div>
                                 <div class="p-4 pt-0 flex gap-2">
-                                    <a href="${item.demo}" target="_blank" class="flex-1 py-2 px-3 rounded-lg border border-zinc-700 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
+                                    <a href="${demo}" target="_blank" class="flex-1 py-2 px-3 rounded-lg border border-zinc-700 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
                                         👁️ Live Demo
                                     </a>
-                                    <button onclick="buyCode('${item.name}', '${item.price}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
+                                    <button onclick="buyCode('${item.name}', '${price}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
                                         Buy Code ⚡
                                     </button>
                                 </div>
@@ -171,10 +176,10 @@
                         `;
                     });
                 } else {
-                    grid.innerHTML = '<p class="text-xs text-zinc-500 col-span-full text-center py-8">No templates found yet. Use admin panel to add templates.</p>';
+                    grid.innerHTML = '<p class="text-xs text-zinc-500 col-span-full text-center py-8">No templates found. Add templates via Admin Dashboard.</p>';
                 }
             } catch (error) {
-                grid.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-8">Error loading templates from GitHub repository.</p>';
+                grid.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-8">Error loading templates from repository.</p>';
             }
         }
 
