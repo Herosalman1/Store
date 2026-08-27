@@ -86,7 +86,7 @@
 
         <!-- Highlights Bar (Dynamic) -->
         <div id="highlightsBar" class="flex gap-4 py-6 overflow-x-auto scrollbar-hide border-b border-zinc-900">
-            <!-- Loaded dynamically from tools.json -->
+            <!-- Loaded dynamically -->
         </div>
 
         <!-- Section Title -->
@@ -151,7 +151,7 @@
                     let teleUser = profile.telegram || 'Superfast_01';
                     document.getElementById('teleLink').href = `https://t.me/${teleUser}`;
 
-                    // Render Highlights
+                    // Render Highlights dynamically
                     highlightsBar.innerHTML = '';
                     highlights.forEach((h, idx) => {
                         let borderClass = idx === 0 ? 'border-rose-500' : 'border-zinc-700';
