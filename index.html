@@ -84,7 +84,7 @@
             </div>
         </header>
 
-        <!-- Highlights Bar (Dynamic) -->
+        <!-- Highlights Bar (Dynamic Photo Render) -->
         <div id="highlightsBar" class="flex gap-4 py-6 overflow-x-auto scrollbar-hide border-b border-zinc-900">
             <!-- Loaded dynamically -->
         </div>
@@ -132,9 +132,9 @@
                     let templates = [];
                     let profile = {};
                     let highlights = [
-                        { icon: "🚀", name: "Projects" },
-                        { icon: "❤️", name: "Rakhi Spl" },
-                        { icon: "💡", name: "Demos" }
+                        { icon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=200", name: "Projects" },
+                        { icon: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=200", name: "Rakhi Spl" },
+                        { icon: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=200", name: "Demos" }
                     ];
 
                     if(Array.isArray(data)) {
@@ -151,13 +151,17 @@
                     let teleUser = profile.telegram || 'Superfast_01';
                     document.getElementById('teleLink').href = `https://t.me/${teleUser}`;
 
-                    // Render Highlights dynamically
+                    // Render Highlights with Image support
                     highlightsBar.innerHTML = '';
                     highlights.forEach((h, idx) => {
                         let borderClass = idx === 0 ? 'border-rose-500' : 'border-zinc-700';
+                        let iconContent = h.icon && h.icon.startsWith('http') 
+                            ? `<img src="${h.icon}" class="w-full h-full object-cover rounded-full">` 
+                            : `<span>${h.icon || '✨'}</span>`;
+
                         highlightsBar.innerHTML += `
                             <div class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0">
-                                <div class="w-16 h-16 rounded-full p-[2px] border ${borderClass} bg-zinc-900 flex items-center justify-center text-xl">${h.icon || '✨'}</div>
+                                <div class="w-16 h-16 rounded-full p-[2px] border ${borderClass} bg-zinc-900 flex items-center justify-center overflow-hidden text-xl">${iconContent}</div>
                                 <span class="text-xs text-zinc-400">${h.name || 'Highlight'}</span>
                             </div>
                         `;
