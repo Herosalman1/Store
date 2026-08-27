@@ -77,13 +77,9 @@
                     <a href="https://beacons.ai/herosalman1" target="_blank" class="text-sky-400 hover:underline block pt-0.5">beacons.ai/herosalman1</a>
                 </div>
 
-                <div class="flex items-center justify-start gap-2" style="margin-top: 4px;">
-                    <a id="instaLink" href="https://www.instagram.com/herosalman1_929/" target="_blank" class="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors bg-zinc-900 px-4 py-1.5 rounded-full border border-zinc-800">
-                        Instagram
-                    </a>
-                    <a id="teleLink" href="https://t.me/Superfast_01" target="_blank" class="flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 transition-colors bg-zinc-900 px-4 py-1.5 rounded-full border border-zinc-800">
-                        Telegram
-                    </a>
+                <!-- DYNAMIC SOCIAL BUTTONS CONTAINER -->
+                <div id="socialButtonsBar" class="flex items-center justify-start gap-2" style="margin-top: 6px;">
+                    <!-- Dynamically injected buttons with custom color, name and url -->
                 </div>
             </div>
         </header>
@@ -132,6 +128,7 @@
         async function fetchStoreData() {
             let grid = document.getElementById('storeGrid');
             let highlightsBar = document.getElementById('highlightsBar');
+            let socialsBar = document.getElementById('socialButtonsBar');
             const jsonUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/tools.json`;
 
             try {
@@ -140,17 +137,26 @@
                     let data = await response.json();
                     let templates = data.templates || [];
                     let profile = data.profile || {};
-                    let highlights = data.highlights || []; // Ab ye seedha JSON (Admin Panel) se highlights uthayega
+                    let highlights = data.highlights || [];
+                    let socials = profile.socials || [];
 
                     if(profile.dp) document.getElementById('storeDp').src = profile.dp;
-                    if(profile.insta) document.getElementById('instaLink').href = profile.insta;
                     
-                    document.getElementById('uiPosts').innerText = profile.posts || '0';
-                    document.getElementById('uiFollowers').innerText = profile.followers || '0';
-                    document.getElementById('uiFollowing').innerText = profile.following || '0';
+                    document.getElementById('uiPosts').innerText = profile.posts || '45';
+                    document.getElementById('uiFollowers').innerText = profile.followers || '9,779';
+                    document.getElementById('uiFollowing').innerText = profile.following || '276';
+
+                    // Render Dynamic Social Buttons with custom font color
+                    socialsBar.innerHTML = '';
+                    socials.forEach(s => {
+                        let btnColor = s.color || '#ffffff';
+                        socialsBar.innerHTML += `
+                            <a href="${s.url || '#'}" target="_blank" style="color: ${btnColor};" class="text-xs transition-opacity hover:opacity-80 bg-zinc-900 px-4 py-1.5 rounded-full border border-zinc-800 font-medium">
+                                ${s.name || 'Link'}
+                            </a>`;
+                    });
 
                     let teleUser = profile.telegram || 'Superfast_01';
-                    document.getElementById('teleLink').href = `https://t.me/${teleUser}`;
 
                     highlightsBar.innerHTML = '';
                     highlights.forEach((h) => {
