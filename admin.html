@@ -26,7 +26,6 @@
         .input-pro { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); color: white; transition: all 0.3s ease; }
         .input-pro:focus { border-color: #f43f5e; box-shadow: 0 0 15px rgba(244, 63, 94, 0.25); outline: none; }
         
-        /* Uniform Button Style */
         .btn-uniform {
             background-color: rgba(31, 41, 55, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -93,7 +92,7 @@
             </div>
         </header>
 
-        <!-- 12-COLUMN RESPONSIVE GRID LAYOUT (Matched Heights) -->
+        <!-- 12-COLUMN RESPONSIVE GRID LAYOUT -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
             <!-- LEFT COLUMN (Span 5 cols): Profile & Highlights -->
@@ -130,8 +129,8 @@
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col">
                     <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
                         <div class="flex items-center gap-2">
-                            <span class="text-zinc-300">✨</span>
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-white">Highlights Manager</h3>
+                            <span class="text-zinc-300">🖼️</span>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-white">Highlights Photo & Manager</h3>
                         </div>
                         <button onclick="addHighlightInput('', '')" class="px-3.5 py-2 btn-uniform text-xs rounded-xl flex items-center gap-1">
                             <span>+ Add</span>
@@ -145,7 +144,7 @@
 
             </div>
 
-            <!-- RIGHT COLUMN (Span 7 cols): Code Upload & Edit System + Publish (Symmetric Height) -->
+            <!-- RIGHT COLUMN (Span 7 cols): Code Upload & Edit System + Publish -->
             <div class="lg:col-span-7 flex flex-col gap-6 justify-between">
                 
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col justify-between">
@@ -197,7 +196,7 @@
                         <span class="text-zinc-300">🚀</span>
                         <h3 class="text-sm font-bold uppercase tracking-wider text-white">Publish Everything</h3>
                     </div>
-                    <p class="text-xs text-zinc-400">Save profile customization, highlights and template updates globally to your live store.</p>
+                    <p class="text-xs text-zinc-400">Save profile customization, highlights photos and template updates globally to your live store.</p>
                     <button onclick="saveToGitHub()" class="w-full py-4 btn-uniform text-xs uppercase tracking-wider rounded-2xl shadow-xl">
                         Save & Upload Everything to GitHub ✨
                     </button>
@@ -256,17 +255,17 @@
                         telegram: "Superfast_01"
                     };
                     storeData.highlights = [
-                        { icon: "🚀", name: "Projects" },
-                        { icon: "❤️", name: "Rakhi Spl" },
-                        { icon: "💡", name: "Demos" }
+                        { icon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=200", name: "Projects" },
+                        { icon: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=200", name: "Rakhi Spl" },
+                        { icon: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=200", name: "Demos" }
                     ];
                 } else {
                     storeData = parsed;
                     if(!storeData.highlights) {
                         storeData.highlights = [
-                            { icon: "🚀", name: "Projects" },
-                            { icon: "❤️", name: "Rakhi Spl" },
-                            { icon: "💡", name: "Demos" }
+                            { icon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=200", name: "Projects" },
+                            { icon: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=200", name: "Rakhi Spl" },
+                            { icon: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=200", name: "Demos" }
                         ];
                     }
                 }
@@ -293,7 +292,7 @@
             storeData.highlights.forEach((h, idx) => {
                 container.innerHTML += `
                     <div class="flex gap-2 items-center bg-black/40 p-2.5 rounded-2xl border border-white/5" id="hRow_${idx}">
-                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Emoji" class="w-16 px-2 py-2 rounded-xl input-pro text-xs text-center text-white">
+                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Photo Image URL" class="w-32 px-2 py-2 rounded-xl input-pro text-xs text-center text-white" title="Paste Photo URL here">
                         <input type="text" id="hName_${idx}" value="${h.name || ''}" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-pro text-xs text-white">
                         <button onclick="removeHighlight(${idx})" class="px-3 py-2 btn-uniform text-xs rounded-xl text-rose-400">🗑️</button>
                     </div>
@@ -415,7 +414,7 @@
                 let nameEl = document.getElementById(`hName_${idx}`);
                 if(iconEl && nameEl) {
                     storeData.highlights.push({
-                        icon: iconEl.value.trim() || "✨",
+                        icon: iconEl.value.trim() || "",
                         name: nameEl.value.trim() || "Highlight"
                     });
                 }
@@ -435,7 +434,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: "Updated profile, dynamic highlights and templates via Admin Panel",
+                        message: "Updated profile, dynamic photo highlights and templates via Admin Panel",
                         content: encodedContent,
                         sha: fileSha
                     })
