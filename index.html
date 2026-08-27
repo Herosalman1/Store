@@ -65,9 +65,9 @@
                 </div>
 
                 <div class="flex justify-start gap-6 text-sm text-zinc-300" style="margin-bottom: -2px;">
-                    <div><span class="font-semibold text-white">45</span> posts</div>
-                    <div><span class="font-semibold text-white">9,779</span> followers</div>
-                    <div><span class="font-semibold text-white">276</span> following</div>
+                    <div><span id="uiPosts" class="font-semibold text-white">45</span> posts</div>
+                    <div><span id="uiFollowers" class="font-semibold text-white">9,779</span> followers</div>
+                    <div><span id="uiFollowing" class="font-semibold text-white">276</span> following</div>
                 </div>
 
                 <div id="storeBio" class="text-sm text-zinc-300 whitespace-pre-line leading-snug" style="margin-bottom: -6px;">
@@ -140,18 +140,15 @@
                     let data = await response.json();
                     let templates = data.templates || [];
                     let profile = data.profile || {};
-                    let highlights = [
-                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835713/663b59ec-9212-424a-a5b2-689adf955b4e.png", name: "MR." },
-                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835362/7.jpg", name: "S" },
-                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835358/6.jpg", name: "A" },
-                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835350/4.jpg", name: "L" },
-                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835347/3.jpg", name: "M" },
-                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835264/1.jpg", name: "A" },
-                        { icon: "https://res.cloudinary.com/ysl029w9/image/upload/v1787835342/2.jpg", name: "N" }
-                    ];
+                    let highlights = data.highlights || []; // Ab ye seedha JSON (Admin Panel) se highlights uthayega
 
                     if(profile.dp) document.getElementById('storeDp').src = profile.dp;
                     if(profile.insta) document.getElementById('instaLink').href = profile.insta;
+                    
+                    document.getElementById('uiPosts').innerText = profile.posts || '0';
+                    document.getElementById('uiFollowers').innerText = profile.followers || '0';
+                    document.getElementById('uiFollowing').innerText = profile.following || '0';
+
                     let teleUser = profile.telegram || 'Superfast_01';
                     document.getElementById('teleLink').href = `https://t.me/${teleUser}`;
 
