@@ -2,7 +2,6 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <!-- MOBILE KO STRICTLY 1040px BROWSER BANANE WALI SETTING (ZOOM OFF) -->
     <meta name="viewport" content="width=1040, user-scalable=no">
     <title>Salman | Developer & Creator Templates Store</title>
     
@@ -45,7 +44,6 @@
 
     <main class="mx-auto w-full max-w-4xl px-4 py-5 flex-1 flex flex-col">
         
-        <!-- YAHAN SE MOBILE LAYOUT HATA DIYA, STRICTLY PC LAYOUT LAGA HAI -->
         <header class="flex flex-row items-start gap-10 pb-5 border-b border-zinc-900">
             <div class="relative">
                 <div class="w-32 h-32 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600">
@@ -97,7 +95,6 @@
             <span class="text-xs text-zinc-500">Tap to View Demo / Buy</span>
         </div>
 
-        <!-- YAHAN STRICTLY 3 COLUMNS LAGA DIYA HAI -->
         <div id="storeGrid" class="grid grid-cols-3 gap-4 pb-12">
             <p class="text-sm text-zinc-600 col-span-full text-center py-12">Loading store data... ⏳</p>
         </div>
@@ -159,15 +156,14 @@
                     document.getElementById('teleLink').href = `https://t.me/${teleUser}`;
 
                     highlightsBar.innerHTML = '';
-                    highlights.forEach((h, idx) => {
-                        let borderClass = idx === 0 ? 'border-rose-500' : 'border-zinc-700';
+                    highlights.forEach((h) => {
                         let iconContent = h.icon && h.icon.startsWith('http') 
                             ? `<img src="${h.icon}" class="w-full h-full object-cover rounded-full">` 
                             : `<span>${h.icon || '✨'}</span>`;
 
                         highlightsBar.innerHTML += `
                             <div class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0">
-                                <div class="w-16 h-16 rounded-full p-[2px] border ${borderClass} bg-zinc-900 flex items-center justify-center overflow-hidden text-xl">${iconContent}</div>
+                                <div class="w-16 h-16 rounded-full p-[2px] border border-zinc-700 bg-zinc-900 flex items-center justify-center overflow-hidden text-xl">${iconContent}</div>
                                 <span class="text-xs text-zinc-400">${h.name || 'Highlight'}</span>
                             </div>
                         `;
