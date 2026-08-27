@@ -1,44 +1,278 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Salman Store</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dashboard</title>
+    <!-- Yeh line mobile me auto-desktop mode ke liye hai -->
+    <meta name="viewport" content="width=1024">
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #0d1117; color: #c9d1d9; padding: 20px; max-width: 600px; margin: auto; display: flex; flex-direction: column; min-height: 100vh; justify-content: center;}
+        .box { background: #161b22; padding: 30px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #30363d; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        input { width: 100%; padding: 14px; margin: 15px 0; background: #010409; color: white; border: 1px solid #30363d; border-radius: 8px; text-align: center; font-size: 16px;}
+        input:focus { border-color: #00ff88; outline: none; }
+        button { padding: 14px 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 15px; transition: 0.3s;}
+        
+        .btn-green { background: #238636; color: white; }
+        .btn-green:hover { background: #2ea043; }
+        .btn-blue { background: #1f6feb; color: white; }
+        .btn-blue:hover { background: #388bfd; }
+        .btn-orange { background: #d29922; color: white; }
+        .btn-orange:hover { background: #e3b341; }
+        .btn-red { background: #da3633; color: white; padding: 6px 12px; width: auto; font-size: 12px;}
+        .btn-red:hover { background: #f85149; }
+        .btn-yellow { background: #9e6a03; color: white; padding: 6px 12px; width: auto; font-size: 12px; margin-right: 5px;}
+        .btn-yellow:hover { background: #bb8009; }
+        
+        /* Drag & Drop Styles */
+        .list-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 12px; background: #010409; border-radius: 8px; border: 1px solid #30363d; text-align: left; cursor: grab; transition: background 0.2s ease;}
+        .list-item:active { cursor: grabbing; }
+        .list-item.dragging { opacity: 0.4; background: #21262d; border: 1px dashed #8b949e; }
+        .list-item.drag-over { border-top: 3px solid #00ea77; transform: scale(1.01); }
+        .drag-icon { margin-right: 12px; color: #8b949e; font-size: 18px; cursor: grab; display: flex; align-items: center;}
+        
+        .action-btns { display: flex; align-items: center; flex-shrink: 0; }
+        h2 { color: #00ff88; margin-top: 0;}
+
+        /* Modal (Pop-up) List Ke Liye */
+        .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { background: #161b22; padding: 20px; border-radius: 12px; border: 1px solid #30363d; width: 90%; max-width: 600px; max-height: 80vh; display: flex; flex-direction: column; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 15px; }
+        .modal-header h3 { margin: 0; color: #fff; }
+        .close-btn { color: #da3633; font-size: 28px; font-weight: bold; cursor: pointer; background: none; border: none; width: auto; padding: 0; }
+        .close-btn:hover { color: #f85149; }
+        
+        #projectList { overflow-y: auto; padding-right: 5px; flex-grow: 1; }
+        #projectList::-webkit-scrollbar { width: 8px; }
+        #projectList::-webkit-scrollbar-track { background: #010409; border-radius: 4px; }
+        #projectList::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-black text-white min-h-screen flex items-center justify-center p-4">
-    <div class="max-w-md w-full bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-2xl space-y-6">
-        <div class="text-center space-y-2">
-            <h1 class="text-2xl font-bold tracking-tight">🔐 GitHub Admin Portal</h1>
-            <p class="text-xs text-zinc-400">Enter your GitHub Personal Access Token to manage store globally.</p>
-        </div>
+<body>
 
-        <div class="space-y-4">
-            <div>
-                <label class="block text-xs font-medium text-zinc-400 mb-1">GitHub Personal Access Token (ghp_...)</label>
-                <input type="password" id="githubToken" placeholder="Paste your GitHub token..." class="w-full px-4 py-3 rounded-xl bg-black border border-zinc-800 text-white text-sm focus:outline-none focus:border-rose-500">
+    <div class="box" id="loginSection">
+        <h2>🔒 Control Room</h2>
+        <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;">Secure Access Portal</p>
+        
+        <input type="password" id="gitToken" placeholder="Apni Secret Key Yahan Daalo">
+        <button class="btn-green" onclick="loadData()">LOGIN & LOAD DATA</button>
+    </div>
+
+    <div class="box" id="editorSection" style="display:none; text-align: left; margin-top: 0;">
+        <h3 id="formTitle" style="color:#00ea77; text-align: center; margin-top: 0;">Add New Site 🔥</h3>
+        <input type="text" id="pName" placeholder="Tool Ka Naam (E.g. Prank Tool)">
+        <input type="text" id="pLink" placeholder="Tool Ka Link (Paste here)">
+        
+        <button id="actionBtn" class="btn-green" style="background:#00ea77; color:black;" onclick="processTool()">ADD TO LIST</button>
+        
+        <button class="btn-orange" style="margin-top:25px;" onclick="openModal()">📋 VIEW SAVED TOOLS LIST</button>
+        <button class="btn-blue" style="margin-top:15px;" onclick="saveToGitHub()">🚀 UPLOAD TO GITHUB</button>
+    </div>
+
+    <!-- List ka Pop-up Box -->
+    <div id="listModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 SABHI TOOLS KI LIST</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
-            <button onclick="saveToken()" class="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold rounded-xl transition-all shadow-lg">
-                Connect & Login 🚀
-            </button>
-            <p id="errorMsg" class="text-xs text-rose-500 text-center hidden">Please enter a valid GitHub Token!</p>
-        </div>
-
-        <div class="text-center pt-2">
-            <a href="index.html" class="text-xs text-zinc-500 hover:text-white transition-colors">← Back to Store</a>
+            <p style="color:#8b949e; font-size:12px; margin-top:0;">💡 Tip: List ko order karne ke liye mouse se hold karke upar-neeche drag karein.</p>
+            <div id="projectList"></div>
         </div>
     </div>
 
     <script>
-        function saveToken() {
-            const token = document.getElementById('githubToken').value.trim();
-            if (token.startsWith('ghp_') || token.length > 20) {
-                localStorage.setItem('githubToken', token);
-                localStorage.setItem('isLoggedIn', 'true');
-                window.location.href = 'tools.html';
-            } else {
-                document.getElementById('errorMsg').classList.remove('hidden');
+        const myRepo = "Herosalman1/all-tools-dashboard"; 
+        
+        let toolsArray = [];
+        let fileSha = "";
+        let editIndex = null; 
+        let dragStartIndex = null; 
+
+        async function loadData() {
+            const token = document.getElementById('gitToken').value;
+            if(!token) return alert("Bhai, Secret Key daalna zaroori hai!");
+
+            const loginBtn = document.querySelector('#loginSection .btn-green');
+            loginBtn.innerText = "LOADING DATA...";
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                
+                if(!response.ok) throw new Error("Key galat hai!");
+                
+                const data = await response.json();
+                fileSha = data.sha;
+                const decodedData = decodeURIComponent(escape(atob(data.content)));
+                toolsArray = JSON.parse(decodedData);
+                
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('editorSection').style.display = 'block';
+                renderList();
+            } catch (error) {
+                alert("Error! Secret Key sahi se copy karke daalo.");
+                loginBtn.innerText = "LOGIN & LOAD DATA";
             }
+        }
+
+        function renderList() {
+            const list = document.getElementById('projectList');
+            list.innerHTML = "";
+            toolsArray.forEach((tool, index) => {
+                list.innerHTML += `
+                    <div class="list-item" draggable="true" data-index="${index}">
+                        <div style="display: flex; align-items: center; flex: 1; padding-right: 10px;">
+                            <span class="drag-icon">☰</span>
+                            <span style="font-size: 14px; font-weight: 500; word-break: break-word; line-height: 1.4;">
+                                ${index + 1}. ${tool.name}
+                            </span>
+                        </div>
+                        <div class="action-btns">
+                            <button class="btn-yellow" onclick="editTool(${index})">EDIT</button>
+                            <button class="btn-red" onclick="deleteTool(${index})">DELETE</button>
+                        </div>
+                    </div>`;
+            });
+            addDragAndDropListeners();
+        }
+
+        function addDragAndDropListeners() {
+            const draggables = document.querySelectorAll('.list-item');
+            
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', function(e) {
+                    dragStartIndex = +this.getAttribute('data-index');
+                    this.classList.add('dragging');
+                });
+
+                draggable.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+
+                draggable.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+
+                draggable.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+
+                draggable.addEventListener('drop', function() {
+                    this.classList.remove('drag-over');
+                    const dragEndIndex = +this.getAttribute('data-index');
+                    swapItems(dragStartIndex, dragEndIndex);
+                });
+
+                draggable.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                });
+            });
+        }
+
+        function swapItems(fromIndex, toIndex) {
+            const itemToMove = toolsArray.splice(fromIndex, 1)[0];
+            toolsArray.splice(toIndex, 0, itemToMove);
+            renderList(); 
+        }
+
+        function processTool() {
+            const name = document.getElementById('pName').value.trim();
+            const link = document.getElementById('pLink').value.trim();
+            
+            if(!name || !link) {
+                return alert("Bhai, Tool ka Naam aur Link dono daalna zaroori hai!");
+            }
+
+            if(editIndex === null) {
+                toolsArray.push({name, url: link});
+            } else {
+                toolsArray[editIndex] = {name, url: link};
+                editIndex = null;
+                document.getElementById('formTitle').innerText = "➕ ADD NAYA TOOL";
+                document.getElementById('actionBtn').innerText = "ADD TO LIST";
+                document.getElementById('actionBtn').style.background = "#00ea77";
+                document.getElementById('actionBtn').style.color = "black";
+            }
+
+            document.getElementById('pName').value = "";
+            document.getElementById('pLink').value = "";
+            renderList();
+            closeModal(); 
+        }
+
+        function editTool(index) {
+            editIndex = index;
+            document.getElementById('pName').value = toolsArray[index].name;
+            document.getElementById('pLink').value = toolsArray[index].url;
+            
+            document.getElementById('formTitle').innerText = "✏️ EDIT TOOL";
+            document.getElementById('actionBtn').innerText = "UPDATE TOOL";
+            document.getElementById('actionBtn').style.background = "#d29922";
+            document.getElementById('actionBtn').style.color = "white";
+            
+            closeModal(); 
+        }
+
+        function deleteTool(index) {
+            if(confirm("Pakka delete karna hai ye tool?")) {
+                toolsArray.splice(index, 1);
+                if(editIndex === index) {
+                    editIndex = null;
+                    document.getElementById('pName').value = "";
+                    document.getElementById('pLink').value = "";
+                    document.getElementById('formTitle').innerText = "➕ ADD NAYA TOOL";
+                    document.getElementById('actionBtn').innerText = "ADD TO LIST";
+                    document.getElementById('actionBtn').style.background = "#00ea77";
+                    document.getElementById('actionBtn').style.color = "black";
+                }
+                renderList();
+            }
+        }
+
+        async function saveToGitHub() {
+            const token = document.getElementById('gitToken').value;
+            const updatedJson = JSON.stringify(toolsArray, null, 2);
+            const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
+
+            const uploadBtn = document.querySelector('.btn-blue');
+            uploadBtn.innerText = "SAVING TO GITHUB...";
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: "Updated tools via Control Room",
+                        content: encodedContent,
+                        sha: fileSha
+                    })
+                });
+
+                if(response.ok) {
+                    const data = await response.json();
+                    fileSha = data.content.sha;
+                    alert("✅ Ekdum Mstt! Changes GitHub par save ho gaye!");
+                    uploadBtn.innerText = "🚀 UPLOAD TO GITHUB";
+                } else {
+                    throw new Error("Save error");
+                }
+            } catch (error) {
+                alert("Save nahi hua! Internet ya key check karo.");
+                uploadBtn.innerText = "🚀 UPLOAD TO GITHUB";
+            }
+        }
+
+        function openModal() {
+            document.getElementById('listModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('listModal').style.display = 'none';
         }
     </script>
 </body>
