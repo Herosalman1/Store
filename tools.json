@@ -8,7 +8,36 @@
     "followers": "9,779",
     "following": "276"
   },
-  "highlights": [],
+  "highlights": [
+    {
+      "icon": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835713/663b59ec-9212-424a-a5b2-689adf955b4e.png",
+      "name": "MR."
+    },
+    {
+      "icon": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835362/7.jpg",
+      "name": "S"
+    },
+    {
+      "icon": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835358/6.jpg",
+      "name": "A"
+    },
+    {
+      "icon": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835350/4.jpg",
+      "name": "L"
+    },
+    {
+      "icon": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835347/3.jpg",
+      "name": "M"
+    },
+    {
+      "icon": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835264/1.jpg",
+      "name": "A"
+    },
+    {
+      "icon": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835342/2.jpg",
+      "name": "N"
+    }
+  ],
   "templates": [
     {
       "name": "Raksha Bandhan",
