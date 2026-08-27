@@ -42,7 +42,7 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-brand selection:text-white" oncontextmenu="return false;">
 
-    <!-- Top Navigation Bar (Clean - Only username and settings icon) -->
+    <!-- Top Navigation Bar -->
     <nav class="sticky top-0 z-50 border-b border-zinc-950 bg-black/80 backdrop-blur-md">
         <div class="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
             <span class="font-bold text-base tracking-wider">herosalman1_929</span>
@@ -111,7 +111,7 @@
             <span class="text-xs text-zinc-500">Tap to View Demo / Buy</span>
         </div>
 
-        <!-- Grid Gallery (Strictly 0 items initially until added via admin) -->
+        <!-- Grid Gallery -->
         <div id="storeGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-12">
             <p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>
         </div>
@@ -123,7 +123,6 @@
         <p>© 2026 herosalman1_929. All rights reserved.</p>
     </footer>
 
-    <!-- Script to fetch store items from GitHub cleanly -->
     <script>
         document.addEventListener('keydown', function (e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.key === 'C')) {
