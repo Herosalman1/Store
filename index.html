@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <!-- MOBILE MEIN DESKTOP SITE AUTO MODE + NO ZOOM KE LIYE YE LINE UPDATE KI HAI -->
+    <!-- MOBILE KO STRICTLY 1040px BROWSER BANANE WALI SETTING (ZOOM OFF) -->
     <meta name="viewport" content="width=1040, user-scalable=no">
     <title>Salman | Developer & Creator Templates Store</title>
     
@@ -45,15 +45,16 @@
 
     <main class="mx-auto w-full max-w-4xl px-4 py-5 flex-1 flex flex-col">
         
-        <header class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 pb-5 border-b border-zinc-900">
+        <!-- YAHAN SE MOBILE LAYOUT HATA DIYA, STRICTLY PC LAYOUT LAGA HAI -->
+        <header class="flex flex-row items-start gap-10 pb-5 border-b border-zinc-900">
             <div class="relative">
-                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600">
+                <div class="w-32 h-32 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600">
                     <img id="storeDp" src="https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4" alt="Profile" class="w-full h-full object-cover rounded-full bg-black">
                 </div>
             </div>
 
-            <div class="flex-1 text-center sm:text-left">
-                <div class="flex items-center justify-center sm:justify-start gap-2" style="margin-bottom: 3px;">
+            <div class="flex-1 text-left">
+                <div class="flex items-center justify-start gap-2" style="margin-bottom: 3px;">
                     <h1 class="text-xl font-semibold tracking-wide text-white" id="profileName">herosalman1_929</h1>
                     <svg aria-label="Verified" class="x1lliihq x1n2onr6 x1q0g3np" fill="rgb(0, 149, 246)" height="18" role="img" viewBox="0 0 40 40" width="18">
                         <title>Verified</title>
@@ -61,24 +62,24 @@
                     </svg>
                 </div>
 
-                <div class="text-xs sm:text-sm font-semibold text-white leading-tight" style="margin-bottom: 6px;">
+                <div class="text-sm font-semibold text-white leading-tight" style="margin-bottom: 6px;">
                     SALMAN <span class="font-normal text-zinc-400">he/him</span>
                 </div>
 
-                <div class="flex justify-center sm:justify-start gap-6 text-sm text-zinc-300" style="margin-bottom: -2px;">
+                <div class="flex justify-start gap-6 text-sm text-zinc-300" style="margin-bottom: -2px;">
                     <div><span class="font-semibold text-white">45</span> posts</div>
                     <div><span class="font-semibold text-white">9,779</span> followers</div>
                     <div><span class="font-semibold text-white">276</span> following</div>
                 </div>
 
-                <div id="storeBio" class="text-xs sm:text-sm text-zinc-300 whitespace-pre-line leading-snug" style="margin-bottom: -6px;">
+                <div id="storeBio" class="text-sm text-zinc-300 whitespace-pre-line leading-snug" style="margin-bottom: -6px;">
                     AI creator
                     Focus अगर करना ही है !!
                     तो सिर्फ अपने Work पर Focus कीजिए !!
                     <a href="https://beacons.ai/herosalman1" target="_blank" class="text-sky-400 hover:underline block pt-0.5">beacons.ai/herosalman1</a>
                 </div>
 
-                <div class="flex items-center justify-center sm:justify-start gap-2" style="margin-top: 4px;">
+                <div class="flex items-center justify-start gap-2" style="margin-top: 4px;">
                     <a id="instaLink" href="https://www.instagram.com/herosalman1_929/" target="_blank" class="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors bg-zinc-900 px-4 py-1.5 rounded-full border border-zinc-800">
                         Instagram
                     </a>
@@ -96,13 +97,14 @@
             <span class="text-xs text-zinc-500">Tap to View Demo / Buy</span>
         </div>
 
-        <div id="storeGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-12">
-            <p class="text-xs text-zinc-600 col-span-full text-center py-12">Loading store data... ⏳</p>
+        <!-- YAHAN STRICTLY 3 COLUMNS LAGA DIYA HAI -->
+        <div id="storeGrid" class="grid grid-cols-3 gap-4 pb-12">
+            <p class="text-sm text-zinc-600 col-span-full text-center py-12">Loading store data... ⏳</p>
         </div>
 
     </main>
 
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center p-6">
         <div class="w-full max-w-4xl h-[90vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl">
             <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800">
                 <h3 class="text-xs font-semibold text-white tracking-wider flex items-center gap-2"><span>🔴</span> Live Code Preview</h3>
@@ -172,7 +174,7 @@
                     });
 
                     if (templates.length === 0) {
-                        grid.innerHTML = '<p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
+                        grid.innerHTML = '<p class="text-sm text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
                         return;
                     }
 
@@ -209,10 +211,10 @@
                         `;
                     });
                 } else {
-                    grid.innerHTML = '<p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
+                    grid.innerHTML = '<p class="text-sm text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
                 }
             } catch (error) {
-                grid.innerHTML = '<p class="text-xs text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
+                grid.innerHTML = '<p class="text-sm text-zinc-600 col-span-full text-center py-12">No templates available right now. Check back soon! ✨</p>';
             }
         }
 
