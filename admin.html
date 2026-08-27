@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Store Admin Dashboard</title>
+    <title>Ultimate Store Admin Control Room</title>
     <meta name="viewport" content="width=1024">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #0d1117; color: #c9d1d9; padding: 20px; max-width: 650px; margin: auto; display: flex; flex-direction: column; min-height: 100vh; justify-content: center;}
-        .box { background: #161b22; padding: 30px 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #30363d; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #010409; color: white; border: 1px solid #30363d; border-radius: 8px; font-size: 14px;}
+        body { background: #0d1117; color: #c9d1d9; padding: 20px; max-width: 700px; margin: auto; display: flex; flex-direction: column; min-height: 100vh; }
+        .box { background: #161b22; padding: 25px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0 15px 0; background: #010409; color: white; border: 1px solid #30363d; border-radius: 8px; font-size: 14px; }
         input:focus, textarea:focus { border-color: #00ff88; outline: none; }
-        button { padding: 14px 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 15px; transition: 0.3s;}
+        button { padding: 12px 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 14px; transition: 0.3s; }
         
         .btn-green { background: #238636; color: white; }
         .btn-green:hover { background: #2ea043; }
@@ -19,14 +19,14 @@
         .btn-blue:hover { background: #388bfd; }
         .btn-orange { background: #d29922; color: white; }
         .btn-orange:hover { background: #e3b341; }
-        .btn-red { background: #da3633; color: white; padding: 6px 12px; width: auto; font-size: 12px;}
+        .btn-red { background: #da3633; color: white; padding: 6px 12px; width: auto; font-size: 12px; }
         .btn-red:hover { background: #f85149; }
-        .btn-yellow { background: #9e6a03; color: white; padding: 6px 12px; width: auto; font-size: 12px; margin-right: 5px;}
+        .btn-yellow { background: #9e6a03; color: white; padding: 6px 12px; width: auto; font-size: 12px; margin-right: 5px; }
         .btn-yellow:hover { background: #bb8009; }
         
         .list-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 12px; background: #010409; border-radius: 8px; border: 1px solid #30363d; text-align: left; }
         .action-btns { display: flex; align-items: center; flex-shrink: 0; }
-        h2, h3 { color: #00ff88; margin-top: 0;}
+        h2, h3 { color: #00ff88; margin-top: 0; }
 
         .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
         .modal-content { background: #161b22; padding: 20px; border-radius: 12px; border: 1px solid #30363d; width: 90%; max-width: 600px; max-height: 80vh; display: flex; flex-direction: column; }
@@ -37,43 +37,72 @@
 </head>
 <body>
 
+    <!-- LOGIN SECTION -->
     <div class="box" id="loginSection">
         <h2>🔒 Store Control Room</h2>
-        <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;">Enter GitHub Token to manage store</p>
+        <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;">Enter GitHub Token to access full control panel</p>
         
         <input type="password" id="gitToken" placeholder="GitHub Personal Access Token">
-        <button class="btn-green" onclick="loadData()">LOGIN & LOAD STORE</button>
+        <button class="btn-green" onclick="loadData()">LOGIN & LOAD PANEL</button>
     </div>
 
-    <div class="box" id="editorSection" style="display:none; text-align: left; margin-top: 0;">
-        <h3 id="formTitle" style="color:#00ea77; text-align: center;">➕ Add New Template / Code</h3>
+    <!-- MAIN DASHBOARD EDITOR SECTION -->
+    <div id="editorSection" style="display:none;">
         
-        <label style="font-size:12px; color:#8b949e;">Template Name:</label>
-        <input type="text" id="pName" placeholder="E.g. Cinematic Birthday">
-        
-        <label style="font-size:12px; color:#8b949e;">Price (₹):</label>
-        <input type="number" id="pPrice" placeholder="249">
+        <!-- SECTION 1: PROFILE CUSTOMIZE -->
+        <div class="box">
+            <h3>👤 1. Profile Customization</h3>
+            <label style="font-size:12px; color:#8b949e;">Profile Picture (DP) URL:</label>
+            <input type="text" id="pDp" placeholder="https://...">
 
-        <label style="font-size:12px; color:#8b949e;">Preview Image URL:</label>
-        <input type="text" id="pImg" placeholder="https://images.unsplash.com/...">
+            <label style="font-size:12px; color:#8b949e;">Bio Text:</label>
+            <textarea id="pBio" rows="3" placeholder="Write your profile bio here..."></textarea>
 
-        <label style="font-size:12px; color:#8b949e;">Live Demo Link:</label>
-        <input type="text" id="pDemo" placeholder="rakhi.html">
+            <label style="font-size:12px; color:#8b949e;">Instagram Link:</label>
+            <input type="text" id="pInsta" placeholder="https://www.instagram.com/...">
 
-        <label style="font-size:12px; color:#8b949e;">Short Description:</label>
-        <textarea id="pDesc" rows="2" placeholder="Write short details about this code..."></textarea>
-        
-        <button id="actionBtn" class="btn-green" style="background:#00ea77; color:black; margin-top: 10px;" onclick="processTool()">ADD TO LIST</button>
-        
-        <button class="btn-orange" style="margin-top:25px;" onclick="openModal()">📋 VIEW SAVED TEMPLATES LIST</button>
-        <button class="btn-blue" style="margin-top:15px;" onclick="saveToGitHub()">🚀 UPLOAD TO GITHUB</button>
+            <label style="font-size:12px; color:#8b949e;">Telegram Username (for Buy button):</label>
+            <input type="text" id="pTele" placeholder="Superfast_01">
+        </div>
+
+        <!-- SECTION 2: CODE UPLOAD & EDIT SYSTEM -->
+        <div class="box">
+            <h3 id="formTitle">📤 2. Code Upload & Edit System</h3>
+            
+            <label style="font-size:12px; color:#8b949e;">Template Name:</label>
+            <input type="text" id="tName" placeholder="E.g. Cinematic Birthday">
+            
+            <label style="font-size:12px; color:#8b949e;">Price (₹):</label>
+            <input type="number" id="tPrice" placeholder="249">
+
+            <label style="font-size:12px; color:#8b949e;">Preview Image URL:</label>
+            <input type="text" id="tImg" placeholder="https://images.unsplash.com/...">
+
+            <label style="font-size:12px; color:#8b949e;">Live Demo Link:</label>
+            <input type="text" id="tDemo" placeholder="rakhi.html">
+
+            <label style="font-size:12px; color:#8b949e;">Short Description:</label>
+            <textarea id="tDesc" rows="2" placeholder="Write short details about this code..."></textarea>
+            
+            <button id="actionBtn" class="btn-green" style="background:#00ea77; color:black; margin-top: 10px;" onclick="processTemplate()">ADD CODE TO LIST</button>
+            
+            <button class="btn-orange" style="margin-top:20px;" onclick="openModal()">📋 MANAGE / EDIT / DELETE CODES</button>
+        </div>
+
+        <!-- SECTION 3: GLOBAL UPLOAD TO GITHUB -->
+        <div class="box" style="text-align: center;">
+            <h3>🚀 3. Publish Changes</h3>
+            <p style="color:#8b949e; font-size:12px; margin-bottom:15px;">Profile aur Codes dono ko ek sath live store par update karne ke liye niche click karein.</p>
+            <button class="btn-blue" onclick="saveToGitHub()">SAVE & UPLOAD EVERYTHING TO GITHUB</button>
+        </div>
+
     </div>
 
-    <!-- List Modal Box -->
+    <!-- List Modal Box for Edit/Delete -->
     <div id="listModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>📋 ALL TEMPLATES LIST</h3>
+                <h3>📋 ALL UPLOADED CODES</h3>
                 <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
             <div id="projectList"></div>
@@ -82,7 +111,7 @@
 
     <script>
         const myRepo = "Herosalman1/all-tools-dashboard"; 
-        let toolsArray = [];
+        let storeData = { profile: {}, templates: [] };
         let fileSha = "";
         let editIndex = null; 
 
@@ -98,29 +127,49 @@
                     headers: { 'Authorization': `token ${token}` }
                 });
                 
-                if(!response.ok) throw new Error("Key galat hai!");
+                if(response.ok) {
+                    const data = await response.json();
+                    fileSha = data.sha;
+                    const decodedData = decodeURIComponent(escape(atob(data.content)));
+                    let parsed = JSON.parse(decodedData);
+                    
+                    // Handle backward compatibility (if file had old array format or new object format)
+                    if(Array.isArray(parsed)) {
+                        storeData.templates = parsed;
+                        storeData.profile = {
+                            dp: "https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4",
+                            bio: "SALMAN he/him\nAI creator & Web Developer",
+                            insta: "https://www.instagram.com/herosalman1_929/",
+                            telegram: "Superfast_01"
+                        };
+                    } else {
+                        storeData = parsed;
+                    }
+                }
                 
-                const data = await response.json();
-                fileSha = data.sha;
-                const decodedData = decodeURIComponent(escape(atob(data.content)));
-                toolsArray = JSON.parse(decodedData);
-                
-                // Store token in localStorage for session
-                localStorage.setItem('gitToken', token);
+                // Fill Profile Fields
+                document.getElementById('pDp').value = storeData.profile.dp || '';
+                document.getElementById('pBio').value = storeData.profile.bio || '';
+                document.getElementById('pInsta').value = storeData.profile.insta || '';
+                document.getElementById('pTele').value = storeData.profile.telegram || '';
 
+                localStorage.setItem('gitToken', token);
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('editorSection').style.display = 'block';
-                renderList();
             } catch (error) {
                 alert("Error! Token ya repository check karo.");
-                loginBtn.innerText = "LOGIN & LOAD STORE";
+                loginBtn.innerText = "LOGIN & LOAD PANEL";
             }
         }
 
         function renderList() {
             const list = document.getElementById('projectList');
             list.innerHTML = "";
-            toolsArray.forEach((tool, index) => {
+            if(!storeData.templates || storeData.templates.length === 0) {
+                list.innerHTML = `<p style="color:#8b949e; text-align:center;">No codes uploaded yet.</p>`;
+                return;
+            }
+            storeData.templates.forEach((tool, index) => {
                 let price = tool.price || '249';
                 list.innerHTML += `
                     <div class="list-item">
@@ -130,19 +179,19 @@
                             </span>
                         </div>
                         <div class="action-btns">
-                            <button class="btn-yellow" onclick="editTool(${index})">EDIT</button>
-                            <button class="btn-red" onclick="deleteTool(${index})">DELETE</button>
+                            <button class="btn-yellow" onclick="editTemplate(${index})">EDIT</button>
+                            <button class="btn-red" onclick="deleteTemplate(${index})">DELETE</button>
                         </div>
                     </div>`;
             });
         }
 
-        function processTool() {
-            const name = document.getElementById('pName').value.trim();
-            const price = document.getElementById('pPrice').value.trim();
-            const img = document.getElementById('pImg').value.trim();
-            const demo = document.getElementById('pDemo').value.trim();
-            const desc = document.getElementById('pDesc').value.trim();
+        function processTemplate() {
+            const name = document.getElementById('tName').value.trim();
+            const price = document.getElementById('tPrice').value.trim();
+            const img = document.getElementById('tImg').value.trim();
+            const demo = document.getElementById('tDemo').value.trim();
+            const desc = document.getElementById('tDesc').value.trim();
             
             if(!name || !price) {
                 return alert("Template Name and Price are required!");
@@ -157,57 +206,65 @@
             };
 
             if(editIndex === null) {
-                toolsArray.push(itemObj);
+                storeData.templates.unshift(itemObj);
             } else {
-                toolsArray[editIndex] = itemObj;
+                storeData.templates[editIndex] = itemObj;
                 editIndex = null;
-                document.getElementById('formTitle').innerText = "➕ Add New Template / Code";
-                document.getElementById('actionBtn').innerText = "ADD TO LIST";
+                document.getElementById('formTitle').innerText = "📤 2. Code Upload & Edit System";
+                document.getElementById('actionBtn').innerText = "ADD CODE TO LIST";
                 document.getElementById('actionBtn').style.background = "#238636";
                 document.getElementById('actionBtn').style.color = "white";
             }
 
-            document.getElementById('pName').value = "";
-            document.getElementById('pPrice').value = "";
-            document.getElementById('pImg').value = "";
-            document.getElementById('pDemo').value = "";
-            document.getElementById('pDesc').value = "";
+            document.getElementById('tName').value = "";
+            document.getElementById('tPrice').value = "";
+            document.getElementById('tImg').value = "";
+            document.getElementById('tDemo').value = "";
+            document.getElementById('tDesc').value = "";
             
-            renderList();
-            closeModal();
-            alert("Added to list! Click 'UPLOAD TO GITHUB' to save globally.");
+            alert("Code added/updated locally! Don't forget to click 'SAVE & UPLOAD EVERYTHING TO GITHUB' at the bottom.");
         }
 
-        function editTool(index) {
+        function editTemplate(index) {
             editIndex = index;
-            let item = toolsArray[index];
-            document.getElementById('pName').value = item.name || '';
-            document.getElementById('pPrice').value = item.price || '';
-            document.getElementById('pImg').value = item.img || '';
-            document.getElementById('pDemo').value = item.demo || item.url || '';
-            document.getElementById('pDesc').value = item.desc || '';
+            let item = storeData.templates[index];
+            document.getElementById('tName').value = item.name || '';
+            document.getElementById('tPrice').value = item.price || '';
+            document.getElementById('tImg').value = item.img || '';
+            document.getElementById('tDemo').value = item.demo || item.url || '';
+            document.getElementById('tDesc').value = item.desc || '';
             
-            document.getElementById('formTitle').innerText = "✏️ Edit Template";
-            document.getElementById('actionBtn').innerText = "UPDATE TEMPLATE";
+            document.getElementById('formTitle').innerText = "✏️ Edit Template Code";
+            document.getElementById('actionBtn').innerText = "UPDATE CODE";
             document.getElementById('actionBtn').style.background = "#d29922";
             document.getElementById('actionBtn').style.color = "white";
             
             closeModal();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
         }
 
-        function deleteTool(index) {
-            if(confirm("Are you sure you want to delete this template?")) {
-                toolsArray.splice(index, 1);
+        function deleteTemplate(index) {
+            if(confirm("Are you sure you want to delete this code?")) {
+                storeData.templates.splice(index, 1);
                 renderList();
             }
         }
 
         async function saveToGitHub() {
             const token = localStorage.getItem('gitToken');
-            const updatedJson = JSON.stringify(toolsArray, null, 2);
+            
+            // Update profile info from inputs before saving
+            storeData.profile = {
+                dp: document.getElementById('pDp').value.trim(),
+                bio: document.getElementById('pBio').value,
+                insta: document.getElementById('pInsta').value.trim(),
+                telegram: document.getElementById('pTele').value.trim()
+            };
+
+            const updatedJson = JSON.stringify(storeData, null, 2);
             const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
 
-            const uploadBtn = document.querySelector('.btn-blue');
+            const uploadBtn = document.querySelector('.box:last-child .btn-blue');
             uploadBtn.innerText = "SAVING TO GITHUB...";
 
             try {
@@ -218,7 +275,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: "Updated store templates via Admin Panel",
+                        message: "Updated profile and templates via Admin Panel",
                         content: encodedContent,
                         sha: fileSha
                     })
@@ -227,14 +284,14 @@
                 if(response.ok) {
                     const data = await response.json();
                     fileSha = data.content.sha;
-                    alert("✅ Successfully updated and published to GitHub!");
-                    uploadBtn.innerText = "🚀 UPLOAD TO GITHUB";
+                    alert("✅ Successfully updated profile & codes globally on GitHub!");
+                    uploadBtn.innerText = "🚀 SAVE & UPLOAD EVERYTHING TO GITHUB";
                 } else {
                     throw new Error("Save error");
                 }
             } catch (error) {
-                alert("Failed to save! Check your token.");
-                uploadBtn.innerText = "🚀 UPLOAD TO GITHUB";
+                alert("Failed to save! Check your token or internet connection.");
+                uploadBtn.innerText = "🚀 SAVE & UPLOAD EVERYTHING TO GITHUB";
             }
         }
 
