@@ -112,7 +112,7 @@
                     </div>
                 </div>
 
-                <!-- Highlights Customization Panel (Expanded height to match right side perfectly) -->
+                <!-- Highlights Customization Panel -->
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col">
                     <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
                         <div class="flex items-center gap-2">
@@ -131,51 +131,53 @@
 
             </div>
 
-            <!-- RIGHT COLUMN (Span 7 cols): Code Upload & Edit System + Publish -->
-            <div class="lg:col-span-7 flex flex-col gap-6">
+            <!-- RIGHT COLUMN (Span 7 cols): Code Upload & Edit System + Publish (Balanced Height) -->
+            <div class="lg:col-span-7 flex flex-col gap-6 justify-between">
                 
-                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10">
-                    <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-brand">📤</span>
-                            <h3 id="formTitle" class="text-sm font-bold uppercase tracking-wider text-white">Code Upload & Edit System</h3>
+                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-zinc-800 pb-3 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-brand">📤</span>
+                                <h3 id="formTitle" class="text-sm font-bold uppercase tracking-wider text-white">Code Upload & Edit System</h3>
+                            </div>
+                            <button onclick="openModal()" class="px-3.5 py-1.5 bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black text-xs font-semibold rounded-xl transition-all border border-amber-500/30 flex items-center gap-1.5">
+                                <span>📋 View Saved List</span>
+                            </button>
                         </div>
-                        <button onclick="openModal()" class="px-3.5 py-1.5 bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black text-xs font-semibold rounded-xl transition-all border border-amber-500/30 flex items-center gap-1.5">
-                            <span>📋 View Saved List</span>
-                        </button>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-400 mb-1">Template Name</label>
+                                <input type="text" id="tName" placeholder="E.g. Cinematic Birthday" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-400 mb-1">Price (₹)</label>
+                                <input type="number" id="tPrice" placeholder="249" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-medium text-zinc-400 mb-1">Preview Image URL</label>
+                                <input type="text" id="tImg" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-medium text-zinc-400 mb-1">Live Demo Link</label>
+                                <input type="text" id="tDemo" placeholder="rakhi.html" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-medium text-zinc-400 mb-1">Short Description</label>
+                                <textarea id="tDesc" rows="3" placeholder="Write short details about this code..." class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Template Name</label>
-                            <input type="text" id="tName" placeholder="E.g. Cinematic Birthday" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Price (₹)</label>
-                            <input type="number" id="tPrice" placeholder="249" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Preview Image URL</label>
-                            <input type="text" id="tImg" placeholder="https://images.unsplash.com/..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Live Demo Link</label>
-                            <input type="text" id="tDemo" placeholder="rakhi.html" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="block text-xs font-medium text-zinc-400 mb-1">Short Description</label>
-                            <textarea id="tDesc" rows="3" placeholder="Write short details about this code..." class="w-full px-3.5 py-3 rounded-xl input-pro text-xs resize-none"></textarea>
-                        </div>
-                    </div>
-                    
-                    <div class="pt-2">
+                    <div class="pt-4">
                         <button id="actionBtn" onclick="processTemplate()" class="w-full py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition-all border border-zinc-700 shadow-md">
                             + Add Code to List
                         </button>
                     </div>
                 </div>
 
-                <!-- SECTION 3: GLOBAL PUBLISH TO GITHUB -->
+                <!-- SECTION 3: GLOBAL PUBLISH TO GITHUB (Balanced) -->
                 <div class="glass-panel p-6 rounded-3xl text-center space-y-3 border border-white/10">
                     <div class="flex items-center justify-center gap-2">
                         <span class="text-emerald-400">🚀</span>
