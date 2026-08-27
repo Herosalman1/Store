@@ -104,27 +104,20 @@
             </div>
         </div>
 
-        <!-- SECTION 2: HIGHLIGHTS CUSTOMIZATION -->
+        <!-- SECTION 2: HIGHLIGHTS CUSTOMIZATION (DYNAMIC) -->
         <div class="glass-box p-6 rounded-3xl space-y-4">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-amber-400">✨ 2. Highlights Customization</h3>
-            <p class="text-xs text-zinc-400">Apne store ke highlights ke icons aur names yahan se change karein:</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-amber-400">✨ 2. Highlights Customization</h3>
+                    <p class="text-xs text-zinc-400">Jitne chahein utne highlights add ya remove karein:</p>
+                </div>
+                <button onclick="addHighlightInput('', '')" class="px-3 py-1.5 bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black text-xs font-semibold rounded-xl transition-all border border-amber-500/30">
+                    + Add Highlight
+                </button>
+            </div>
             
-            <div id="highlightsContainer" class="space-y-3">
-                <!-- Highlight 1 -->
-                <div class="flex gap-2 items-center bg-black/40 p-3 rounded-2xl border border-white/5">
-                    <input type="text" id="hIcon0" placeholder="Emoji (e.g. 🚀)" class="w-20 px-3 py-2 rounded-xl input-dark text-xs text-center">
-                    <input type="text" id="hName0" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-dark text-xs">
-                </div>
-                <!-- Highlight 2 -->
-                <div class="flex gap-2 items-center bg-black/40 p-3 rounded-2xl border border-white/5">
-                    <input type="text" id="hIcon1" placeholder="Emoji (e.g. ❤️)" class="w-20 px-3 py-2 rounded-xl input-dark text-xs text-center">
-                    <input type="text" id="hName1" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-dark text-xs">
-                </div>
-                <!-- Highlight 3 -->
-                <div class="flex gap-2 items-center bg-black/40 p-3 rounded-2xl border border-white/5">
-                    <input type="text" id="hIcon2" placeholder="Emoji (e.g. 💡)" class="w-20 px-3 py-2 rounded-xl input-dark text-xs text-center">
-                    <input type="text" id="hName2" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-dark text-xs">
-                </div>
+            <div id="highlightsAdminContainer" class="space-y-3">
+                <!-- Dynamically populated highlight rows -->
             </div>
         </div>
 
@@ -243,11 +236,8 @@
                 document.getElementById('pInsta').value = storeData.profile.insta || '';
                 document.getElementById('pTele').value = storeData.profile.telegram || '';
 
-                // Load highlights inputs
-                storeData.highlights.forEach((h, idx) => {
-                    if(document.getElementById(`hIcon${idx}`)) document.getElementById(`hIcon${idx}`).value = h.icon || '';
-                    if(document.getElementById(`hName${idx}`)) document.getElementById(`hName${idx}`).value = h.name || '';
-                });
+                // Render dynamic highlights inputs
+                renderHighlightsAdmin();
 
                 localStorage.setItem('gitToken', token);
                 document.getElementById('loginSection').style.display = 'none';
@@ -256,6 +246,30 @@
                 alert("Connection failed! Check your GitHub Token.");
                 loginBtn.innerText = "LOGIN & LOAD DASHBOARD 🚀";
             }
+        }
+
+        function renderHighlightsAdmin() {
+            let container = document.getElementById('highlightsAdminContainer');
+            container.innerHTML = '';
+            storeData.highlights.forEach((h, idx) => {
+                container.innerHTML += `
+                    <div class="flex gap-2 items-center bg-black/40 p-3 rounded-2xl border border-white/5" id="hRow_${idx}">
+                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Emoji" class="w-20 px-3 py-2 rounded-xl input-dark text-xs text-center">
+                        <input type="text" id="hName_${idx}" value="${h.name || ''}" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-dark text-xs">
+                        <button onclick="removeHighlight(${idx})" class="px-2.5 py-2 bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white text-xs rounded-xl transition-all border border-rose-500/20">🗑️</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addHighlightInput(icon, name) {
+            storeData.highlights.push({ icon: icon, name: name });
+            renderHighlightsAdmin();
+        }
+
+        function removeHighlight(idx) {
+            storeData.highlights.splice(idx, 1);
+            renderHighlightsAdmin();
         }
 
         function renderList() {
@@ -356,12 +370,18 @@
                 telegram: document.getElementById('pTele').value.trim()
             };
 
-            // Gather highlights
-            storeData.highlights = [
-                { icon: document.getElementById('hIcon0').value.trim() || "🚀", name: document.getElementById('hName0').value.trim() || "Projects" },
-                { icon: document.getElementById('hIcon1').value.trim() || "❤️", name: document.getElementById('hName1').value.trim() || "Rakhi Spl" },
-                { icon: document.getElementById('hIcon2').value.trim() || "💡", name: document.getElementById('hName2').value.trim() || "Demos" }
-            ];
+            // Gather dynamic highlights from inputs
+            storeData.highlights = [];
+            storeData.highlights.forEach((h, idx) => {
+                let iconEl = document.getElementById(`hIcon_${idx}`);
+                let nameEl = document.getElementById(`hName_${idx}`);
+                if(iconEl && nameEl) {
+                    storeData.highlights.push({
+                        icon: iconEl.value.trim() || "✨",
+                        name: nameEl.value.trim() || "Highlight"
+                    });
+                }
+            });
 
             const updatedJson = JSON.stringify(storeData, null, 2);
             const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
@@ -377,7 +397,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: "Updated profile, highlights and templates via Admin Panel",
+                        message: "Updated profile, dynamic highlights and templates via Admin Panel",
                         content: encodedContent,
                         sha: fileSha
                     })
