@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1040">
+    <title>Salman | Developer & Creator Templates Store</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#000000',
+                        foreground: '#ffffff',
+                        brand: '#e11d48',
+                        muted: '#71717a'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-brand selection:text-white" oncontextmenu="return false;">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 border-b border-zinc-900 bg-black/80 backdrop-blur-md">
+        <div class="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
+            <span class="font-bold text-base tracking-wider">herosalman1_929</span>
+            <a href="admin.html" class="text-[10px] text-zinc-500 hover:text-white transition-colors">Admin Login ⚙️</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="mx-auto w-full max-w-4xl px-4 py-8 flex-1 flex flex-col">
+        
+        <!-- Instagram Profile Section -->
+        <header class="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 pb-8 border-b border-zinc-900">
+            <div class="relative">
+                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" alt="Profile" class="w-full h-full object-cover rounded-full bg-black">
+                </div>
+            </div>
+
+            <div class="flex-1 text-center sm:text-left">
+                <div class="flex items-center justify-center sm:justify-start gap-4 mb-4">
+                    <h1 class="text-xl font-semibold tracking-wide">herosalman1_929</h1>
+                </div>
+
+                <div class="flex justify-center sm:justify-start gap-6 text-sm mb-4 text-zinc-300">
+                    <div><span class="font-semibold text-white">45</span> posts</div>
+                    <div><span class="font-semibold text-white">9,779</span> followers</div>
+                    <div><span class="font-semibold text-white">276</span> following</div>
+                </div>
+
+                <div class="text-xs sm:text-sm text-zinc-300 space-y-1 mb-3">
+                    <p class="font-medium text-white">SALMAN <span class="text-zinc-500">he/him</span></p>
+                    <p>AI creator & Web Developer</p>
+                    <p class="text-zinc-400">Focus अगर करना ही है !! तो सिर्फ अपने Work पर Focus कीजिए !!</p>
+                </div>
+
+                <div class="flex items-center justify-center sm:justify-start gap-4 pt-1">
+                    <a href="https://www.instagram.com/herosalman1_929/" target="_blank" class="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800">
+                        Instagram
+                    </a>
+                    <a href="https://t.me/Superfast_01" target="_blank" class="flex items-center gap-1.5 text-xs text-sky-400 hover:text-sky-300 transition-colors bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800">
+                        Telegram
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Highlights Bar -->
+        <div class="flex gap-4 py-6 overflow-x-auto scrollbar-hide border-b border-zinc-900">
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0">
+                <div class="w-16 h-16 rounded-full p-[2px] border border-rose-500 bg-zinc-900 flex items-center justify-center text-xl">🚀</div>
+                <span class="text-xs text-zinc-400">Projects</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0">
+                <div class="w-16 h-16 rounded-full p-[2px] border border-zinc-700 bg-zinc-900 flex items-center justify-center text-xl">❤️</div>
+                <span class="text-xs text-zinc-400">Rakhi Spl</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0">
+                <div class="w-16 h-16 rounded-full p-[2px] border border-zinc-700 bg-zinc-900 flex items-center justify-center text-xl">💡</div>
+                <span class="text-xs text-zinc-400">Demos</span>
+            </div>
+        </div>
+
+        <!-- Section Title -->
+        <div class="py-6 flex items-center justify-between">
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">📁 Premium Codes & Templates (Reels Grid)</h2>
+            <span class="text-xs text-zinc-500">Tap to View Demo / Buy</span>
+        </div>
+
+        <!-- Grid Gallery (Fetched from GitHub templates.json) -->
+        <div id="storeGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-12">
+            <p class="text-xs text-zinc-500 col-span-full text-center py-8">Loading templates from GitHub... ⏳</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-900 py-6 text-center text-xs text-zinc-500">
+        <p>© 2026 herosalman1_929. All rights reserved.</p>
+    </footer>
+
+    <!-- Script to fetch global templates from GitHub -->
+    <script>
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.key === 'C')) {
+                e.preventDefault();
+                alert('Action restricted to protect source code.');
+                return false;
+            }
+        });
+
+        async function fetchGitHubTemplates() {
+            let grid = document.getElementById('storeGrid');
+            // Apna GitHub Username aur Repository yahan set kar dein (Jaise 'herosalman' aur 'store')
+            const username = 'herosalman'; 
+            const repo = 'store';
+            const jsonUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/templates.json`;
+
+            try {
+                let response = await fetch(jsonUrl);
+                if (response.ok) {
+                    let list = await response.json();
+                    grid.innerHTML = '';
+                    
+                    list.forEach(item => {
+                        grid.innerHTML += `
+                            <div class="group relative rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 flex flex-col justify-between hover:border-rose-600 transition-all shadow-xl">
+                                <div>
+                                    <div class="relative aspect-[4/3] bg-zinc-900 overflow-hidden">
+                                        <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90">
+                                        <span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-semibold text-rose-400 border border-rose-500/30">₹${item.price}</span>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-semibold text-white text-sm mb-1">${item.name}</h3>
+                                        <p class="text-xs text-zinc-400 line-clamp-2 mb-3">${item.desc}</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 pt-0 flex gap-2">
+                                    <a href="${item.demo}" target="_blank" class="flex-1 py-2 px-3 rounded-lg border border-zinc-700 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
+                                        👁️ Live Demo
+                                    </a>
+                                    <button onclick="buyCode('${item.name}', '${item.price}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
+                                        Buy Code ⚡
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    grid.innerHTML = '<p class="text-xs text-zinc-500 col-span-full text-center py-8">No templates found yet. Use admin panel to add templates.</p>';
+                }
+            } catch (error) {
+                grid.innerHTML = '<p class="text-xs text-rose-500 col-span-full text-center py-8">Error loading templates from GitHub repository.</p>';
+            }
+        }
+
+        function buyCode(templateName, price) {
+            const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
+            window.open(`https://t.me/Superfast_01?text=${msg}`, '_blank');
+        }
+
+        fetchGitHubTemplates();
+    </script>
+</body>
+</html>

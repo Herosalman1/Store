@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Salman Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'admin.html';
+        }
+    </script>
+</head>
+<body class="bg-black text-white min-h-screen p-4 md:p-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+        
+        <!-- Top Bar -->
+        <div class="flex items-center justify-between border-b border-zinc-900 pb-4">
+            <div>
+                <h1 class="text-xl font-bold">⚡ Ultimate Store Dashboard</h1>
+                <p class="text-xs text-zinc-400">Manage DP, Bio, Links, Highlights & Templates globally via GitHub.</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="index.html" target="_blank" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-xs font-medium rounded-lg transition-all">
+                    View Live Store 🌐
+                </a>
+                <button onclick="logout()" class="px-4 py-2 bg-rose-600/20 text-rose-500 hover:bg-rose-600 hover:text-white text-xs font-medium rounded-lg transition-all border border-rose-500/30">
+                    Logout 🔒
+                </button>
+            </div>
+        </div>
+
+        <!-- GitHub Config Box -->
+        <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1">GitHub Username</label>
+                <input type="text" id="ghUser" value="herosalman" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1">Repository Name</label>
+                <input type="text" id="ghRepo" value="store" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+            </div>
+        </div>
+
+        <!-- SECTION 1: Profile, Bio & Social Links Customizer -->
+        <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl space-y-4">
+            <h2 class="text-lg font-semibold text-rose-400">👤 Edit Profile, DP & Social Links</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Instagram Username</label>
+                    <input type="text" id="pUser" value="herosalman1_929" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Profile Picture (DP) URL</label>
+                    <input type="text" id="pDp" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Bio Text</label>
+                    <textarea id="pBio" rows="2" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">SALMAN he/him
+AI creator & Web Developer
+Focus अगर करना ही है !! तो सिर्फ अपने Work पर Focus कीजिए !!</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Instagram Link</label>
+                    <input type="text" id="pInsta" value="https://www.instagram.com/herosalman1_929/" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Telegram Username (for Buy)</label>
+                    <input type="text" id="pTele" value="Superfast_01" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: Add New Template / Code -->
+        <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl space-y-4">
+            <h2 class="text-lg font-semibold text-rose-400">➕ Upload New Code / Template</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Template Name</label>
+                    <input type="text" id="tName" placeholder="e.g. Cinematic Birthday" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Price (₹)</label>
+                    <input type="number" id="tPrice" placeholder="249" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Preview Image URL</label>
+                    <input type="text" id="tImg" placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Live Demo Link (e.g. rakhi.html)</label>
+                    <input type="text" id="tDemo" placeholder="rakhi.html" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-medium text-zinc-400 mb-1">Short Description</label>
+                    <textarea id="tDesc" rows="2" placeholder="Write short details..." class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white"></textarea>
+                </div>
+            </div>
+
+            <button onclick="addToList()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs rounded-xl transition-all border border-zinc-700">
+                + Add to List (Before Global Push)
+            </button>
+        </div>
+
+        <!-- Current Templates List Preview -->
+        <div class="space-y-4">
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-zinc-400">📋 Templates Ready to Publish</h2>
+            <div id="tempListContainer" class="space-y-3">
+                <!-- Loaded items -->
+            </div>
+        </div>
+
+        <!-- FINAL PUBLISH BUTTON -->
+        <button onclick="publishEverythingToGitHub()" id="pubBtn" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm uppercase tracking-wider rounded-2xl transition-all shadow-2xl">
+            🚀 Save & Push Everything to GitHub
+        </button>
+
+    </main>
+
+    <script>
+        let currentTemplates = [
+            {name: "Raksha Bandhan Special", price: "249", img: "https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=500&auto=format&fit=crop", demo: "rakhi.html", desc: "Cinematic intro, music toggle, and interactive typewriter letter for sisters."}
+        ];
+
+        function renderTempList() {
+            let container = document.getElementById('tempListContainer');
+            container.innerHTML = '';
+            currentTemplates.forEach((item, index) => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+                        <div class="flex items-center gap-4">
+                            <img src="${item.img}" class="w-12 h-12 object-cover rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-sm text-white">${item.name}</h3>
+                                <p class="text-xs text-zinc-400">₹${item.price} • Demo: ${item.demo}</p>
+                            </div>
+                        </div>
+                        <button onclick="removeItem(${index})" class="px-3 py-1.5 bg-rose-600/20 text-rose-500 hover:bg-rose-600 hover:text-white text-xs rounded-lg transition-all border border-rose-500/30">
+                            Remove 🗑️
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function addToList() {
+            let name = document.getElementById('tName').value.trim();
+            let price = document.getElementById('tPrice').value.trim();
+            let img = document.getElementById('tImg').value.trim();
+            let demo = document.getElementById('tDemo').value.trim();
+            let desc = document.getElementById('tDesc').value.trim();
+
+            if (!name || !price) {
+                alert('Please enter Template Name and Price!');
+                return;
+            }
+
+            currentTemplates.unshift({
+                name, price,
+                img: img || 'https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=500&auto=format&fit=crop',
+                demo: demo || '#',
+                desc: desc || 'Custom web template.'
+            });
+
+            document.getElementById('tName').value = '';
+            document.getElementById('tPrice').value = '';
+            document.getElementById('tImg').value = '';
+            document.getElementById('tDemo').value = '';
+            document.getElementById('tDesc').value = '';
+
+            renderTempList();
+        }
+
+        function removeItem(index) {
+            currentTemplates.splice(index, 1);
+            renderTempList();
+        }
+
+        async function publishEverythingToGitHub() {
+            let username = document.getElementById('ghUser').value.trim();
+            let repo = document.getElementById('ghRepo').value.trim();
+            let token = localStorage.getItem('githubToken');
+
+            if (!token) {
+                alert('GitHub Token missing! Please login again.');
+                window.location.href = 'admin.html';
+                return;
+            }
+
+            document.getElementById('pubBtn').innerText = 'Syncing Profile & Templates to GitHub... ⏳';
+
+            // Gather Profile Data
+            let profileData = {
+                username: document.getElementById('pUser').value.trim(),
+                dp: document.getElementById('pDp').value.trim(),
+                bio: document.getElementById('pBio').value,
+                insta: document.getElementById('pInsta').value.trim(),
+                telegram: document.getElementById('pTele').value.trim(),
+                templates: currentTemplates
+            };
+
+            const filePath = 'store-data.json';
+            const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${filePath}`;
+
+            try {
+                let sha = '';
+                let res = await fetch(apiUrl, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+
+                if (res.ok) {
+                    let fileData = await res.json();
+                    sha = fileData.sha;
+                }
+
+                let encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(profileData, null, 2))));
+
+                let pushRes = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Update store profile and templates`,
+                        content: encodedContent,
+                        sha: sha ? sha : undefined
+                    })
+                });
+
+                if (pushRes.ok) {
+                    alert('Successfully updated store globally on GitHub! 🎉');
+                } else {
+                    let err = await pushRes.json();
+                    alert('GitHub Error: ' + err.message);
+                }
+            } catch (e) {
+                alert('Network error or invalid GitHub repository details!');
+                console.error(e);
+            }
+
+            document.getElementById('pubBtn').innerText = '🚀 Save & Push Everything to GitHub';
+        }
+
+        renderTempList();
+    </script>
+</body>
+</html>
