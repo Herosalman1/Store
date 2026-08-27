@@ -33,9 +33,8 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 selection:bg-brand selection:text-white">
 
-    <!-- LOGIN SECTION (Clean & Modern Shopping Bag Theme) -->
+    <!-- LOGIN SECTION -->
     <div id="loginSection" class="max-w-md w-full glass-box p-8 rounded-3xl shadow-2xl space-y-6 text-center">
-        <!-- Shopping Bag Icon -->
         <div class="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/10 text-brand text-3xl border border-brand/20 shadow-inner mb-1">
             🛍️
         </div>
@@ -167,7 +166,8 @@
     </div>
 
     <script>
-        const myRepo = "Herosalman1/all-tools-dashboard"; 
+        // Yahan bhi naye repository ka naam set kiya gaya hai
+        const myRepo = "Herosalman1/Store"; 
         let storeData = { profile: {}, templates: [] };
         let fileSha = "";
         let editIndex = null; 
@@ -355,6 +355,11 @@
         }
         function closeModal() {
             document.getElementById('listModal').style.display = 'none';
+        }
+
+        function logout() {
+            localStorage.removeItem('gitToken');
+            location.reload();
         }
 
         window.onload = function() {
