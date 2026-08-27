@@ -208,8 +208,7 @@
 
     </div>
 
-    <!-- YAHAN SE BADA KIYA HAI MODAL KO -->
-    <!-- List Modal Box for Edit/Delete -->
+    <!-- LARGE MODAL BOX (Half Screen +) -->
     <div id="listModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-10">
         <div class="max-w-4xl w-full h-[75vh] glass-panel p-6 sm:p-8 rounded-3xl border border-zinc-700 flex flex-col shadow-2xl">
             <div class="flex items-center justify-between pb-5 border-b border-zinc-800 mb-5">
@@ -243,7 +242,7 @@
             }
 
             loginBtn.innerText = "CONNECTING... ⏳";
-            loginBtn.style.backgroundColor = "#3b82f6"; 
+            loginBtn.style.backgroundColor = "#2563eb"; // Blue connection
 
             try {
                 const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
@@ -259,9 +258,7 @@
                 
                 if(Array.isArray(parsed)) {
                     storeData.templates = parsed;
-                    storeData.profile = {
-                        dp: "", bio: "", insta: "", telegram: ""
-                    };
+                    storeData.profile = { dp: "", bio: "", insta: "", telegram: "" };
                     storeData.highlights = [];
                 } else {
                     storeData = parsed;
@@ -357,10 +354,10 @@
             
             if(!name || !price) {
                 btn.innerText = "⚠️ ENTER TEMPLATE NAME & PRICE!";
-                btn.style.backgroundColor = "#ef4444"; 
+                btn.style.backgroundColor = "#ef4444"; // Red for error
                 setTimeout(() => {
                     btn.innerText = editIndex === null ? "+ Add Code to List" : "UPDATE CODE";
-                    btn.style.backgroundColor = "";
+                    btn.style.backgroundColor = ""; // Reset to default gray
                 }, 2500);
                 return;
             }
@@ -387,20 +384,19 @@
             document.getElementById('tDemo').value = "";
             document.getElementById('tDesc').value = "";
             
-            btn.innerText = "ADD CODE LIST DONE ✅";
-            btn.style.backgroundColor = "#22c55e"; 
-            btn.style.borderColor = "#22c55e";
-            btn.style.color = "#000";
-            btn.style.fontWeight = "bold";
+            // Pro-Level Blue visual feedback!
+            btn.innerText = "ADDED TO LIST SUCCESSFULLY 📋";
+            btn.style.backgroundColor = "#2563eb"; // Tailwind blue-600
+            btn.style.borderColor = "#2563eb";
+            btn.style.color = "#ffffff";
 
             setTimeout(() => {
                 btn.innerText = "+ Add Code to List";
                 btn.style.backgroundColor = "";
                 btn.style.borderColor = "";
                 btn.style.color = "";
-                btn.style.fontWeight = "";
                 btn.className = "w-full py-3.5 btn-uniform text-xs uppercase tracking-wider rounded-xl shadow-md transition-all";
-            }, 2500);
+            }, 2000);
         }
 
         function editTemplate(index) {
@@ -455,8 +451,8 @@
             const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
 
             uploadBtn.innerText = "UPLOADING TO GITHUB... ⏳";
-            uploadBtn.style.backgroundColor = "#3b82f6"; 
-            uploadBtn.style.borderColor = "#3b82f6";
+            uploadBtn.style.backgroundColor = "#2563eb"; // Blue processing state
+            uploadBtn.style.borderColor = "#2563eb";
 
             try {
                 const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
@@ -477,7 +473,7 @@
                     fileSha = data.content.sha;
                     
                     uploadBtn.innerText = "CODE GITHUB PER UPLOAD KAR DIYA HAI ✅";
-                    uploadBtn.style.backgroundColor = "#22c55e"; 
+                    uploadBtn.style.backgroundColor = "#22c55e"; // Green for success
                     uploadBtn.style.borderColor = "#22c55e";
                     uploadBtn.style.color = "#000";
                     uploadBtn.style.fontWeight = "bold";
