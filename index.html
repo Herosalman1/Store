@@ -209,14 +209,15 @@
                                 <div>
                                     <div class="relative aspect-[4/3] bg-zinc-900 overflow-hidden">
                                         <img src="${img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90">
-                                        <!-- VIP Transparent Glassmorphism Price Badge -->
+                                        <!-- Transparent Glassmorphism Price Badge -->
                                         <div class="absolute top-3 right-3 px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-md text-sm font-bold text-white border border-white/20 shadow-2xl flex items-center gap-1 tracking-wide">
                                             <span>₹${price}</span>
                                         </div>
                                     </div>
                                     <div class="p-4">
                                         <h3 class="font-semibold text-white text-sm mb-1">${item.name}</h3>
-                                        <p class="text-xs text-zinc-400 line-clamp-2 mb-3">${desc}</p>
+                                        <!-- whitespace-pre-line added here to preserve line breaks from textarea -->
+                                        <p class="text-xs text-zinc-400 whitespace-pre-line mb-3">${desc}</p>
                                     </div>
                                 </div>
                                 <div class="p-4 pt-0 flex gap-2">
