@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salman | Developer & Creator Templates Store</title>
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,9 +23,12 @@
         }
     </script>
     
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- CUSTOM PROFILE & LAYOUT STYLES -->
     <style>
+        /* --- GLOBAL BODY --- */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #000000;
@@ -32,8 +36,142 @@
             -webkit-user-select: none;
             user-select: none;
         }
+
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* --- 1. PROFILE DP STYLES --- */
+        .profile-dp-container {
+            width: 150px;         /* Desktop/Mobile Default Width */
+            height: 150px;        /* Desktop/Mobile Default Height */
+            border-radius: 9999px;
+            padding: 2px;
+            background: linear-gradient(to top right, #f59e0b, #f43f5e, #9333ea);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .profile-dp-container {
+                width: 150px;    /* PC/Large Screen DP Size */
+                height: 150px;
+            }
+        }
+
+        .profile-dp-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 9999px;
+            background-color: #000000;
+        }
+
+        /* --- 2. USERNAME & VERIFIED BADGE --- */
+        .profile-username-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .profile-username {
+            font-size: 28px;     /* Mobile font size */
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            color: #ffffff;
+        }
+
+        @media (min-width: 640px) {
+            .profile-username {
+                font-size: 28px; /* PC/Desktop font size */
+            }
+        }
+
+        .verified-icon {
+            width: 18px;         /* Badge Width */
+            height: 18px;        /* Badge Height */
+            fill: rgb(0, 149, 246);
+            flex-shrink: 0;
+        }
+
+        /* --- 3. DISPLAY NAME & PRONOUNS --- */
+        .profile-fullname {
+            font-size: 20px;     /* Name Font Size */
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.25;
+            margin-bottom: 8px;
+        }
+
+        .profile-pronouns {
+            font-size: 16px;     /* Pronouns Size */
+            font-weight: 400;
+            color: #a1a1aa;
+        }
+
+        /* --- 4. STATS (POSTS, FOLLOWERS, FOLLOWING) --- */
+        .profile-stats-bar {
+            display: flex;
+            justify-content: flex-start;
+            gap: 16px;
+            font-size: 13px;     /* Text Size */
+            color: #d4d4d8;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .profile-stats-bar {
+                gap: 24px;
+                font-size: 14px;
+            }
+        }
+
+        .profile-stats-number {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* --- 5. BIO TEXT --- */
+        .profile-bio {
+            font-size: 20px;     /* Bio Font Size */
+            color: #d4d4d8;
+            white-space: pre-line;
+            line-height: 1.375;
+            padding-top: -8px;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .profile-bio {
+                font-size: 16px;
+            }
+        }
+
+        /* --- 6. SOCIAL BUTTONS BAR --- */
+        .social-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;            /* Buttons gap */
+            padding-top: 8px;
+        }
+
+        .social-button {
+            font-size: 16px;     /* Button Text Size */
+            font-weight: 500;
+            padding: 6px 16px;   /* Padding */
+            border-radius: 9999px;
+            background-color: #18181b;
+            border: 1px solid #27272a;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .social-button:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-brand selection:text-white" oncontextmenu="return false;">
@@ -45,38 +183,45 @@
     <main class="mx-auto w-full max-w-4xl px-4 py-5 flex-1 flex flex-col">
         
         <header class="flex flex-row items-start gap-6 sm:gap-10 pb-5 border-b border-zinc-950">
+            <!-- PROFILE DP CONTAINER -->
             <div class="relative">
-                <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 cursor-pointer" onclick="openDpStory()">
-                    <img id="storeDp" src="https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4" alt="Profile" class="w-full h-full object-cover rounded-full bg-black">
+                <div class="profile-dp-container" onclick="openDpStory()">
+                    <img id="storeDp" src="https://avatars.githubusercontent.com/u/213235513?s=400&u=e78a19fe3543b47afabf3d6235a9901a38ddd5f4&v=4" alt="Profile" class="profile-dp-img">
                 </div>
             </div>
 
+            <!-- PROFILE DETAILS -->
             <div class="flex-1 text-left">
-                <div class="flex items-center justify-start gap-2" style="margin-bottom: 5px;">
-                    <h1 class="text-base sm:text-xl font-semibold tracking-wide text-white" id="profileName">herosalman1_929</h1>
-                    <svg aria-label="Verified" class="x1lliihq x1n2onr6 x1q0g3np" fill="rgb(0, 149, 246)" height="18" role="img" viewBox="0 0 40 40" width="19">
+                <!-- USERNAME & VERIFIED BADGE -->
+                <div class="profile-username-row">
+                    <h1 class="profile-username" id="profileName">herosalman1_929</h1>
+                    <svg aria-label="Verified" class="verified-icon" fill="rgb(0, 149, 246)" viewBox="0 0 40 40" role="img">
                         <title>Verified</title>
                         <path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.36l5.432 3.138v6.353h6.234L14.638 40l5.36-3.094L25.358 40l2.972-5.149h6.234v-6.353L40 25.36 36.906 20 40 14.64l-5.432-3.136V5.15h-6.234L25.358 0l-5.36 3.094Zm11.586 10.986-13.41 13.41-6.41-6.41 2.828-2.828 3.582 3.582 10.582-10.582 2.828 2.828Z" fill-rule="evenodd"></path>
                     </svg>
                 </div>
 
-                <div class="text-xs sm:text-sm font-semibold text-white leading-tight" style="margin-bottom: 12px;">
-                    SALMAN <span class="font-normal text-zinc-400">he/him</span>
+                <!-- DISPLAY NAME & PRONOUNS -->
+                <div class="profile-fullname">
+                    SALMAN <span class="profile-pronouns">he/him</span>
                 </div>
 
-                <div class="flex justify-start gap-4 sm:gap-6 text-xs sm:text-sm text-zinc-300" style="margin-bottom: 8px;">
-                    <div><span id="uiPosts" class="font-semibold text-white">45</span> posts</div>
-                    <div><span id="uiFollowers" class="font-semibold text-white">9,779</span> followers</div>
-                    <div><span id="uiFollowing" class="font-semibold text-white">276</span> following</div>
+                <!-- STATS (POSTS, FOLLOWERS, FOLLOWING) -->
+                <div class="profile-stats-bar">
+                    <div><span id="uiPosts" class="profile-stats-number">45</span> posts</div>
+                    <div><span id="uiFollowers" class="profile-stats-number">9,779</span> followers</div>
+                    <div><span id="uiFollowing" class="profile-stats-number">276</span> following</div>
                 </div>
 
-                <div id="storeBio" class="text-xs sm:text-sm text-zinc-300 whitespace-pre-line leading-snug pt-1" style="margin-bottom: 10px;">
+                <!-- BIO -->
+                <div id="storeBio" class="profile-bio">
                     AI creator
                     Focus अगर करना ही है !!
                     तो सिर्फ अपने Work पर Focus कीजिए !!
                 </div>
 
-                <div id="socialButtonsBar" class="flex flex-wrap items-center justify-start gap-2 pt-2"></div>
+                <!-- SOCIAL BUTTONS -->
+                <div id="socialButtonsBar" class="social-buttons-container"></div>
             </div>
         </header>
 
@@ -93,7 +238,7 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (FULL HD PC 1920PX ULTRA MINIATURIZED FOR MOBILE) -->
+    <!-- LIVE PREVIEW MODAL -->
     <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-1 sm:p-6">
         <div class="w-full max-w-6xl h-auto sm:h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative my-auto">
             <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10">
@@ -106,7 +251,6 @@
                 </div>
             </div>
             
-            <!-- Full HD Canvas Container -->
             <div id="frameWrapper" class="w-full h-[40vh] sm:h-auto sm:flex-1 bg-black relative overflow-hidden flex items-center justify-center">
                 <iframe id="previewFrame" src="" class="border-0 bg-white"></iframe>
             </div>
@@ -162,6 +306,7 @@
         let activeTemplateImages = [];
         let activeImageIdx = 0;
 
+        // Inspect element restriction
         document.addEventListener('keydown', function (e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.key === 'C')) {
                 e.preventDefault();
@@ -196,7 +341,7 @@
                     socials.forEach(s => {
                         let btnColor = s.color || '#ffffff';
                         socialsBar.innerHTML += `
-                            <a href="${s.url || '#'}" target="_blank" style="color: ${btnColor};" class="text-xs transition-opacity hover:opacity-80 bg-zinc-900 px-4 py-1.5 rounded-full border border-zinc-800 font-medium">
+                            <a href="${s.url || '#'}" target="_blank" style="color: ${btnColor};" class="social-button">
                                 ${s.name || 'Link'}
                             </a>`;
                     });
@@ -399,7 +544,6 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- ULTRA MINIATURIZED FULL HD PC PREVIEW (1920x1080) ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
@@ -418,7 +562,6 @@
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
 
-            // Strict Full HD PC Target (1920px width x 1080px height)
             const pcWidth = 1920;
             const pcHeight = 1080;
 
