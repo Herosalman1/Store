@@ -50,6 +50,13 @@
   ],
   "templates": [
     {
+      "name": "Birthday Shayari ✨",
+      "price": "199",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787924914/b2b74f23-bbbf-4a7c-9cc0-c0017a1ed9aa.png",
+      "demo": "https://herosalman1.github.io/Bdy-6/surprise.html",
+      "desc": "Special Tranding Template 💫❤️✨"
+    },
+    {
       "name": "Birthday Special",
       "price": "149",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787924682/f57267e8-7595-481a-ac7a-f17ba4cb71a2.png",
