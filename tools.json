@@ -50,6 +50,13 @@
   ],
   "templates": [
     {
+      "name": "Birthday Special 🎂",
+      "price": "149",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787925329/af41efb4-ef32-418c-8f91-637dfa728776.png",
+      "demo": "https://herosalman1.github.io/Bdy-5/surprise.html",
+      "desc": "5,4,3,2,1 Counting Special Template 💫❤️"
+    },
+    {
       "name": "Birthday Shayari ✨",
       "price": "199",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787924914/b2b74f23-bbbf-4a7c-9cc0-c0017a1ed9aa.png",
