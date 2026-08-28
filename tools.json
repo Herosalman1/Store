@@ -50,6 +50,13 @@
   ],
   "templates": [
     {
+      "name": "Birthday Special Template 😁💖",
+      "price": "199",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787926372/b6ee8924-229b-4041-83bf-5e13de465311.png",
+      "demo": "https://herosalman1.github.io/Bdy-2/surprise.html",
+      "desc": "Most Transding Template 🎉"
+    },
+    {
       "name": "Trand heart Treee 💖🎂",
       "price": "199",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787926105/f01ae643-8831-41a8-b635-e1a9a20068c4.png",
