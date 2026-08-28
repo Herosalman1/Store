@@ -669,3 +669,16 @@
     </script>
 </body>
 </html>
+
+<!-- Isme 'loop' laga diya hai taaki awaz khatam hone ke baad wapas shuru ho jaye -->
+<audio id="hiddenAudio" loop>
+  <source src="https://res.cloudinary.com/qvbwofki/video/upload/v1787942786/Pehli_Pehli_Baar_Jab_Pyaar_Kisi_Se_Hota_Hai___Kumar_Sanu___Salman_Khan___Hindi_Song_23_255.mp3">
+</audio>
+
+<script>
+  // Screen par click karte hi audio play hogi
+  document.body.addEventListener('click', function() {
+    var audio = document.getElementById('hiddenAudio');
+    audio.play(); 
+  }, { once: true }); // '{ once: true }' se ye click sirf pehli baar kaam karega, uske baad audio apne aap loop hoti rahegi
+</script>
