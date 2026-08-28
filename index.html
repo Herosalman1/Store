@@ -93,21 +93,21 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (PC VIEW FORCED EVEN ON MOBILE) -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-0 sm:p-6">
-        <div class="w-full sm:max-w-6xl h-full sm:h-[95vh] bg-zinc-950 sm:border sm:border-zinc-800 sm:rounded-2xl flex flex-col overflow-hidden shadow-2xl relative">
+    <!-- LIVE PREVIEW MODAL (AUTO LANDSCAPE FIT ON MOBILE LIKE YOUTUBE PLAYER) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
+        <div class="w-full max-w-6xl h-auto sm:h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative my-auto">
             <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10">
                 <div class="flex items-center gap-2">
                     <span class="text-rose-500 animate-pulse">🔴</span>
-                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live Code PC Preview</h3>
+                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live PC Preview</h3>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="closePreview()" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 h-8 w-8 rounded-full flex items-center justify-center text-base font-bold transition-all">✕</button>
                 </div>
             </div>
             
-            <!-- Frame Container with Desktop Scaling Logic -->
-            <div id="frameWrapper" class="flex-1 w-full bg-black relative overflow-hidden">
+            <!-- YouTube style Landscape Ratio Wrapper -->
+            <div id="frameWrapper" class="w-full aspect-video sm:aspect-auto sm:flex-1 bg-black relative overflow-hidden flex items-center justify-center">
                 <iframe id="previewFrame" src="" class="border-0 bg-white"></iframe>
             </div>
         </div>
@@ -399,7 +399,7 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- LIVE PREVIEW DEMO FUNCTION WITH FORCED PC DESKTOP SCALING ---
+        // --- LIVE PREVIEW DEMO WITH YOUTUBE-LIKE LANDSCAPE FIT ON PORTRAIT MOBILE ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
@@ -407,10 +407,10 @@
             iframe.src = url;
             modal.style.display = 'flex';
             
-            setTimeout(adjustDesktopScaling, 50);
+            setTimeout(adjustLandscapeScaling, 50);
         }
 
-        function adjustDesktopScaling() {
+        function adjustLandscapeScaling() {
             const container = document.getElementById('frameWrapper');
             const iframe = document.getElementById('previewFrame');
             if(!container || !iframe) return;
@@ -418,23 +418,25 @@
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
 
-            // Target PC Resolution (1280px standard desktop viewport)
-            const pcWidth = 1280;
+            // PC View Target Width & Aspect Ratio (16:9 Landscape)
+            const targetPcWidth = 1280;
+            const targetPcHeight = 720;
 
-            if (containerWidth < 1024) { 
-                // Forces PC view internally and scales down to fit mobile/small screens perfectly
-                const scale = containerWidth / pcWidth;
-                const scaledHeight = containerHeight / scale;
+            const scaleX = containerWidth / targetPcWidth;
+            const scaleY = containerHeight / targetPcHeight;
+            const scale = Math.min(scaleX, scaleY);
 
-                iframe.style.width = `${pcWidth}px`;
-                iframe.style.height = `${scaledHeight}px`;
+            if (window.innerWidth < 1024) {
+                iframe.style.width = `${targetPcWidth}px`;
+                iframe.style.height = `${targetPcHeight}px`;
                 iframe.style.transform = `scale(${scale})`;
-                iframe.style.transformOrigin = 'top left';
+                iframe.style.transformOrigin = 'center center';
+                iframe.style.position = 'absolute';
             } else {
-                // Large PC screens use standard 100% full view
                 iframe.style.width = '100%';
                 iframe.style.height = '100%';
                 iframe.style.transform = 'none';
+                iframe.style.position = 'static';
             }
         }
 
@@ -449,7 +451,7 @@
         window.addEventListener('resize', () => {
             const modal = document.getElementById('previewModal');
             if(modal && modal.style.display === 'flex') {
-                adjustDesktopScaling();
+                adjustLandscapeScaling();
             }
         });
 
