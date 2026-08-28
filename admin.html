@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard | Salman Store</title>
+    <title>Admin Dashboard | Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -204,6 +204,7 @@
 
     </div>
 
+    <!-- LIST MODAL -->
     <div id="listModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-10">
         <div class="max-w-4xl w-full h-[75vh] glass-panel p-6 sm:p-8 rounded-3xl border border-zinc-700 flex flex-col shadow-2xl">
             <div class="flex items-center justify-between pb-5 border-b border-zinc-800 mb-5">
@@ -219,6 +220,17 @@
         let storeData = { profile: { socials: [] }, highlights: [], templates: [] };
         let fileSha = "";
         let editIndex = null; 
+
+        // 🌟 CORE FUNCTION: Sorts templates so pinned ones are always at the top
+        function sortTemplates() {
+            if(storeData.templates && storeData.templates.length > 0) {
+                storeData.templates.sort((a, b) => {
+                    let isPinnedA = a.pinned === true;
+                    let isPinnedB = b.pinned === true;
+                    return (isPinnedB === true) - (isPinnedA === true);
+                });
+            }
+        }
 
         async function loadData() {
             const token = document.getElementById('gitToken').value.trim();
@@ -256,6 +268,9 @@
                     if(!storeData.profile) storeData.profile = {};
                     if(!storeData.profile.socials) storeData.profile.socials = [];
                 }
+
+                // 🌟 Sort data immediately on load so lists show correctly
+                sortTemplates();
                 
                 document.getElementById('pDp').value = storeData.profile.dp || '';
                 document.getElementById('pBio').value = storeData.profile.bio || '';
@@ -343,21 +358,35 @@
             }
             storeData.templates.forEach((tool, index) => {
                 let price = tool.price || '199';
+                let isPinned = tool.pinned === true;
+                let pinText = isPinned ? 'UNPIN 📌' : 'PIN 📍';
+                
+                // YOUR REQUESTED BLUE COLOR (#166ed3) FOR PIN BUTTON IN ADMIN LIST
+                let pinClass = isPinned ? 'bg-[#166ed3] hover:opacity-80 text-white shadow-[0_0_12px_rgba(22,110,211,0.5)]' : 'bg-zinc-800 hover:bg-zinc-700 text-white';
+
                 list.innerHTML += `
-                    <div class="flex items-center justify-between bg-black/60 border border-white/10 p-4 rounded-2xl hover:border-zinc-500 transition-colors">
+                    <div class="flex items-center justify-between bg-black/60 border ${isPinned ? 'border-[#166ed3]/60' : 'border-white/10'} p-4 rounded-2xl hover:border-zinc-500 transition-colors">
                         <div class="flex items-center gap-4">
                             <img src="${tool.img}" class="w-14 h-14 object-cover rounded-xl border border-white/10">
                             <div>
-                                <h4 class="text-sm font-semibold text-white tracking-wide">${index + 1}. ${tool.name}</h4>
+                                <h4 class="text-sm font-semibold text-white tracking-wide">${index + 1}. ${tool.name} ${isPinned ? '<span class="text-[10px] bg-[#166ed3] text-white px-1.5 py-0.5 rounded ml-2 font-bold">PINNED</span>' : ''}</h4>
                                 <p class="text-xs text-rose-400 font-bold mt-0.5">₹${price}</p>
                             </div>
                         </div>
                         <div class="flex gap-2">
-                            <button onclick="editTemplate(${index})" class="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold rounded-xl border border-white/5 transition-all">EDIT</button>
-                            <button onclick="deleteTemplate(${index})" class="px-5 py-2 bg-rose-900/50 hover:bg-rose-600 text-white text-xs font-bold rounded-xl border border-rose-500/30 transition-all">DELETE</button>
+                            <button onclick="togglePin(${index})" class="px-4 py-2 ${pinClass} text-xs font-bold rounded-xl border border-white/5 transition-all">${pinText}</button>
+                            <button onclick="editTemplate(${index})" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold rounded-xl border border-white/5 transition-all">EDIT</button>
+                            <button onclick="deleteTemplate(${index})" class="px-4 py-2 bg-rose-900/50 hover:bg-rose-600 text-white text-xs font-bold rounded-xl border border-rose-500/30 transition-all">DELETE</button>
                         </div>
                     </div>`;
             });
+        }
+
+        // 🌟 PIN/UNPIN AND AUTO-SORT LOGIC
+        function togglePin(index) {
+            storeData.templates[index].pinned = !storeData.templates[index].pinned;
+            sortTemplates(); // Turant sort kardo array ko taaki pin hote hi top pe chala jaye
+            renderList();    // List ko dobara refresh kardo
         }
 
         function processTemplate() {
@@ -383,11 +412,14 @@
                 name, price, img,
                 images: imagesArr,
                 demo: document.getElementById('tDemo').value.trim() || '#',
-                desc: document.getElementById('tDesc').value.trim() || 'Special Template ❤️🎁💫✨'
+                desc: document.getElementById('tDesc').value.trim() || 'Special Template ❤️🎁💫✨',
+                pinned: editIndex !== null ? (storeData.templates[editIndex].pinned || false) : false
             };
 
             if(editIndex === null) { storeData.templates.unshift(itemObj); } 
             else { storeData.templates[editIndex] = itemObj; editIndex = null; document.getElementById('formTitle').innerText = "Code Upload & Edit System"; }
+
+            sortTemplates(); // Naya add hone ke baad ya edit hone ke baad sort karlo
 
             document.getElementById('tName').value = ""; document.getElementById('tPrice').value = ""; 
             document.getElementById('previewImagesContainer').innerHTML = '<input type="text" id="tImgMain" placeholder="Main Image URL (https://...)" class="preview-img-input w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">';
@@ -462,6 +494,9 @@
                 }
             });
 
+            // Make sure array is perfectly sorted before saving to GitHub JSON
+            sortTemplates();
+
             const updatedJson = JSON.stringify(storeData, null, 2);
             const encodedContent = btoa(unescape(encodeURIComponent(updatedJson)));
 
@@ -472,7 +507,7 @@
                 const response = await fetch(`https://api.github.com/repos/${myRepo}/contents/tools.json`, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Updated profile, buttons, highlights & templates via Control Room", content: encodedContent, sha: fileSha })
+                    body: JSON.stringify({ message: "Updated profile, buttons, highlights & pinned templates via Control Room", content: encodedContent, sha: fileSha })
                 });
 
                 if(response.ok) {
