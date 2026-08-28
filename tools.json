@@ -50,6 +50,13 @@
   ],
   "templates": [
     {
+      "name": "Happy Birthday",
+      "price": "149",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787900253/164f32a2-d102-4856-87af-63dd01f163b9.png",
+      "demo": "https://herosalman1.github.io/Bdy-1/surprise.html",
+      "desc": "Special Candle Template 💫"
+    },
+    {
       "name": "Raksha Bandhan",
       "price": "199",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787835800/548451ef-0167-40b1-a89f-c98398aba42f.png",
