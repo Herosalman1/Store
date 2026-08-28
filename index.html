@@ -191,7 +191,6 @@
             flex-shrink: 0;
         }
 
-        /* Yahan se Highlights ka Circle Size aap apne hisab se set kar sakte hain (e.g., 85px, 90px) */
         .highlight-circle {
             width: 85px;         
             height: 85px;        
@@ -429,6 +428,13 @@
                         return;
                     }
 
+                    // LOGIC TO KEEP PINNED ITEMS ON TOP
+                    templates.sort((a, b) => {
+                        let isPinnedA = a.pinned === true;
+                        let isPinnedB = b.pinned === true;
+                        return (isPinnedB === true) - (isPinnedA === true);
+                    });
+
                     grid.innerHTML = '';
                     templates.forEach((item, tIdx) => {
                         let price = item.price || '199';
@@ -436,19 +442,20 @@
                         let demo = item.demo || '#';
                         let desc = item.desc || '';
                         let hasMultiple = item.images && item.images.length > 0;
-
+                        
+                        // HIDDEN PIN TAG: Customer ko nahi pata chalega konsa pin hai, buttons bhi pehle jaise
                         grid.innerHTML += `
                             <div class="group relative rounded-xl overflow-hidden border border-zinc-900 bg-zinc-950 flex flex-col justify-between hover:border-rose-600 transition-all shadow-xl">
                                 <div>
                                     <div class="relative aspect-[4/3] bg-zinc-900 overflow-hidden cursor-pointer" onclick="handleImgClick(${tIdx})">
                                         <img src="${img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90">
-                                        <div class="absolute top-3 right-3 px-3 py-1 rounded-xl bg-black/60 backdrop-blur-md text-xs font-bold text-white border border-white/20 shadow-2xl flex items-center gap-1 tracking-wide">
+                                        <div class="absolute top-3 right-3 px-3 py-1 rounded-xl bg-black/60 backdrop-blur-md text-xs font-bold text-white border border-white/20 shadow-2xl flex items-center gap-1 tracking-wide z-10">
                                             <span>₹${price}</span>
                                         </div>
-                                        ${hasMultiple ? `<div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/70 backdrop-blur text-[10px] text-zinc-200 rounded-md border border-white/10">📸 Multiple Photos</div>` : ''}
+                                        ${hasMultiple ? `<div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/70 backdrop-blur text-[10px] text-zinc-200 rounded-md border border-white/10 z-10">📸 Multiple Photos</div>` : ''}
                                     </div>
                                     <div class="p-4">
-                                        <h3 class="font-semibold text-white text-sm mb-1">${item.name}</h3>
+                                        <h3 class="font-semibold text-white text-sm mb-1 flex items-center gap-2">${item.name}</h3>
                                         <p class="text-xs text-zinc-400 whitespace-pre-line mb-3">${desc}</p>
                                     </div>
                                 </div>
@@ -613,6 +620,12 @@
             iframe.src = url;
             modal.style.display = 'flex';
             
+            // BACKGROUND MUSIC PAUSE LOGIC
+            const bgAudio = document.getElementById('hiddenAudio');
+            if (bgAudio && !bgAudio.paused) {
+                bgAudio.pause();
+            }
+
             setTimeout(adjustFullPcScaling, 50);
         }
 
@@ -651,6 +664,12 @@
             iframe.src = '';
             iframe.style.transform = 'none';
             modal.style.display = 'none';
+
+            // BACKGROUND MUSIC PLAY LOGIC
+            const bgAudio = document.getElementById('hiddenAudio');
+            if (bgAudio) {
+                bgAudio.play().catch(e => console.log("Auto-play blocked by browser", e));
+            }
         }
 
         window.addEventListener('resize', () => {
@@ -667,18 +686,17 @@
 
         fetchStoreData();
     </script>
+
+    <!-- BACKGROUND MUSIC SECTION -->
+    <audio id="hiddenAudio" loop>
+      <source src="https://res.cloudinary.com/qvbwofki/video/upload/v1787942786/Pehli_Pehli_Baar_Jab_Pyaar_Kisi_Se_Hota_Hai___Kumar_Sanu___Salman_Khan___Hindi_Song_23_255.mp3">
+    </audio>
+
+    <script>
+      document.body.addEventListener('click', function() {
+        var audio = document.getElementById('hiddenAudio');
+        audio.play().catch(e => console.log("Click to play needed", e)); 
+      }, { once: true }); 
+    </script>
 </body>
 </html>
-
-<!-- Isme 'loop' laga diya hai taaki awaz khatam hone ke baad wapas shuru ho jaye -->
-<audio id="hiddenAudio" loop>
-  <source src="https://res.cloudinary.com/qvbwofki/video/upload/v1787942786/Pehli_Pehli_Baar_Jab_Pyaar_Kisi_Se_Hota_Hai___Kumar_Sanu___Salman_Khan___Hindi_Song_23_255.mp3">
-</audio>
-
-<script>
-  // Screen par click karte hi audio play hogi
-  document.body.addEventListener('click', function() {
-    var audio = document.getElementById('hiddenAudio');
-    audio.play(); 
-  }, { once: true }); // '{ once: true }' se ye click sirf pehli baar kaam karega, uske baad audio apne aap loop hoti rahegi
-</script>
