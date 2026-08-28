@@ -158,14 +158,17 @@
                                 <label class="block text-xs font-medium text-zinc-400 mb-1">Price (₹)</label>
                                 <input type="number" id="tPrice" placeholder="249" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
                             </div>
+                            
                             <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Main Preview Image URL</label>
-                                <input type="text" id="tImg" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="block text-xs font-medium text-zinc-400">Preview Images URLs</label>
+                                    <button type="button" onclick="addPreviewImageInput()" class="px-3 py-1 bg-brand text-white text-[10px] font-bold rounded-lg border border-white/10 hover:bg-rose-500 transition-all">+ Add URL</button>
+                                </div>
+                                <div id="previewImagesContainer" class="space-y-2">
+                                    <input type="text" id="tImgMain" placeholder="Main Image URL (https://...)" class="preview-img-input w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                                </div>
                             </div>
-                            <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Additional Preview Image URLs (Comma or newline separated)</label>
-                                <textarea id="tImages" rows="2" placeholder="https://img1.com, https://img2.com" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs resize-none"></textarea>
-                            </div>
+
                             <div class="sm:col-span-2">
                                 <label class="block text-xs font-medium text-zinc-400 mb-1">Live Demo Link</label>
                                 <input type="text" id="tDemo" placeholder="rakhi.html" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
@@ -281,6 +284,17 @@
             }
         }
 
+        function addPreviewImageInput(val = '') {
+            const container = document.getElementById('previewImagesContainer');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2';
+            div.innerHTML = `
+                <input type="text" value="${val}" placeholder="Additional Image URL" class="preview-img-input w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                <button type="button" onclick="this.parentElement.remove()" class="px-3 bg-rose-900/50 text-rose-400 rounded-xl hover:bg-rose-600 hover:text-white transition-all text-xs font-bold">X</button>
+            `;
+            container.appendChild(div);
+        }
+
         function renderSocialsAdmin() {
             let container = document.getElementById('socialsAdminContainer');
             container.innerHTML = '';
@@ -296,14 +310,8 @@
                     </div>`;
             });
         }
-        function addSocialInput(name, url, color) {
-            storeData.profile.socials.push({ name, url, color });
-            renderSocialsAdmin();
-        }
-        function removeSocial(idx) {
-            storeData.profile.socials.splice(idx, 1);
-            renderSocialsAdmin();
-        }
+        function addSocialInput(name, url, color) { storeData.profile.socials.push({ name, url, color }); renderSocialsAdmin(); }
+        function removeSocial(idx) { storeData.profile.socials.splice(idx, 1); renderSocialsAdmin(); }
 
         function renderHighlightsAdmin() {
             let container = document.getElementById('highlightsAdminContainer');
@@ -323,10 +331,7 @@
                     </div>`;
             });
         }
-        function addHighlightInput(icon, name, images) { 
-            storeData.highlights.push({ icon: icon, name: name, images: images || [] }); 
-            renderHighlightsAdmin(); 
-        }
+        function addHighlightInput(icon, name, images) { storeData.highlights.push({ icon: icon, name: name, images: images || [] }); renderHighlightsAdmin(); }
         function removeHighlight(idx) { storeData.highlights.splice(idx, 1); renderHighlightsAdmin(); }
 
         function renderList() {
@@ -367,12 +372,15 @@
                 return;
             }
 
-            let rawImages = document.getElementById('tImages').value.trim();
-            let imagesArr = rawImages ? rawImages.split(/,|\n/).map(s => s.trim()).filter(Boolean) : [];
+            const imgInputs = document.querySelectorAll('.preview-img-input');
+            let img = imgInputs[0].value.trim() || 'https://res.cloudinary.com/ysl029w9/image/upload/v1787835800/548451ef-0167-40b1-a89f-c98398aba42f.png';
+            let imagesArr = [];
+            for (let i = 1; i < imgInputs.length; i++) {
+                if (imgInputs[i].value.trim()) { imagesArr.push(imgInputs[i].value.trim()); }
+            }
 
             const itemObj = {
-                name, price,
-                img: document.getElementById('tImg').value.trim() || 'https://res.cloudinary.com/ysl029w9/image/upload/v1787835800/548451ef-0167-40b1-a89f-c98398aba42f.png',
+                name, price, img,
                 images: imagesArr,
                 demo: document.getElementById('tDemo').value.trim() || '#',
                 desc: document.getElementById('tDesc').value.trim() || 'Special Template ❤️🎁💫✨'
@@ -381,7 +389,9 @@
             if(editIndex === null) { storeData.templates.unshift(itemObj); } 
             else { storeData.templates[editIndex] = itemObj; editIndex = null; document.getElementById('formTitle').innerText = "Code Upload & Edit System"; }
 
-            document.getElementById('tName').value = ""; document.getElementById('tPrice').value = ""; document.getElementById('tImg').value = ""; document.getElementById('tImages').value = ""; document.getElementById('tDemo').value = ""; document.getElementById('tDesc').value = "";
+            document.getElementById('tName').value = ""; document.getElementById('tPrice').value = ""; 
+            document.getElementById('previewImagesContainer').innerHTML = '<input type="text" id="tImgMain" placeholder="Main Image URL (https://...)" class="preview-img-input w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">';
+            document.getElementById('tDemo').value = ""; document.getElementById('tDesc').value = "";
             
             btn.innerText = "ADDED TO LIST SUCCESSFULLY 📋";
             btn.style.backgroundColor = "#2563eb"; btn.style.borderColor = "#2563eb"; btn.style.color = "#ffffff";
@@ -395,8 +405,12 @@
             editIndex = index; let item = storeData.templates[index];
             document.getElementById('tName').value = item.name || '';
             document.getElementById('tPrice').value = item.price || '';
-            document.getElementById('tImg').value = item.img || '';
-            document.getElementById('tImages').value = item.images ? item.images.join(', ') : '';
+            
+            document.getElementById('previewImagesContainer').innerHTML = `<input type="text" id="tImgMain" value="${item.img || ''}" placeholder="Main Image URL" class="preview-img-input w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">`;
+            if (item.images && item.images.length > 0) {
+                item.images.forEach(url => addPreviewImageInput(url));
+            }
+
             document.getElementById('tDemo').value = item.demo || '';
             document.getElementById('tDesc').value = item.desc || '';
             document.getElementById('formTitle').innerText = "✏️ Edit Template Code";
