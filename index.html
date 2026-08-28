@@ -42,8 +42,8 @@
 
         /* --- 1. PROFILE DP STYLES --- */
         .profile-dp-container {
-            width: 150px;         /* Desktop/Mobile Default Width */
-            height: 150px;        /* Desktop/Mobile Default Height */
+            width: 150px;        
+            height: 150px;       
             border-radius: 9999px;
             padding: 2px;
             background: linear-gradient(to top right, #f59e0b, #f43f5e, #9333ea);
@@ -53,7 +53,7 @@
 
         @media (min-width: 640px) {
             .profile-dp-container {
-                width: 150px;    /* PC/Large Screen DP Size */
+                width: 150px;    
                 height: 150px;
             }
         }
@@ -76,28 +76,22 @@
         }
 
         .profile-username {
-            font-size: 28px;     /* Mobile font size */
+            font-size: 28px;     
             font-weight: 600;
             letter-spacing: 0.025em;
             color: #ffffff;
         }
 
-        @media (min-width: 640px) {
-            .profile-username {
-                font-size: 28px; /* PC/Desktop font size */
-            }
-        }
-
         .verified-icon {
-            width: 18px;         /* Badge Width */
-            height: 18px;        /* Badge Height */
+            width: 18px;         
+            height: 18px;        
             fill: rgb(0, 149, 246);
             flex-shrink: 0;
         }
 
         /* --- 3. DISPLAY NAME & PRONOUNS --- */
         .profile-fullname {
-            font-size: 20px;     /* Name Font Size */
+            font-size: 20px;     
             font-weight: 600;
             color: #ffffff;
             line-height: 1.25;
@@ -105,17 +99,17 @@
         }
 
         .profile-pronouns {
-            font-size: 16px;     /* Pronouns Size */
+            font-size: 16px;     
             font-weight: 400;
             color: #a1a1aa;
         }
 
-        /* --- 4. STATS (POSTS, FOLLOWERS, FOLLOWING) --- */
+        /* --- 4. STATS --- */
         .profile-stats-bar {
             display: flex;
             justify-content: flex-start;
             gap: 16px;
-            font-size: 13px;     /* Text Size */
+            font-size: 13px;     
             color: #d4d4d8;
             margin-bottom: 8px;
         }
@@ -134,11 +128,10 @@
 
         /* --- 5. BIO TEXT --- */
         .profile-bio {
-            font-size: 20px;     /* Bio Font Size */
+            font-size: 20px;     
             color: #d4d4d8;
             white-space: pre-line;
             line-height: 1.375;
-            padding-top: -8px;
             margin-bottom: 8px;
         }
 
@@ -154,14 +147,14 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: flex-start;
-            gap: 8px;            /* Buttons gap */
+            gap: 8px;            
             padding-top: 8px;
         }
 
         .social-button {
-            font-size: 16px;     /* Button Text Size */
+            font-size: 16px;     
             font-weight: 500;
-            padding: 6px 16px;   /* Padding */
+            padding: 6px 16px;   
             border-radius: 9999px;
             background-color: #18181b;
             border: 1px solid #27272a;
@@ -171,6 +164,71 @@
 
         .social-button:hover {
             opacity: 0.8;
+        }
+
+        /* --- 7. HIGHLIGHTS SECTION STYLES --- */
+        .highlights-container {
+            display: flex;
+            gap: 16px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            border-bottom: 1px solid #18181b;
+        }
+
+        .highlights-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .highlight-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Yahan se Highlights ka Circle Size aap apne hisab se set kar sakte hain (e.g., 85px, 90px) */
+        .highlight-circle {
+            width: 85px;         
+            height: 85px;        
+            border-radius: 9999px;
+            padding: 2px;        
+            background: linear-gradient(to top right, #f59e0b, #f43f5e, #9333ea); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .highlight-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 9999px;
+            background-color: #09090b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .highlight-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .highlight-title {
+            font-size: 12px;     
+            color: #a1a1aa;
+            text-align: center;
+            max-width: 85px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -206,7 +264,7 @@
                     SALMAN <span class="profile-pronouns">he/him</span>
                 </div>
 
-                <!-- STATS (POSTS, FOLLOWERS, FOLLOWING) -->
+                <!-- STATS -->
                 <div class="profile-stats-bar">
                     <div><span id="uiPosts" class="profile-stats-number">45</span> posts</div>
                     <div><span id="uiFollowers" class="profile-stats-number">9,779</span> followers</div>
@@ -225,7 +283,7 @@
             </div>
         </header>
 
-        <div id="highlightsBar" class="flex gap-4 py-4 overflow-x-auto scrollbar-hide border-b border-zinc-950"></div>
+        <div id="highlightsBar" class="highlights-container"></div>
 
         <div class="py-4 flex items-center justify-between">
             <h2 class="text-xs font-semibold uppercase tracking-widest text-zinc-400">📁 PREMIUM CODES & TEMPLATES (REELS GRID)</h2>
@@ -351,13 +409,17 @@
                     highlightsBar.innerHTML = '';
                     highlights.forEach((h, hIdx) => {
                         let iconContent = h.icon && h.icon.startsWith('http') 
-                            ? `<img src="${h.icon}" class="w-full h-full object-cover rounded-full">` 
+                            ? `<img src="${h.icon}">` 
                             : `<span>${h.icon || '✨'}</span>`;
 
                         highlightsBar.innerHTML += `
-                            <div onclick="openHighlightStory(${hIdx})" class="flex flex-col items-center gap-1.5 cursor-pointer flex-shrink-0">
-                                <div class="w-16 h-16 rounded-full p-[2px] border border-zinc-700 bg-zinc-900 flex items-center justify-center overflow-hidden text-xl">${iconContent}</div>
-                                <span class="text-xs text-zinc-400">${h.name || 'Highlight'}</span>
+                            <div onclick="openHighlightStory(${hIdx})" class="highlight-item">
+                                <div class="highlight-circle">
+                                    <div class="highlight-inner">
+                                        ${iconContent}
+                                    </div>
+                                </div>
+                                <span class="highlight-title">${h.name || 'Highlight'}</span>
                             </div>
                         `;
                     });
@@ -594,7 +656,7 @@
         window.addEventListener('resize', () => {
             const modal = document.getElementById('previewModal');
             if(modal && modal.style.display === 'flex') {
-                adjustFullPcScaling();
+                adjustFilePcScaling();
             }
         });
 
