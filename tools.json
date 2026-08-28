@@ -89,6 +89,24 @@
       "pinned": true
     },
     {
+      "name": "Birthday Shayari ✨",
+      "price": "199",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787935029/6e77265d-da7e-4ac0-b585-0e84ff82686e.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Bdy-6/surprise.html",
+      "desc": "Special Tranding Template 💫❤️✨",
+      "pinned": true
+    },
+    {
+      "name": "Raksha Bandhan",
+      "price": "199",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787936346/cc0c77f9-fbc6-4464-9372-035345e6ef78.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Happy-Raksha-Bandhan-2026/rakhi.html",
+      "desc": "Special Template ❤️🎁💫✨",
+      "pinned": true
+    },
+    {
       "name": "Birthday WIshes From White Small Dot 🎂",
       "price": "149",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787935278/f12cbd32-a51c-4d8e-b1c6-1abec480c3e6.png",
@@ -105,15 +123,6 @@
       "desc": "5, 4, 3, 2, 1 \nCounting Special Template 💫❤️"
     },
     {
-      "name": "Birthday Shayari ✨",
-      "price": "199",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787935029/6e77265d-da7e-4ac0-b585-0e84ff82686e.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/Bdy-6/surprise.html",
-      "desc": "Special Tranding Template 💫❤️✨",
-      "pinned": true
-    },
-    {
       "name": "Birthday Special",
       "price": "149",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787937028/7d4b47cf-5e17-46e6-b016-5f9c32c61e82.png",
@@ -128,14 +137,6 @@
       "images": [],
       "demo": "https://herosalman1.github.io/Bdy-1/surprise.html",
       "desc": "Special Candle Template 💫"
-    },
-    {
-      "name": "Raksha Bandhan",
-      "price": "199",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787936346/cc0c77f9-fbc6-4464-9372-035345e6ef78.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/Happy-Raksha-Bandhan-2026/rakhi.html",
-      "desc": "Special Template ❤️🎁💫✨"
     }
   ]
 }
