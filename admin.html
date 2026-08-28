@@ -79,7 +79,6 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             <div class="lg:col-span-5 flex flex-col gap-6">
                 
-                <!-- Profile Customization Panel -->
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10">
                     <div class="flex items-center gap-2 border-b border-zinc-800 pb-3">
                         <span class="text-zinc-300">👤</span>
@@ -112,7 +111,6 @@
                     </div>
                 </div>
 
-                <!-- SOCIAL BUTTONS MANAGER PANEL -->
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10">
                     <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
                         <div class="flex items-center gap-2">
@@ -124,23 +122,19 @@
                         </button>
                     </div>
                     
-                    <div id="socialsAdminContainer" class="space-y-3 max-h-[220px] overflow-y-auto pr-1">
-                        <!-- Dynamically populated buttons -->
-                    </div>
+                    <div id="socialsAdminContainer" class="space-y-3 max-h-[220px] overflow-y-auto pr-1"></div>
                 </div>
 
-                <!-- Highlights Panel -->
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col">
                     <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
                         <div class="flex items-center gap-2"><span class="text-zinc-300">🖼️</span><h3 class="text-sm font-bold uppercase tracking-wider text-white">Highlights</h3></div>
-                        <button onclick="addHighlightInput('', '')" class="px-3.5 py-2 btn-uniform text-xs rounded-xl flex items-center gap-1"><span>+ Add</span></button>
+                        <button onclick="addHighlightInput('', '', [])" class="px-3.5 py-2 btn-uniform text-xs rounded-xl flex items-center gap-1"><span>+ Add</span></button>
                     </div>
                     <div id="highlightsAdminContainer" class="space-y-2.5 overflow-y-auto pr-1 flex-1 min-h-[170px]"></div>
                 </div>
 
             </div>
 
-            <!-- RIGHT COLUMN: Code Upload & Publish -->
             <div class="lg:col-span-7 flex flex-col gap-6 justify-between">
                 
                 <div class="glass-panel p-6 rounded-3xl space-y-4 border border-white/10 flex-1 flex flex-col justify-between">
@@ -165,8 +159,12 @@
                                 <input type="number" id="tPrice" placeholder="249" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
                             </div>
                             <div class="sm:col-span-2">
-                                <label class="block text-xs font-medium text-zinc-400 mb-1">Preview Image URL</label>
+                                <label class="block text-xs font-medium text-zinc-400 mb-1">Main Preview Image URL</label>
                                 <input type="text" id="tImg" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-medium text-zinc-400 mb-1">Additional Preview Image URLs (Comma or newline separated)</label>
+                                <textarea id="tImages" rows="2" placeholder="https://img1.com, https://img2.com" class="w-full px-3.5 py-2.5 rounded-xl input-pro text-xs resize-none"></textarea>
                             </div>
                             <div class="sm:col-span-2">
                                 <label class="block text-xs font-medium text-zinc-400 mb-1">Live Demo Link</label>
@@ -203,7 +201,6 @@
 
     </div>
 
-    <!-- Modal List Box -->
     <div id="listModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-10">
         <div class="max-w-4xl w-full h-[75vh] glass-panel p-6 sm:p-8 rounded-3xl border border-zinc-700 flex flex-col shadow-2xl">
             <div class="flex items-center justify-between pb-5 border-b border-zinc-800 mb-5">
@@ -284,7 +281,6 @@
             }
         }
 
-        // Render Social Buttons in Admin
         function renderSocialsAdmin() {
             let container = document.getElementById('socialsAdminContainer');
             container.innerHTML = '';
@@ -293,7 +289,7 @@
             storeData.profile.socials.forEach((s, idx) => {
                 container.innerHTML += `
                     <div class="flex gap-2 items-center bg-black/40 p-2.5 rounded-2xl border border-white/5" id="sRow_${idx}">
-                        <input type="text" id="sName_${idx}" value="${s.name || ''}" placeholder="Name (e.g. Instagram)" class="w-28 px-2 py-2 rounded-xl input-pro text-xs text-white">
+                        <input type="text" id="sName_${idx}" value="${s.name || ''}" placeholder="Name" class="w-28 px-2 py-2 rounded-xl input-pro text-xs text-white">
                         <input type="text" id="sUrl_${idx}" value="${s.url || ''}" placeholder="URL Link" class="flex-1 px-3 py-2 rounded-xl input-pro text-xs text-white">
                         <input type="color" id="sColor_${idx}" value="${s.color || '#ffffff'}" class="w-9 h-9 bg-transparent cursor-pointer rounded-lg border border-white/10" title="Choose Font Color">
                         <button onclick="removeSocial(${idx})" class="px-2.5 py-2 btn-uniform text-xs rounded-xl text-rose-400">🗑️</button>
@@ -313,15 +309,24 @@
             let container = document.getElementById('highlightsAdminContainer');
             container.innerHTML = '';
             storeData.highlights.forEach((h, idx) => {
+                let imagesStr = Array.isArray(h.images) ? h.images.join(', ') : (h.icon ? h.icon : '');
                 container.innerHTML += `
-                    <div class="flex gap-2 items-center bg-black/40 p-2.5 rounded-2xl border border-white/5">
-                        <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Photo Image URL" class="w-32 px-2 py-2 rounded-xl input-pro text-xs text-center text-white">
-                        <input type="text" id="hName_${idx}" value="${h.name || ''}" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-pro text-xs text-white">
-                        <button onclick="removeHighlight(${idx})" class="px-3 py-2 btn-uniform text-xs rounded-xl text-rose-400">🗑️</button>
+                    <div class="bg-black/40 p-3 rounded-2xl border border-white/5 space-y-2">
+                        <div class="flex gap-2 items-center">
+                            <input type="text" id="hIcon_${idx}" value="${h.icon || ''}" placeholder="Cover Image URL" class="w-32 px-2 py-2 rounded-xl input-pro text-xs text-center text-white">
+                            <input type="text" id="hName_${idx}" value="${h.name || ''}" placeholder="Highlight Name" class="flex-1 px-3 py-2 rounded-xl input-pro text-xs text-white">
+                            <button onclick="removeHighlight(${idx})" class="px-3 py-2 btn-uniform text-xs rounded-xl text-rose-400">🗑️</button>
+                        </div>
+                        <div>
+                            <input type="text" id="hImages_${idx}" value="${imagesStr}" placeholder="Story/Images URLs (comma separated)" class="w-full px-3 py-1.5 rounded-xl input-pro text-[11px] text-zinc-300">
+                        </div>
                     </div>`;
             });
         }
-        function addHighlightInput(icon, name) { storeData.highlights.push({ icon: icon, name: name }); renderHighlightsAdmin(); }
+        function addHighlightInput(icon, name, images) { 
+            storeData.highlights.push({ icon: icon, name: name, images: images || [] }); 
+            renderHighlightsAdmin(); 
+        }
         function removeHighlight(idx) { storeData.highlights.splice(idx, 1); renderHighlightsAdmin(); }
 
         function renderList() {
@@ -362,9 +367,13 @@
                 return;
             }
 
+            let rawImages = document.getElementById('tImages').value.trim();
+            let imagesArr = rawImages ? rawImages.split(/,|\n/).map(s => s.trim()).filter(Boolean) : [];
+
             const itemObj = {
                 name, price,
                 img: document.getElementById('tImg').value.trim() || 'https://res.cloudinary.com/ysl029w9/image/upload/v1787835800/548451ef-0167-40b1-a89f-c98398aba42f.png',
+                images: imagesArr,
                 demo: document.getElementById('tDemo').value.trim() || '#',
                 desc: document.getElementById('tDesc').value.trim() || 'Special Template ❤️🎁💫✨'
             };
@@ -372,7 +381,7 @@
             if(editIndex === null) { storeData.templates.unshift(itemObj); } 
             else { storeData.templates[editIndex] = itemObj; editIndex = null; document.getElementById('formTitle').innerText = "Code Upload & Edit System"; }
 
-            document.getElementById('tName').value = ""; document.getElementById('tPrice').value = ""; document.getElementById('tImg').value = ""; document.getElementById('tDemo').value = ""; document.getElementById('tDesc').value = "";
+            document.getElementById('tName').value = ""; document.getElementById('tPrice').value = ""; document.getElementById('tImg').value = ""; document.getElementById('tImages').value = ""; document.getElementById('tDemo').value = ""; document.getElementById('tDesc').value = "";
             
             btn.innerText = "ADDED TO LIST SUCCESSFULLY 📋";
             btn.style.backgroundColor = "#2563eb"; btn.style.borderColor = "#2563eb"; btn.style.color = "#ffffff";
@@ -387,6 +396,7 @@
             document.getElementById('tName').value = item.name || '';
             document.getElementById('tPrice').value = item.price || '';
             document.getElementById('tImg').value = item.img || '';
+            document.getElementById('tImages').value = item.images ? item.images.join(', ') : '';
             document.getElementById('tDemo').value = item.demo || '';
             document.getElementById('tDesc').value = item.desc || '';
             document.getElementById('formTitle').innerText = "✏️ Edit Template Code";
@@ -401,7 +411,6 @@
             const token = localStorage.getItem('gitToken');
             const uploadBtn = document.getElementById('uploadBtn');
             
-            // Gather Profile Data & Socials
             let currentSocials = [];
             document.querySelectorAll('[id^="sName_"]').forEach((el, idx) => {
                 let urlEl = document.getElementById(`sUrl_${idx}`);
@@ -427,8 +436,15 @@
             storeData.highlights = [];
             document.querySelectorAll('[id^="hIcon_"]').forEach((el, idx) => {
                 let nameEl = document.getElementById(`hName_${idx}`);
+                let imgEl = document.getElementById(`hImages_${idx}`);
                 if(el && nameEl) {
-                    storeData.highlights.push({ icon: el.value.trim(), name: nameEl.value.trim() || "Highlight" });
+                    let imgsText = imgEl ? imgEl.value.trim() : '';
+                    let imgsArr = imgsText ? imgsText.split(/,|\n/).map(s => s.trim()).filter(Boolean) : [el.value.trim()];
+                    storeData.highlights.push({ 
+                        icon: el.value.trim(), 
+                        name: nameEl.value.trim() || "Highlight",
+                        images: imgsArr
+                    });
                 }
             });
 
