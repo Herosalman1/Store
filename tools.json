@@ -50,6 +50,13 @@
   ],
   "templates": [
     {
+      "name": "Birthday Special",
+      "price": "149",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787924682/f57267e8-7595-481a-ac7a-f17ba4cb71a2.png",
+      "demo": "https://herosalman1.github.io/Bdy-7/surprise.html",
+      "desc": "Ballon air Fly Template 🎈✨"
+    },
+    {
       "name": "Happy Birthday",
       "price": "149",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787900253/164f32a2-d102-4856-87af-63dd01f163b9.png",
