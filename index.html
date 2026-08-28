@@ -93,29 +93,27 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
-        <div class="w-full max-w-5xl h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative">
-            <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800">
+    <!-- LIVE PREVIEW MODAL (PC VIEW FORCED EVEN ON MOBILE) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-0 sm:p-6">
+        <div class="w-full sm:max-w-6xl h-full sm:h-[95vh] bg-zinc-950 sm:border sm:border-zinc-800 sm:rounded-2xl flex flex-col overflow-hidden shadow-2xl relative">
+            <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10">
                 <div class="flex items-center gap-2">
                     <span class="text-rose-500 animate-pulse">🔴</span>
-                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live Code Preview</h3>
+                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live Code PC Preview</h3>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="setPreviewSize('responsive')" id="sizeMobBtn" class="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-medium transition-all">📱 Mobile View</button>
-                    <button onclick="setPreviewSize('full')" id="sizeFullBtn" class="px-3 py-1 bg-zinc-700 text-white rounded-lg text-xs font-medium transition-all">💻 PC View</button>
-                    <button onclick="closePreview()" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 h-8 w-8 rounded-full flex items-center justify-center text-base font-bold transition-all ml-2">✕</button>
+                    <button onclick="closePreview()" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 h-8 w-8 rounded-full flex items-center justify-center text-base font-bold transition-all">✕</button>
                 </div>
             </div>
-            <div class="flex-1 w-full bg-black flex items-center justify-center relative overflow-hidden p-0 sm:p-4">
-                <div id="frameContainer" class="w-full h-full transition-all duration-300 bg-black flex items-center justify-center">
-                    <iframe id="previewFrame" src="" class="w-full h-full border-0 bg-white"></iframe>
-                </div>
+            
+            <!-- Frame Container with Desktop Scaling Logic -->
+            <div id="frameWrapper" class="flex-1 w-full bg-black relative overflow-hidden">
+                <iframe id="previewFrame" src="" class="border-0 bg-white"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- DP & HIGHLIGHT STORY MODAL (Size increased for desktop) -->
+    <!-- DP & HIGHLIGHT STORY MODAL -->
     <div id="storyModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center">
         <div class="absolute top-4 left-4 right-4 z-20 flex items-center gap-1.5" id="storyProgressBars"></div>
         <div class="absolute top-8 left-4 right-4 z-20 flex items-center justify-between pt-2">
@@ -125,7 +123,6 @@
             </div>
             <button onclick="closeStory()" class="text-white text-3xl font-light px-3 py-1 bg-black/40 rounded-full">×</button>
         </div>
-        <!-- CHANGED: max-w-md to max-w-4xl lg:max-w-5xl to make the image large on desktop -->
         <div class="relative w-full max-w-4xl lg:max-w-5xl h-full sm:h-[90vh] sm:rounded-2xl overflow-hidden flex items-center justify-center bg-transparent mx-auto">
             <img id="storyImage" src="" class="w-full h-full object-contain select-none">
             <div class="absolute inset-y-0 left-0 w-1/3 cursor-pointer" onclick="prevStorySlide()"></div>
@@ -133,9 +130,8 @@
         </div>
     </div>
 
-    <!-- GALLERY MODAL (Size increased for desktop) -->
+    <!-- GALLERY MODAL -->
     <div id="galleryModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-0 sm:p-6">
-        <!-- CHANGED: sm:max-w-xl to sm:max-w-5xl lg:max-w-6xl for massive desktop view. Height updated to sm:h-[90vh] -->
         <div class="w-full sm:max-w-5xl lg:max-w-6xl bg-zinc-950 sm:border sm:border-zinc-800 h-full sm:h-[90vh] sm:rounded-2xl flex flex-col overflow-hidden shadow-2xl justify-between mx-auto">
             <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10">
                 <h3 id="galleryModalTitle" class="text-xs font-semibold text-white">Preview Gallery</h3>
@@ -403,28 +399,42 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
+        // --- LIVE PREVIEW DEMO FUNCTION WITH FORCED PC DESKTOP SCALING ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
-            document.getElementById('previewTitle').innerText = name ? `Live Preview: ${name}` : "Live Code Preview";
+            document.getElementById('previewTitle').innerText = name ? `Live PC Preview: ${name}` : "Live Code Preview";
             iframe.src = url;
             modal.style.display = 'flex';
-            setPreviewSize('full');
+            
+            setTimeout(adjustDesktopScaling, 50);
         }
 
-        function setPreviewSize(mode) {
-            const container = document.getElementById('frameContainer');
-            const mobBtn = document.getElementById('sizeMobBtn');
-            const fullBtn = document.getElementById('sizeFullBtn');
-            
-            if(mode === 'responsive') {
-                container.className = "w-[390px] h-[844px] rounded-3xl border-8 border-zinc-800 shadow-2xl transition-all duration-300 bg-black overflow-hidden my-auto";
-                mobBtn.className = "px-3 py-1 bg-zinc-700 text-white rounded-lg text-xs font-medium transition-all";
-                fullBtn.className = "px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-medium transition-all";
+        function adjustDesktopScaling() {
+            const container = document.getElementById('frameWrapper');
+            const iframe = document.getElementById('previewFrame');
+            if(!container || !iframe) return;
+
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+
+            // Target PC Resolution (1280px standard desktop viewport)
+            const pcWidth = 1280;
+
+            if (containerWidth < 1024) { 
+                // Forces PC view internally and scales down to fit mobile/small screens perfectly
+                const scale = containerWidth / pcWidth;
+                const scaledHeight = containerHeight / scale;
+
+                iframe.style.width = `${pcWidth}px`;
+                iframe.style.height = `${scaledHeight}px`;
+                iframe.style.transform = `scale(${scale})`;
+                iframe.style.transformOrigin = 'top left';
             } else {
-                container.className = "w-full h-full transition-all duration-300 bg-black flex items-center justify-center";
-                fullBtn.className = "px-3 py-1 bg-zinc-700 text-white rounded-lg text-xs font-medium transition-all";
-                mobBtn.className = "px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-medium transition-all";
+                // Large PC screens use standard 100% full view
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.transform = 'none';
             }
         }
 
@@ -432,8 +442,16 @@
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
             iframe.src = '';
+            iframe.style.transform = 'none';
             modal.style.display = 'none';
         }
+
+        window.addEventListener('resize', () => {
+            const modal = document.getElementById('previewModal');
+            if(modal && modal.style.display === 'flex') {
+                adjustDesktopScaling();
+            }
+        });
 
         function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
