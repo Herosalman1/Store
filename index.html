@@ -93,8 +93,8 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (AUTO LANDSCAPE FIT ON MOBILE LIKE YOUTUBE PLAYER) -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
+    <!-- LIVE PREVIEW MODAL (FULL HD PC 1920PX ULTRA MINIATURIZED FOR MOBILE) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-1 sm:p-6">
         <div class="w-full max-w-6xl h-auto sm:h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative my-auto">
             <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10">
                 <div class="flex items-center gap-2">
@@ -106,8 +106,8 @@
                 </div>
             </div>
             
-            <!-- YouTube style Landscape Ratio Wrapper -->
-            <div id="frameWrapper" class="w-full aspect-video sm:aspect-auto sm:flex-1 bg-black relative overflow-hidden flex items-center justify-center">
+            <!-- Full HD Canvas Container -->
+            <div id="frameWrapper" class="w-full h-[40vh] sm:h-auto sm:flex-1 bg-black relative overflow-hidden flex items-center justify-center">
                 <iframe id="previewFrame" src="" class="border-0 bg-white"></iframe>
             </div>
         </div>
@@ -399,7 +399,7 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- LIVE PREVIEW DEMO WITH YOUTUBE-LIKE LANDSCAPE FIT ON PORTRAIT MOBILE ---
+        // --- ULTRA MINIATURIZED FULL HD PC PREVIEW (1920x1080) ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
@@ -407,10 +407,10 @@
             iframe.src = url;
             modal.style.display = 'flex';
             
-            setTimeout(adjustLandscapeScaling, 50);
+            setTimeout(adjustFullPcScaling, 50);
         }
 
-        function adjustLandscapeScaling() {
+        function adjustFullPcScaling() {
             const container = document.getElementById('frameWrapper');
             const iframe = document.getElementById('previewFrame');
             if(!container || !iframe) return;
@@ -418,17 +418,17 @@
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
 
-            // PC View Target Width & Aspect Ratio (16:9 Landscape)
-            const targetPcWidth = 1280;
-            const targetPcHeight = 720;
+            // Strict Full HD PC Target (1920px width x 1080px height)
+            const pcWidth = 1920;
+            const pcHeight = 1080;
 
-            const scaleX = containerWidth / targetPcWidth;
-            const scaleY = containerHeight / targetPcHeight;
+            const scaleX = containerWidth / pcWidth;
+            const scaleY = containerHeight / pcHeight;
             const scale = Math.min(scaleX, scaleY);
 
             if (window.innerWidth < 1024) {
-                iframe.style.width = `${targetPcWidth}px`;
-                iframe.style.height = `${targetPcHeight}px`;
+                iframe.style.width = `${pcWidth}px`;
+                iframe.style.height = `${pcHeight}px`;
                 iframe.style.transform = `scale(${scale})`;
                 iframe.style.transformOrigin = 'center center';
                 iframe.style.position = 'absolute';
@@ -451,7 +451,7 @@
         window.addEventListener('resize', () => {
             const modal = document.getElementById('previewModal');
             if(modal && modal.style.display === 'flex') {
-                adjustLandscapeScaling();
+                adjustFullPcScaling();
             }
         });
 
