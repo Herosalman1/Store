@@ -107,21 +107,12 @@
       "pinned": true
     },
     {
-      "name": "Dragon Catch Skull 🐉💀",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787985282/b4a40a89-c6cb-4768-997e-6e0d11431188.png",
+      "name": "Prank Template 😁💖",
+      "price": "149",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1788007436/2ad919db-c8fc-463d-93d6-361bf5f0cc21.png",
       "images": [],
-      "demo": "https://herosalman1.github.io/Lizard-Dragon/",
-      "desc": "Scary Special Template ✨",
-      "pinned": false
-    },
-    {
-      "name": "I love you 💫❤️",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787983561/54d33b6e-c728-4057-ac62-72ab09782a19.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/i-love-you/",
-      "desc": "Special Template ✨",
+      "demo": "https://herosalman1.github.io/THINK-3/prank.html",
+      "desc": "Special Template 💫❤️",
       "pinned": false
     },
     {
@@ -131,51 +122,6 @@
       "images": [],
       "demo": "https://herosalman1.github.io/MULTIPLE-HEART-NAME/surprise.html",
       "desc": "Special Template 💫❤️",
-      "pinned": false
-    },
-    {
-      "name": "Coloursfull Butterfly 🦋✨",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787980783/8fe40a61-c5b9-4d4e-aa0a-a79300c90570.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/Butterfly/",
-      "desc": "Special Template 💫❤️",
-      "pinned": false
-    },
-    {
-      "name": "Particles-Text-Animation ✨",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787979179/08f385fa-0801-49ea-a879-7c21babc44fa.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/Particles-text-Animation/",
-      "desc": "Special Template 💫❤️",
-      "pinned": false
-    },
-    {
-      "name": "Happy New Year 🎉",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787978534/8cc61b0a-0476-474f-87fe-580b95b6747d.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/Happy-New-Year-2027/",
-      "desc": "Special Template 💥",
-      "pinned": false
-    },
-    {
-      "name": "Happy New Year 💥",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787977115/1c01166e-55f4-41c2-a61e-03e7d287649d.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/New-Year-3/Surprise.html",
-      "desc": "Wishes Your Friends Well\nWith Templates 🤗❤️",
-      "pinned": false
-    },
-    {
-      "name": "Happy Diwali 🪔",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787975062/e8661566-68a5-4841-9f7d-c04b3eacb08e.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/Happy-Diwali/diwali.html",
-      "desc": "Wishes Template ❤️🎉",
       "pinned": false
     },
     {
@@ -227,6 +173,69 @@
       "images": [],
       "demo": "https://herosalman1.github.io/Bdy-1/surprise.html",
       "desc": "Special Candle Template 💫"
+    },
+    {
+      "name": "Dragon Catch Skull 🐉💀",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787985282/b4a40a89-c6cb-4768-997e-6e0d11431188.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Lizard-Dragon/",
+      "desc": "Scary Special Template ✨",
+      "pinned": false
+    },
+    {
+      "name": "I love you 💫❤️",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787983561/54d33b6e-c728-4057-ac62-72ab09782a19.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/i-love-you/",
+      "desc": "Special Template ✨",
+      "pinned": false
+    },
+    {
+      "name": "Coloursfull Butterfly 🦋✨",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787980783/8fe40a61-c5b9-4d4e-aa0a-a79300c90570.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Butterfly/",
+      "desc": "Special Template 💫❤️",
+      "pinned": false
+    },
+    {
+      "name": "Particles-Text-Animation ✨",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787979179/08f385fa-0801-49ea-a879-7c21babc44fa.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Particles-text-Animation/",
+      "desc": "Special Template 💫❤️",
+      "pinned": false
+    },
+    {
+      "name": "Happy New Year 🎉",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787978534/8cc61b0a-0476-474f-87fe-580b95b6747d.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Happy-New-Year-2027/",
+      "desc": "Special Template 💥",
+      "pinned": false
+    },
+    {
+      "name": "Happy New Year 💥",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787977115/1c01166e-55f4-41c2-a61e-03e7d287649d.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/New-Year-3/Surprise.html",
+      "desc": "Wishes Your Friends Well\nWith Templates 🤗❤️",
+      "pinned": false
+    },
+    {
+      "name": "Happy Diwali 🪔",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787975062/e8661566-68a5-4841-9f7d-c04b3eacb08e.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Happy-Diwali/diwali.html",
+      "desc": "Wishes Template ❤️🎉",
+      "pinned": false
     }
   ]
 }
