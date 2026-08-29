@@ -204,7 +204,6 @@
 
     </div>
 
-    <!-- LIST MODAL -->
     <div id="listModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 sm:p-10">
         <div class="max-w-4xl w-full h-[75vh] glass-panel p-6 sm:p-8 rounded-3xl border border-zinc-700 flex flex-col shadow-2xl">
             <div class="flex items-center justify-between pb-5 border-b border-zinc-800 mb-5">
@@ -221,13 +220,22 @@
         let fileSha = "";
         let editIndex = null; 
 
-        // 🌟 CORE FUNCTION: Sorts templates so pinned ones are always at the top
+        // 🌟 NEW ADVANCED SORTING: Pinned top par, then price ke hisaab se descending
         function sortTemplates() {
             if(storeData.templates && storeData.templates.length > 0) {
                 storeData.templates.sort((a, b) => {
                     let isPinnedA = a.pinned === true;
                     let isPinnedB = b.pinned === true;
-                    return (isPinnedB === true) - (isPinnedA === true);
+                    
+                    // Pinned pehle rakho
+                    if (isPinnedA !== isPinnedB) {
+                        return isPinnedB ? 1 : -1;
+                    }
+                    
+                    // Price ke hisaab se (High to Low)
+                    let priceA = parseFloat(a.price) || 0;
+                    let priceB = parseFloat(b.price) || 0;
+                    return priceB - priceA;
                 });
             }
         }
@@ -361,7 +369,6 @@
                 let isPinned = tool.pinned === true;
                 let pinText = isPinned ? 'UNPIN 📌' : 'PIN 📍';
                 
-                // YOUR REQUESTED BLUE COLOR (#166ed3) FOR PIN BUTTON IN ADMIN LIST
                 let pinClass = isPinned ? 'bg-[#166ed3] hover:opacity-80 text-white shadow-[0_0_12px_rgba(22,110,211,0.5)]' : 'bg-zinc-800 hover:bg-zinc-700 text-white';
 
                 list.innerHTML += `
