@@ -153,10 +153,10 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-1 sm:p-6">
-        <div class="w-full max-w-6xl h-auto sm:h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative my-auto">
-            <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10">
+    <!-- LIVE PREVIEW MODAL (FULL WIDTH PC VIEW) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
+        <div class="w-full sm:w-[95vw] max-w-[1800px] h-full sm:h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative mx-auto">
+            <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10 shrink-0">
                 <div class="flex items-center gap-2">
                     <span class="text-rose-500 animate-pulse">🔴</span>
                     <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live PC Preview</h3>
@@ -166,9 +166,9 @@
                 </div>
             </div>
             
-            <div id="frameWrapper" class="w-full h-[40vh] sm:h-auto sm:flex-1 bg-black relative overflow-hidden flex items-center justify-center">
-                <!-- MAX PERMISSIONS ADDED HERE TO FORCE AUTOPLAY -->
-                <iframe id="previewFrame" src="" class="border-0 bg-white" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+            <div id="frameWrapper" class="w-full h-full flex-1 bg-black relative overflow-hidden flex items-center justify-center">
+                <!-- IFRAME ALLOWED ALL PERMISSIONS FOR AUTOPLAY -->
+                <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
             </div>
         </div>
     </div>
@@ -484,12 +484,10 @@
                 bgAudio.pause();
             }
 
-            // ADVANCED TRICK: Passing autoplay parameter to URL
             const finalUrl = url.includes('?') ? url + '&autoplay=1' : url + '?autoplay=1';
             iframe.src = finalUrl;
             modal.style.display = 'flex';
             
-            // FORCING FOCUS ON IFRAME TO SIMULATE USER PRESENCE
             iframe.onload = function() {
                 try {
                     iframe.contentWindow.focus();
@@ -504,27 +502,27 @@
             const iframe = document.getElementById('previewFrame');
             if(!container || !iframe) return;
 
-            const containerWidth = container.clientWidth;
-            const containerHeight = container.clientHeight;
-
-            const pcWidth = 1920;
-            const pcHeight = 1080;
-
-            const scaleX = containerWidth / pcWidth;
-            const scaleY = containerHeight / pcHeight;
-            const scale = Math.min(scaleX, scaleY);
-
             if (window.innerWidth < 1024) {
+                // Mobile: Scale to prevent templates from breaking on narrow screens
+                const containerWidth = container.clientWidth;
+                const containerHeight = container.clientHeight;
+                const pcWidth = 1920;
+                const pcHeight = 1080;
+                const scaleX = containerWidth / pcWidth;
+                const scaleY = containerHeight / pcHeight;
+                const scale = Math.min(scaleX, scaleY);
+                
                 iframe.style.width = `${pcWidth}px`;
                 iframe.style.height = `${pcHeight}px`;
                 iframe.style.transform = `scale(${scale})`;
                 iframe.style.transformOrigin = 'center center';
                 iframe.style.position = 'absolute';
             } else {
+                // PC: FILL 100% OF THE POPUP (Removes all black borders)
                 iframe.style.width = '100%';
                 iframe.style.height = '100%';
                 iframe.style.transform = 'none';
-                iframe.style.position = 'static';
+                iframe.style.position = 'absolute';
             }
         }
 
