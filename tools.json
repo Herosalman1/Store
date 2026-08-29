@@ -107,8 +107,17 @@
       "pinned": true
     },
     {
+      "name": "Happy New Year 💥",
+      "price": "99",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787977115/1c01166e-55f4-41c2-a61e-03e7d287649d.png",
+      "images": [],
+      "demo": "https://github.com/Herosalman1/New-Year-3/newyear.html",
+      "desc": "Wishes Your Friends Well\nWith Templates 🤗❤️",
+      "pinned": false
+    },
+    {
       "name": "Happy Diwali 🪔",
-      "price": "149",
+      "price": "94",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787975062/e8661566-68a5-4841-9f7d-c04b3eacb08e.png",
       "images": [],
       "demo": "https://herosalman1.github.io/Happy-Diwali/diwali.html",
