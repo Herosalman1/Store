@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1440">
+    <meta name="viewport" content="width=1040">
     <title>Salman | Developer & Creator Templates Store</title>
     
     <!-- Tailwind CSS CDN -->
@@ -153,7 +153,7 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (1440x900 CENTERED & TOUCH-FRIENDLY FOR MOBILE) -->
+    <!-- LIVE PREVIEW MODAL (1440x900 RESOLUTION VIEW) -->
     <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 hidden flex-col items-center justify-center">
         <!-- Floating Close Button on Top Right -->
         <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
@@ -478,7 +478,7 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- 1440x900 Centered Preview Handler with Touch Support ---
+        // --- 1440x900 Centered Preview Handler ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
@@ -524,7 +524,7 @@
     </audio>
 
     <script>
-      document.body.addEventListener('click', function(e) {
+      MainBody: document.body.addEventListener('click', function(e) {
         var audio = document.getElementById('hiddenAudio');
         
         if (e.target.closest('.live-demo-btn')) {
