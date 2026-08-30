@@ -153,12 +153,12 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (SMART DEVICE-BASED SCALING) -->
+    <!-- LIVE PREVIEW MODAL (TOUCH-FRIENDLY & RESPONSIVE) -->
     <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center">
         <!-- Floating Close Button on Top Right -->
         <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
         
-        <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-hidden">
+        <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-auto">
             <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
         </div>
     </div>
@@ -442,7 +442,7 @@
         function updateGalleryModal() {
             document.getElementById('activeGalleryImg').src = activeTemplateImages[activeImageIdx];
             let thumbContainer = document.getElementById('galleryThumbnails');
-            thumbContainer.inlineHTML = '';
+            thumbContainer.innerHTML = '';
             
             if(activeTemplateImages.length > 1) {
                 thumbContainer.style.display = 'flex';
@@ -478,7 +478,7 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- Smart Device-Wise Preview Scaling ---
+        // --- Smart Responsive Preview Handler for Mobile & PC ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
@@ -493,49 +493,30 @@
             iframe.src = finalUrl;
             modal.style.display = 'flex';
             
+            // Device ke hisaab se sizing set karega taaki mobile mein click 100% work kare
+            if (window.innerWidth < 1024) {
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.position = 'absolute';
+                iframe.style.transform = 'none';
+            } else {
+                iframe.style.width = '1920px';
+                iframe.style.height = '1080px';
+                iframe.style.position = 'absolute';
+                iframe.style.transform = 'none';
+            }
+            
             iframe.onload = function() {
                 try {
                     iframe.contentWindow.focus();
                 } catch(e) {}
             };
-            
-            setTimeout(adjustPreviewScaling, 50);
-        }
-
-        function adjustPreviewScaling() {
-            const container = document.getElementById('frameWrapper');
-            const iframe = document.getElementById('previewFrame');
-            if(!container || !iframe) return;
-
-            // Agar screen mobile wali hai (< 1024px) toh auto-fit scale karega taaki poora template ek baar mein dikhe
-            if (window.innerWidth < 1024) {
-                const containerWidth = container.clientWidth;
-                const containerHeight = container.clientHeight;
-                const pcWidth = 1920;
-                const pcHeight = 1080;
-                const scaleX = containerWidth / pcWidth;
-                const scaleY = containerHeight / pcHeight;
-                const scale = Math.min(scaleX, scaleY);
-                
-                iframe.style.width = `${pcWidth}px`;
-                iframe.style.height = `${pcHeight}px`;
-                iframe.style.transform = `scale(${scale})`;
-                iframe.style.transformOrigin = 'center center';
-                iframe.style.position = 'absolute';
-            } else {
-                // Agar PC par hai toh 100% full original PC size mein open hoga
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.transform = 'none';
-                iframe.style.position = 'absolute';
-            }
         }
 
         function closePreview() {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
             iframe.src = '';
-            iframe.style.transform = 'none';
             modal.style.display = 'none';
 
             const bgAudio = document.getElementById('hiddenAudio');
@@ -543,13 +524,6 @@
                 bgAudio.play().catch(e => console.log("Auto-play blocked by browser", e));
             }
         }
-
-        window.addEventListener('resize', () => {
-            const modal = document.getElementById('previewModal');
-            if(modal && modal.style.display === 'flex') {
-                adjustPreviewScaling();
-            }
-        });
 
         function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
