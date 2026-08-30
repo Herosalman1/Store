@@ -153,13 +153,13 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (1440x900 DESKTOP RESOLUTION VIEW) -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center">
+    <!-- LIVE PREVIEW MODAL (1440x900 CENTERED & TOUCH-FRIENDLY FOR MOBILE) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 hidden flex-col items-center justify-center">
         <!-- Floating Close Button on Top Right -->
         <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
         
-        <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-hidden">
-            <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+        <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-auto" style="-webkit-overflow-scrolling: touch;">
+            <iframe id="previewFrame" src="" class="border-0 bg-black" style="width: 1440px; height: 900px; position: absolute; pointer-events: auto;" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
         </div>
     </div>
 
@@ -478,11 +478,10 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- 1440x900 Desktop Viewport Resolution for Both PC and Mobile ---
+        // --- 1440x900 Centered Preview Handler with Touch Support ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
-            document.getElementById('previewTitle').innerText = name ? `Live Preview: ${name}` : "Live Code Preview";
             
             const bgAudio = document.getElementById('hiddenAudio');
             if (bgAudio && !bgAudio.paused) {
@@ -493,26 +492,11 @@
             iframe.src = finalUrl;
             modal.style.display = 'flex';
             
-            setTimeout(adjustPreviewScaling, 50);
-
             iframe.onload = function() {
                 try {
                     iframe.contentWindow.focus();
                 } catch(e) {}
             };
-        }
-
-        function adjustPreviewScaling() {
-            const container = document.getElementById('frameWrapper');
-            const iframe = document.getElementById('previewFrame');
-            if(!container || !iframe) return;
-
-            // Mobile aur PC dono ke liye exact 1440x900 desktop resolution render hogi
-            iframe.style.width = '1440px';
-            iframe.style.height = '900px';
-            iframe.style.position = 'absolute';
-            iframe.style.top = '0';
-            iframe.style.left = '0';
         }
 
         function closePreview() {
@@ -526,13 +510,6 @@
                 bgAudio.play().catch(e => console.log("Auto-play blocked by browser", e));
             }
         }
-
-        window.addEventListener('resize', () => {
-            const modal = document.getElementById('previewModal');
-            if(modal && modal.style.display === 'flex') {
-                adjustPreviewScaling();
-            }
-        });
 
         function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
@@ -550,7 +527,7 @@
       document.body.addEventListener('click', function(e) {
         var audio = document.getElementById('hiddenAudio');
         
-        if (e.target.closest('.live-demo-btn') || document.getElementById('previewModal').style.display === 'flex') {
+        if (e.target.closest('.live-demo-btn')) {
             return;
         }
 
