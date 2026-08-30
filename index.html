@@ -153,13 +153,13 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (AUTO 100% MAX FIT VIEW) -->
+    <!-- LIVE PREVIEW MODAL (SMART DEVICE-BASED SCALING) -->
     <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center">
         <!-- Floating Close Button on Top Right -->
         <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
         
         <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-hidden">
-            <iframe id="previewFrame" src="" class="border-0 bg-black w-full h-full absolute inset-0" style="max-width: 100%; max-height: 100%; object-fit: contain;" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+            <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
         </div>
     </div>
 
@@ -325,7 +325,7 @@
                                     </div>
                                 </div>
                                 <div class="p-4 pt-0 flex gap-2">
-                                    <button onclick="openPreview('${demo}')" class="live-demo-btn flex-1 py-2 px-3 rounded-lg border border-zinc-800 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
+                                    <button onclick="openPreview('${demo}', '${item.name.replace(/'/g, "\\'")}')" class="live-demo-btn flex-1 py-2 px-3 rounded-lg border border-zinc-800 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
                                         👁️ Live Demo
                                     </button>
                                     <button onclick="buyCode('${item.name.replace(/'/g, "\\'")}', '${price}', '${teleUser}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
@@ -442,7 +442,7 @@
         function updateGalleryModal() {
             document.getElementById('activeGalleryImg').src = activeTemplateImages[activeImageIdx];
             let thumbContainer = document.getElementById('galleryThumbnails');
-            thumbContainer.innerHTML = '';
+            thumbContainer.inlineHTML = '';
             
             if(activeTemplateImages.length > 1) {
                 thumbContainer.style.display = 'flex';
@@ -478,10 +478,11 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- Auto 100% Max Fit Preview ---
-        function openPreview(url) {
+        // --- Smart Device-Wise Preview Scaling ---
+        function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
+            document.getElementById('previewTitle').innerText = name ? `Live Preview: ${name}` : "Live Code Preview";
             
             const bgAudio = document.getElementById('hiddenAudio');
             if (bgAudio && !bgAudio.paused) {
@@ -497,12 +498,44 @@
                     iframe.contentWindow.focus();
                 } catch(e) {}
             };
+            
+            setTimeout(adjustPreviewScaling, 50);
+        }
+
+        function adjustPreviewScaling() {
+            const container = document.getElementById('frameWrapper');
+            const iframe = document.getElementById('previewFrame');
+            if(!container || !iframe) return;
+
+            // Agar screen mobile wali hai (< 1024px) toh auto-fit scale karega taaki poora template ek baar mein dikhe
+            if (window.innerWidth < 1024) {
+                const containerWidth = container.clientWidth;
+                const containerHeight = container.clientHeight;
+                const pcWidth = 1920;
+                const pcHeight = 1080;
+                const scaleX = containerWidth / pcWidth;
+                const scaleY = containerHeight / pcHeight;
+                const scale = Math.min(scaleX, scaleY);
+                
+                iframe.style.width = `${pcWidth}px`;
+                iframe.style.height = `${pcHeight}px`;
+                iframe.style.transform = `scale(${scale})`;
+                iframe.style.transformOrigin = 'center center';
+                iframe.style.position = 'absolute';
+            } else {
+                // Agar PC par hai toh 100% full original PC size mein open hoga
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.transform = 'none';
+                iframe.style.position = 'absolute';
+            }
         }
 
         function closePreview() {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
             iframe.src = '';
+            iframe.style.transform = 'none';
             modal.style.display = 'none';
 
             const bgAudio = document.getElementById('hiddenAudio');
@@ -510,6 +543,13 @@
                 bgAudio.play().catch(e => console.log("Auto-play blocked by browser", e));
             }
         }
+
+        window.addEventListener('resize', () => {
+            const modal = document.getElementById('previewModal');
+            if(modal && modal.style.display === 'flex') {
+                adjustPreviewScaling();
+            }
+        });
 
         function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
@@ -527,7 +567,7 @@
       document.body.addEventListener('click', function(e) {
         var audio = document.getElementById('hiddenAudio');
         
-        if (e.target.closest('.live-demo-btn')) {
+        if (e.target.closest('.live-demo-btn') || document.getElementById('previewModal').style.display === 'flex') {
             return;
         }
 
