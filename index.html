@@ -153,13 +153,13 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (ABSOLUTE 100% FULL SCREEN, ZERO GAP) -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center">
+    <!-- LIVE PREVIEW MODAL (FULL SCREEN GAPLESS WITH MOBILE SCALING) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center p-0">
         <!-- Floating Close Button on Top Right -->
         <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
         
-        <div class="w-full h-full relative bg-black flex items-center justify-center overflow-hidden">
-            <iframe id="previewFrame" src="" class="border-0 bg-black w-full h-full absolute inset-0" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+        <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-hidden">
+            <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
         </div>
     </div>
 
@@ -464,7 +464,6 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- FULL SCREEN PREVIEW HANDLER ---
         function openPreview(url) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
@@ -483,12 +482,37 @@
                     iframe.contentWindow.focus();
                 } catch(e) {}
             };
+
+            // Call scaling after modal is displayed
+            setTimeout(adjustFullPcScaling, 50);
+        }
+
+        function adjustFullPcScaling() {
+            const container = document.getElementById('frameWrapper');
+            const iframe = document.getElementById('previewFrame');
+            if(!container || !iframe) return;
+
+            // Apply exactly the 1440x750 scaling to maintain desktop aspect on mobile
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+            const pcWidth = 1440;
+            const pcHeight = 750;
+            const scaleX = containerWidth / pcWidth;
+            const scaleY = containerHeight / pcHeight;
+            const scale = Math.min(scaleX, scaleY);
+            
+            iframe.style.width = `${pcWidth}px`;
+            iframe.style.height = `${pcHeight}px`;
+            iframe.style.transform = `scale(${scale})`;
+            iframe.style.transformOrigin = 'center center';
+            iframe.style.position = 'absolute';
         }
 
         function closePreview() {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
             iframe.src = '';
+            iframe.style.transform = 'none';
             modal.style.display = 'none';
 
             const bgAudio = document.getElementById('hiddenAudio');
@@ -496,6 +520,14 @@
                 bgAudio.play().catch(e => console.log("Auto-play blocked by browser", e));
             }
         }
+
+        // Re-calculate scaling on window resize
+        window.addEventListener('resize', () => {
+            const modal = document.getElementById('previewModal');
+            if(modal && modal.style.display === 'flex') {
+                adjustFullPcScaling();
+            }
+        });
 
         function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
