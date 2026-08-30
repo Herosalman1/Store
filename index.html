@@ -502,11 +502,11 @@
             const iframe = document.getElementById('previewFrame');
             if(!container || !iframe) return;
 
-            // 1440x900 resolution scaling fit for mobile and desktop screens
+            // 1440x800 resolution scaling fit for mobile and desktop screens
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
             const pcWidth = 1440;
-            const pcHeight = 900;
+            const pcHeight = 800;
             const scaleX = containerWidth / pcWidth;
             const scaleY = containerHeight / pcHeight;
             const scale = Math.min(scaleX, scaleY);
