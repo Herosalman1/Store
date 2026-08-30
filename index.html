@@ -153,22 +153,13 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (EXACT 1440x900 SCALED VIEW) -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
-        <div class="w-full sm:w-[98vw] max-w-[1920px] h-full sm:h-[96vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative mx-auto">
-            <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10 shrink-0">
-                <div class="flex items-center gap-2">
-                    <span class="text-rose-500 animate-pulse">🔴</span>
-                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live Preview</h3>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="closePreview()" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 h-8 w-8 rounded-full flex items-center justify-center text-base font-bold transition-all">✕</button>
-                </div>
-            </div>
-            
-            <div id="frameWrapper" class="w-full h-full flex-1 bg-black relative overflow-hidden flex items-center justify-center">
-                <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
-            </div>
+    <!-- LIVE PREVIEW MODAL (ABSOLUTE 100% FULL SCREEN, ZERO GAP) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center">
+        <!-- Floating Close Button on Top Right -->
+        <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
+        
+        <div class="w-full h-full relative bg-black flex items-center justify-center overflow-hidden">
+            <iframe id="previewFrame" src="" class="border-0 bg-black w-full h-full absolute inset-0" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
         </div>
     </div>
 
@@ -320,7 +311,7 @@
                                     </div>
                                 </div>
                                 <div class="p-4 pt-0 flex gap-2">
-                                    <button onclick="openPreview('${demo}', '${item.name.replace(/'/g, "\\'")}')" class="live-demo-btn flex-1 py-2 px-3 rounded-lg border border-zinc-800 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
+                                    <button onclick="openPreview('${demo}')" class="live-demo-btn flex-1 py-2 px-3 rounded-lg border border-zinc-800 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
                                         👁️ Live Demo
                                     </button>
                                     <button onclick="buyCode('${item.name.replace(/'/g, "\\'")}', '${price}', '${teleUser}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
@@ -473,11 +464,10 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- Exact 1440x900 Scaled Preview Handler ---
-        function openPreview(url, name) {
+        // --- FULL SCREEN PREVIEW HANDLER ---
+        function openPreview(url) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
-            document.getElementById('previewTitle').innerText = name ? `Live Preview: ${name}` : "Live Code Preview";
             
             const bgAudio = document.getElementById('hiddenAudio');
             if (bgAudio && !bgAudio.paused) {
@@ -493,36 +483,12 @@
                     iframe.contentWindow.focus();
                 } catch(e) {}
             };
-            
-            setTimeout(adjustFullPcScaling, 50);
-        }
-
-        function adjustFullPcScaling() {
-            const container = document.getElementById('frameWrapper');
-            const iframe = document.getElementById('previewFrame');
-            if(!container || !iframe) return;
-
-            // 1440x800 resolution scaling fit for mobile and desktop screens
-            const containerWidth = container.clientWidth;
-            const containerHeight = container.clientHeight;
-            const pcWidth = 1440;
-            const pcHeight = 750;
-            const scaleX = containerWidth / pcWidth;
-            const scaleY = containerHeight / pcHeight;
-            const scale = Math.min(scaleX, scaleY);
-            
-            iframe.style.width = `${pcWidth}px`;
-            iframe.style.height = `${pcHeight}px`;
-            iframe.style.transform = `scale(${scale})`;
-            iframe.style.transformOrigin = 'center center';
-            iframe.style.position = 'absolute';
         }
 
         function closePreview() {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
             iframe.src = '';
-            iframe.style.transform = 'none';
             modal.style.display = 'none';
 
             const bgAudio = document.getElementById('hiddenAudio');
@@ -530,13 +496,6 @@
                 bgAudio.play().catch(e => console.log("Auto-play blocked by browser", e));
             }
         }
-
-        window.addEventListener('resize', () => {
-            const modal = document.getElementById('previewModal');
-            if(modal && modal.style.display === 'flex') {
-                adjustFullPcScaling();
-            }
-        });
 
         function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
