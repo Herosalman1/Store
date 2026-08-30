@@ -153,13 +153,13 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (FULL WIDTH PC VIEW) -->
+    <!-- LIVE PREVIEW MODAL (EXACT 1440x900 SCALED VIEW) -->
     <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
-        <div class="w-full sm:w-[95vw] max-w-[1800px] h-full sm:h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative mx-auto">
+        <div class="w-full sm:w-[98vw] max-w-[1920px] h-full sm:h-[96vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative mx-auto">
             <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10 shrink-0">
                 <div class="flex items-center gap-2">
                     <span class="text-rose-500 animate-pulse">🔴</span>
-                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live PC Preview</h3>
+                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live Preview</h3>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="closePreview()" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 h-8 w-8 rounded-full flex items-center justify-center text-base font-bold transition-all">✕</button>
@@ -473,10 +473,11 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
+        // --- Exact 1440x900 Scaled Preview Handler ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
-            document.getElementById('previewTitle').innerText = name ? `Live PC Preview: ${name}` : "Live Code Preview";
+            document.getElementById('previewTitle').innerText = name ? `Live Preview: ${name}` : "Live Code Preview";
             
             const bgAudio = document.getElementById('hiddenAudio');
             if (bgAudio && !bgAudio.paused) {
@@ -501,26 +502,20 @@
             const iframe = document.getElementById('previewFrame');
             if(!container || !iframe) return;
 
-            if (window.innerWidth < 1024) {
-                const containerWidth = container.clientWidth;
-                const containerHeight = container.clientHeight;
-                const pcWidth = 1920;
-                const pcHeight = 1080;
-                const scaleX = containerWidth / pcWidth;
-                const scaleY = containerHeight / pcHeight;
-                const scale = Math.min(scaleX, scaleY);
-                
-                iframe.style.width = `${pcWidth}px`;
-                iframe.style.height = `${pcHeight}px`;
-                iframe.style.transform = `scale(${scale})`;
-                iframe.style.transformOrigin = 'center center';
-                iframe.style.position = 'absolute';
-            } else {
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.transform = 'none';
-                iframe.style.position = 'absolute';
-            }
+            // 1440x900 resolution scaling fit for mobile and desktop screens
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+            const pcWidth = 1440;
+            const pcHeight = 900;
+            const scaleX = containerWidth / pcWidth;
+            const scaleY = containerHeight / pcHeight;
+            const scale = Math.min(scaleX, scaleY);
+            
+            iframe.style.width = `${pcWidth}px`;
+            iframe.style.height = `${pcHeight}px`;
+            iframe.style.transform = `scale(${scale})`;
+            iframe.style.transformOrigin = 'center center';
+            iframe.style.position = 'absolute';
         }
 
         function closePreview() {
