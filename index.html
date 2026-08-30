@@ -153,13 +153,13 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (TOUCH-FRIENDLY & RESPONSIVE) -->
+    <!-- LIVE PREVIEW MODAL (MOBILE TOUCH-FRIENDLY FIX) -->
     <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center">
         <!-- Floating Close Button on Top Right -->
         <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
         
-        <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-auto">
-            <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+        <div id="frameWrapper" class="w-full h-full relative bg-black overflow-auto" style="-webkit-overflow-scrolling: touch;">
+            <iframe id="previewFrame" src="" class="border-0 bg-black" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: auto;" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
         </div>
     </div>
 
@@ -478,11 +478,10 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- Smart Responsive Preview Handler for Mobile & PC ---
+        // --- Touch-Optimized Preview Handler ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
-            document.getElementById('previewTitle').innerText = name ? `Live Preview: ${name}` : "Live Code Preview";
             
             const bgAudio = document.getElementById('hiddenAudio');
             if (bgAudio && !bgAudio.paused) {
@@ -492,19 +491,6 @@
             const finalUrl = url.includes('?') ? url + '&autoplay=1' : url + '?autoplay=1';
             iframe.src = finalUrl;
             modal.style.display = 'flex';
-            
-            // Device ke hisaab se sizing set karega taaki mobile mein click 100% work kare
-            if (window.innerWidth < 1024) {
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.position = 'absolute';
-                iframe.style.transform = 'none';
-            } else {
-                iframe.style.width = '1920px';
-                iframe.style.height = '1080px';
-                iframe.style.position = 'absolute';
-                iframe.style.transform = 'none';
-            }
             
             iframe.onload = function() {
                 try {
@@ -541,7 +527,7 @@
       document.body.addEventListener('click', function(e) {
         var audio = document.getElementById('hiddenAudio');
         
-        if (e.target.closest('.live-demo-btn') || document.getElementById('previewModal').style.display === 'flex') {
+        if (e.target.closest('.live-demo-btn')) {
             return;
         }
 
