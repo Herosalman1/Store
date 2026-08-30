@@ -245,6 +245,15 @@
       "demo": "https://herosalman1.github.io/Happy-Diwali/diwali.html",
       "desc": "Wishes Template ❤️🎉",
       "pinned": false
+    },
+    {
+      "name": "Neon Heart ❤️",
+      "price": "49",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1788103928/2fa629c4-0c58-4f52-8d7c-d40685e52dc0.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Heart-1/",
+      "desc": "Special Template 💫❤️",
+      "pinned": false
     }
   ]
 }
