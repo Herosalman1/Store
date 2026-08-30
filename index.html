@@ -153,13 +153,13 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (FULL SCREEN GAPLESS WITH MOBILE SCALING) -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center p-0">
+    <!-- LIVE PREVIEW MODAL (ABSOLUTE FULL SCREEN, NO BORDERS/HEADERS) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black hidden flex-col items-center justify-center p-0 m-0">
         <!-- Floating Close Button on Top Right -->
-        <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
+        <button onclick="closePreview()" class="absolute top-4 right-4 z-[60] text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
         
         <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-hidden">
-            <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+            <iframe id="previewFrame" src="" class="border-0 bg-black absolute inset-0" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
         </div>
     </div>
 
@@ -311,7 +311,7 @@
                                     </div>
                                 </div>
                                 <div class="p-4 pt-0 flex gap-2">
-                                    <button onclick="openPreview('${demo}')" class="live-demo-btn flex-1 py-2 px-3 rounded-lg border border-zinc-800 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
+                                    <button onclick="openPreview('${demo}', '${item.name.replace(/'/g, "\\'")}')" class="live-demo-btn flex-1 py-2 px-3 rounded-lg border border-zinc-800 bg-zinc-900 text-white font-medium text-xs hover:bg-zinc-800 text-center transition-all">
                                         👁️ Live Demo
                                     </button>
                                     <button onclick="buyCode('${item.name.replace(/'/g, "\\'")}', '${price}', '${teleUser}')" class="flex-1 py-2 px-3 rounded-lg bg-rose-600 text-white font-semibold text-xs hover:bg-rose-700 text-center transition-all shadow-md">
@@ -464,7 +464,8 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        function openPreview(url) {
+        // --- Exact 1440x750 Mobile Scaling & Full Screen PC ---
+        function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
             
@@ -482,8 +483,7 @@
                     iframe.contentWindow.focus();
                 } catch(e) {}
             };
-
-            // Call scaling after modal is displayed
+            
             setTimeout(adjustFullPcScaling, 50);
         }
 
@@ -492,20 +492,30 @@
             const iframe = document.getElementById('previewFrame');
             if(!container || !iframe) return;
 
-            // Apply exactly the 1440x750 scaling to maintain desktop aspect on mobile
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
-            const pcWidth = 1440;
-            const pcHeight = 750;
-            const scaleX = containerWidth / pcWidth;
-            const scaleY = containerHeight / pcHeight;
-            const scale = Math.min(scaleX, scaleY);
             
-            iframe.style.width = `${pcWidth}px`;
-            iframe.style.height = `${pcHeight}px`;
-            iframe.style.transform = `scale(${scale})`;
-            iframe.style.transformOrigin = 'center center';
-            iframe.style.position = 'absolute';
+            // Check if Mobile (<= 980px viewport width)
+            if (window.innerWidth <= 980) {
+                // Exact 1440x750 scaling for Mobile
+                const pcWidth = 1440;
+                const pcHeight = 750;
+                const scaleX = containerWidth / pcWidth;
+                const scaleY = containerHeight / pcHeight;
+                const scale = Math.min(scaleX, scaleY);
+                
+                iframe.style.width = `${pcWidth}px`;
+                iframe.style.height = `${pcHeight}px`;
+                iframe.style.transform = `scale(${scale})`;
+                iframe.style.transformOrigin = 'center center';
+                iframe.style.position = 'absolute';
+            } else {
+                // Full Screen for PC (100% Edge-to-Edge)
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.transform = 'none';
+                iframe.style.position = 'absolute';
+            }
         }
 
         function closePreview() {
@@ -521,7 +531,6 @@
             }
         }
 
-        // Re-calculate scaling on window resize
         window.addEventListener('resize', () => {
             const modal = document.getElementById('previewModal');
             if(modal && modal.style.display === 'flex') {
