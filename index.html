@@ -153,13 +153,22 @@
 
     </main>
 
-    <!-- LIVE PREVIEW MODAL (1440x900 RESOLUTION VIEW) -->
-    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 hidden flex-col items-center justify-center">
-        <!-- Floating Close Button on Top Right -->
-        <button onclick="closePreview()" class="absolute top-4 right-4 z-50 text-white bg-black/70 hover:bg-rose-600 h-10 w-10 rounded-full flex items-center justify-center text-xl font-bold border border-white/20 shadow-2xl transition-all">✕</button>
-        
-        <div id="frameWrapper" class="w-full h-full relative bg-black flex items-center justify-center overflow-auto" style="-webkit-overflow-scrolling: touch;">
-            <iframe id="previewFrame" src="" class="border-0 bg-black" style="width: 1440px; height: 900px; position: absolute; pointer-events: auto;" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+    <!-- LIVE PREVIEW MODAL (FULL WIDTH PC VIEW) -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-2 sm:p-6">
+        <div class="w-full sm:w-[95vw] max-w-[1800px] h-full sm:h-[95vh] bg-zinc-950 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl relative mx-auto">
+            <div class="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800 z-10 shrink-0">
+                <div class="flex items-center gap-2">
+                    <span class="text-rose-500 animate-pulse">🔴</span>
+                    <h3 class="text-xs sm:text-sm font-semibold text-white tracking-wider" id="previewTitle">Live PC Preview</h3>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="closePreview()" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-zinc-700 h-8 w-8 rounded-full flex items-center justify-center text-base font-bold transition-all">✕</button>
+                </div>
+            </div>
+            
+            <div id="frameWrapper" class="w-full h-full flex-1 bg-black relative overflow-hidden flex items-center justify-center">
+                <iframe id="previewFrame" src="" class="border-0 bg-black" allow="autoplay; encrypted-media; fullscreen; microphone" allowtransparency="true"></iframe>
+            </div>
         </div>
     </div>
 
@@ -212,27 +221,13 @@
         let activeTemplateImages = [];
         let activeImageIdx = 0;
 
-        // F12 & Inspect Protection System
         document.addEventListener('keydown', function (e) {
-            if (
-                e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
-                (e.ctrlKey && e.key === 'U')
-            ) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U') || (e.ctrlKey && e.key === 'C')) {
                 e.preventDefault();
-                window.location.reload();
+                alert('Action restricted to protect source code.');
                 return false;
             }
         });
-
-        setInterval(function() {
-            const before = performance.now();
-            debugger;
-            const after = performance.now();
-            if (after - before > 100) {
-                window.location.reload();
-            }
-        }, 1000);
 
         async function fetchStoreData() {
             let grid = document.getElementById('storeGrid');
@@ -478,10 +473,10 @@
             document.getElementById('galleryModal').style.display = 'none';
         }
 
-        // --- 1440x900 Centered Preview Handler ---
         function openPreview(url, name) {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
+            document.getElementById('previewTitle').innerText = name ? `Live PC Preview: ${name}` : "Live Code Preview";
             
             const bgAudio = document.getElementById('hiddenAudio');
             if (bgAudio && !bgAudio.paused) {
@@ -497,12 +492,42 @@
                     iframe.contentWindow.focus();
                 } catch(e) {}
             };
+            
+            setTimeout(adjustFullPcScaling, 50);
+        }
+
+        function adjustFullPcScaling() {
+            const container = document.getElementById('frameWrapper');
+            const iframe = document.getElementById('previewFrame');
+            if(!container || !iframe) return;
+
+            if (window.innerWidth < 1024) {
+                const containerWidth = container.clientWidth;
+                const containerHeight = container.clientHeight;
+                const pcWidth = 1920;
+                const pcHeight = 1080;
+                const scaleX = containerWidth / pcWidth;
+                const scaleY = containerHeight / pcHeight;
+                const scale = Math.min(scaleX, scaleY);
+                
+                iframe.style.width = `${pcWidth}px`;
+                iframe.style.height = `${pcHeight}px`;
+                iframe.style.transform = `scale(${scale})`;
+                iframe.style.transformOrigin = 'center center';
+                iframe.style.position = 'absolute';
+            } else {
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.transform = 'none';
+                iframe.style.position = 'absolute';
+            }
         }
 
         function closePreview() {
             const modal = document.getElementById('previewModal');
             const iframe = document.getElementById('previewFrame');
             iframe.src = '';
+            iframe.style.transform = 'none';
             modal.style.display = 'none';
 
             const bgAudio = document.getElementById('hiddenAudio');
@@ -510,6 +535,13 @@
                 bgAudio.play().catch(e => console.log("Auto-play blocked by browser", e));
             }
         }
+
+        window.addEventListener('resize', () => {
+            const modal = document.getElementById('previewModal');
+            if(modal && modal.style.display === 'flex') {
+                adjustFullPcScaling();
+            }
+        });
 
         function buyCode(templateName, price, teleUser) {
             const msg = encodeURIComponent(`Hi Salman! I want to buy the code for "${templateName}" priced at ₹${price}. Please share the payment QR/UPI details.`);
@@ -524,10 +556,10 @@
     </audio>
 
     <script>
-      MainBody: document.body.addEventListener('click', function(e) {
+      document.body.addEventListener('click', function(e) {
         var audio = document.getElementById('hiddenAudio');
         
-        if (e.target.closest('.live-demo-btn')) {
+        if (e.target.closest('.live-demo-btn') || document.getElementById('previewModal').style.display === 'flex') {
             return;
         }
 
