@@ -193,15 +193,6 @@
       "desc": "Special Candle Template 💫"
     },
     {
-      "name": "Dragon Catch Skull 🐉💀",
-      "price": "99",
-      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787985282/b4a40a89-c6cb-4768-997e-6e0d11431188.png",
-      "images": [],
-      "demo": "https://herosalman1.github.io/Lizard-Dragon/",
-      "desc": "Scary Special Template ✨",
-      "pinned": false
-    },
-    {
       "name": "I love you 💫❤️",
       "price": "99",
       "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787983561/54d33b6e-c728-4057-ac62-72ab09782a19.png",
@@ -280,6 +271,15 @@
       "images": [],
       "demo": "https://herosalman1.github.io/Heart-1/",
       "desc": "Special Template 💫❤️",
+      "pinned": false
+    },
+    {
+      "name": "Dragon Catch Skull 🐉💀",
+      "price": "48",
+      "img": "https://res.cloudinary.com/ysl029w9/image/upload/v1787985282/b4a40a89-c6cb-4768-997e-6e0d11431188.png",
+      "images": [],
+      "demo": "https://herosalman1.github.io/Lizard-Dragon/",
+      "desc": "Scary Special Template ✨",
       "pinned": false
     }
   ]
